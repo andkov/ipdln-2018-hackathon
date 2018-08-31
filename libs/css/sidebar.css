@@ -1,0 +1,28 @@
+#TOC {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  overflow:auto;
+  line-height:150%;
+}
+
+
+body, td {
+      max-width: 900px;
+      margin: auto;
+      margin-left:400px;
+      line-height: 20px;
+}
+
+
+p {line-height:200%}
+
+body {
+  max-width: 900px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+

@@ -1,0 +1,166 @@
+---
+title: "Sonata Title"
+author: "J.Smith"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    theme: simplex
+    toc: true
+    toc_depth: 3
+    keep_md: true
+    toc_float: true
+---
+
+<!-- These two chunks should be added in the beginning of every .Rmd that you want to source an .R script -->
+<!--  The 1st mandatory chunck  -->
+<!--  Set the working directory to the repository's base directory -->
+```{r, echo=F, message=F} 
+#Don't combine this call with any other chunk 
+# cat("Working directory: ", getwd()) # check where you are
+  library(knitr)
+# Rmd is in "./reports/reportA/reportA.Rmd", but now the root is "./"
+  knitr::opts_knit$set(root.dir='../../') 
+```
+
+<!--  The 2nd mandatory chunck  -->
+<!-- Set the report-wide options, and point to the external code file. -->
+```{r set_options, echo=F}
+# set options shared by all chunks
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 4, 
+  fig.width = 5.5, 
+  out.width = "550px",
+  fig.path = 'figure_rmd/',     
+  dev = "png",
+  dpi = 400
+  # fig.path = 'figure_pdf/',     
+  # dev = "pdf"#,
+  # dev.args=list(pdf = list(colormodel = 'cmyk'))
+)
+echoChunks <- FALSE
+options(width=120) #So the output is 50% wider than the default.
+# connect to the file with the underlying R script  
+read_chunk("./sandbox/.../script.R") 
+```
+
+
+
+<!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
+```{r load-packages, echo=echoChunks, message=FALSE}
+```
+
+
+<!-- Load the sources.  Suppress the output when loading sources. --> 
+```{r load-sources, echo=echoChunks, message=FALSE}
+```
+# I. Exposition
+
+## Glossary
+Review object definitions to assist you in reading the report. 
+<!-- Load any Global functions and variables declared in the R file.  Suppress the output. --> 
+```{r declare-globals, echo=T, results='show', message=FALSE, warning=F}
+```
+
+Review functions definitions to assist you in reading the report.
+```{r utility-functions, echo=echoChunks, results='show', message=FALSE}
+```
+
+<!-- Declare any global functions specific to a Rmd output.  Suppress the output. --> 
+```{r, echo=echoChunks, message=FALSE}
+#Put code in here.  It doesn't call a chunk in the codebehind file.
+```
+
+## Load Data
+<!-- Load the datasets.   -->
+```{r load-data, echo=TRUE, results='hide', message=FALSE}
+```
+
+<!-- Inspect the datasets.   -->
+```{r inspect-data, echo=echoChunks, results='hide', message=FALSE}
+```
+
+## Data Tweaks
+<!-- Tweak the datasets.   -->
+```{r tweak-data, echo=T, results='hide', message=FALSE, warning=F}
+```
+
+# II. Development A
+
+```{r dev-a-0, echo=T, results='asos', message=FALSE}
+```
+
+## A1
+```{r dev-a-1, echo=T, results='show', message=FALSE}
+```
+
+## A2
+```{r dev-a-2, echo=T, results='show', message=FALSE}
+```
+
+## A3
+```{r dev-a-3, echo=T, results='show', message=FALSE}
+```
+
+## A4
+```{r dev-a-4, echo=T, results='show', message=FALSE}
+```
+
+## A5
+```{r dev-a-5, echo=T, results='show', message=FALSE}
+```
+
+
+
+
+# III. Development B
+```{r dev-b-0, echo=T, results='show', message=FALSE}
+```
+
+## B1
+```{r dev-b-1, echo=F, results='show', message=FALSE}
+```
+
+## B2
+```{r dev-b-2, echo=F, results='show', message=FALSE}
+```
+
+## B3
+```{r dev-b-3, echo=F, results='show', message=FALSE}
+```
+
+## B4
+```{r dev-b-4, echo=T, results='show', message=FALSE}
+```
+
+## B5
+```{r dev-b-5, echo=T, results='show', message=FALSE}
+```
+
+
+# IV. Recap
+```{r recap-0, echo=T, results='show', message=FALSE}
+```
+
+```{r recap-1, echo=T, results='show', message=FALSE}
+```
+
+```{r recap-2, echo=T, results='show', message=FALSE}
+```
+
+```{r recap-3, echo=T, results='show', message=FALSE}
+```
+
+
+```{r xxx, echo=T, results='show', message=FALSE}
+```
+
+
+
+```{r session-info, echo=FALSE}
+cat("Report rendered by", Sys.info()["user"], "at", strftime(Sys.time(), "%Y-%m-%d, %H:%M %z"))
+sessionInfo()
+```
