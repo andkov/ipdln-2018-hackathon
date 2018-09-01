@@ -7,14 +7,20 @@ This report was automatically generated with the R package **knitr**
 
 
 ```r
-# this script transcribes the meta data from https://drive.google.com/file/d/10idMxy8eX8nTHr6wr2Q40x4XOP3Y5ck7/view
+# this script transcribes the meta data from 
+# https://drive.google.com/file/d/10idMxy8eX8nTHr6wr2Q40x4XOP3Y5ck7/view
 # and organizes the data documentation in a form convenient for reproducible analytics
 
+# Lines before the first chunk are invisible to Rmd/Rnw callers
+# Run to stitch a tech report of this script (used only in RStudio)
+# knitr::stitch_rmd(
+#   script = "./manipulation/0-metador.R",
+#   output = "./manipulation/stitched-output/0-metador.md"
+# )
 
-# knitr::stitch_rmd(script="./manipulation/0-assemble-meta-data.R", output="./manipulation/stitch_rmd/0-assemble-meta-data.md")
-# These first few lines run only when the file is run in RStudio, !!NOT when an Rmd/Rnw file calls it!!
-rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. This is not called by knitr, because it's above the first chunk.
-cat("\f") # clear console 
+rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. 
+# This is not called by knitr, because it's above the first chunk.
+cat("\f") # clear console when working in RStudio
 ```
 
 
@@ -24,6 +30,97 @@ library(magrittr) #Pipes
 requireNamespace("dplyr", quietly=TRUE)
 ```
 
+
+```r
+# declare where you will store the product of this script
+path_save <- "./data-unshared/derived/ls_guide.rds"
+```
+
+```r
+# ABDERR                 "Aboriginal Status"
+# ABIDENT                "Aboriginal Identity (detail)"
+# ADIFCLTY               "Problems with ADL"
+# AGE_IMM_REVISED_group  "Age at immigration"
+# CITSM                  "Citizen of Canada"
+# COD1                   "Cause of death (short)"
+# COD1_CODES             "Cause of death (short): Codes"
+# COD2                   "Cause of death (long)"
+# COD2_CODES             "Cause of death (long): Codes"
+# COWD                   "Class of worker"
+# DISABFL                "Problems with ADL"
+# DISABIL                "Problems with ADL (by type)"
+# DPOB11N                "Contry of birth"
+# DVISMIN                "Visible minority"
+# EFCNT_PP_REVISED       "Family size"
+# FOL                    "First language"
+# GENSTPOB               "Generation in Canada"
+# HCDD                   "Highest degree"
+# IMMDER                 "Immigration status"
+# KID_group              "Number of children"
+# LOINCA                 "Low income A"
+# LOINCB                 "Low income B"
+# MARST                  "Marital status"
+# NOCSBRD                "Occupation (broad)"
+# OLN                    "Conversational language"
+# POBDER                 "Place of birth"
+# PR                     "Province of residence"
+# RPAIR                  "Need repair of dwelling?"
+# RUINDFG                "Rural status" 
+# SEX                    "Sex"
+# S_DEAD                 "Dead in X years?"
+# TRMODE                 "Ride to work"
+# YRIM_group             "Year came to Canada"
+# age_group              "Age"
+# d_licoratio_da_bef     "Low income decile"
+```
+
+```r
+demographic <- c(
+  "SEX"                    # "Sex"                            # demographics      
+  ,"age_group"             # "Age"                            #      
+  ,"MARST"                 # "Marital status"                 #                 
+  ,"EFCNT_PP_REVISED"      # "Family size"                    #              
+  ,"KID_group"             # "Number of children"             #                     
+  ,"PR"                    # "Province of residence"          #                        
+)
+identity <- c(
+  "FOL"                    # "First language"                 # identity            
+  ,"OLN"                   # "Conversational language"        #
+  ,"DVISMIN"               # "Visible minority"               #                   
+  ,"ABDERR"                # "Aboriginal Status"              #                    
+  ,"ABIDENT"               # "Aboriginal Identity (detail)"   #  
+)
+economic <- c(
+  "HCDD"                   # "Highest degree"                 # economic               
+  ,"COWD"                  # "Class of worker"                #                  
+  ,"NOCSBRD"               # "Occupation (broad)"             #                     
+  ,"TRMODE"                # "Ride to work"                   #               
+  ,"LOINCA"                # "Low income A"                   #               
+  ,"LOINCB"                # "Low income B"                   #               
+  ,"d_licoratio_da_bef"    # "Low income decile"              #                    
+  ,"RUINDFG"               # "Rural status"                   #                
+  ,"RPAIR"                 # "Need repair of dwelling?"       #                           
+)
+immigration <- c(
+  "POBDER"                 # "Place of birth"                 # immigration               
+  ,"DPOB11N"               # "Contry of birth"                #                  
+  ,"IMMDER"                # "Immigration status"             #                     
+  ,"AGE_IMM_REVISED_group" # "Age at immigration"             #                     
+  ,"YRIM_group"            # "Year came to Canada"            #                      
+  ,"CITSM"                 # "Citizen of Canada"              #                    
+  ,"GENSTPOB"              # "Generation in Canada"           #                       
+)
+health <- c(
+  "ADIFCLTY"               # "Problems with ADL"              #  health                  
+  ,"DISABFL"               # "Problems with ADL"              #                    
+  ,"DISABIL"               # "Problems with ADL (by type)"    #
+  ,"S_DEAD"                # "Dead in X years?"               #                   
+  ,"COD1"                  # "Cause of death (short)"         #                         
+  ,"COD1_CODES"            # "Cause of death (short): Codes"  #
+  ,"COD2"                  # "Cause of death (long)"          #                        
+  ,"COD2_CODES"            # "Cause of death (long): Codes"   #                           
+)
+```
 
 ```r
 ABDERR <- list(
@@ -495,113 +592,24 @@ d_licoratio_da_bef <- list(
 ```
 
 ```r
-# ABDERR                 "Aboriginal Status"
-# ABIDENT                "Aboriginal Identity (detail)"
-# ADIFCLTY               "Problems with ADL"
-# AGE_IMM_REVISED_group  "Age at immigration"
-# CITSM                  "Citizen of Canada"
-# COD1                   "Cause of death (short)"
-# COD1_CODES             "Cause of death (short): Codes"
-# COD2                   "Cause of death (long)"
-# COD2_CODES             "Cause of death (long): Codes"
-# COWD                   "Class of worker"
-# DISABFL                "Problems with ADL"
-# DISABIL                "Problems with ADL (by type)"
-# DPOB11N                "Contry of birth"
-# DVISMIN                "Visible minority"
-# EFCNT_PP_REVISED       "Family size"
-# FOL                    "First language"
-# GENSTPOB               "Generation in Canada"
-# HCDD                   "Highest degree"
-# IMMDER                 "Immigration status"
-# KID_group              "Number of children"
-# LOINCA                 "Low income A"
-# LOINCB                 "Low income B"
-# MARST                  "Marital status"
-# NOCSBRD                "Occupation (broad)"
-# OLN                    "Conversational language"
-# POBDER                 "Place of birth"
-# PR                     "Province of residence"
-# RPAIR                  "Need repair of dwelling?"
-# RUINDFG                "Rural status" 
-# SEX                    "Sex"
-# S_DEAD                 "Dead in X years?"
-# TRMODE                 "Ride to work"
-# YRIM_group             "Year came to Canada"
-# age_group              "Age"
-# d_licoratio_da_bef     "Low income decile"
-```
-
-```r
-demographic <- c(
- "SEX"                   # "Sex"                            # demographics      
-,"age_group"             # "Age"                            #      
-,"MARST"                 # "Marital status"                 #                 
-,"EFCNT_PP_REVISED"      # "Family size"                    #              
-,"KID_group"             # "Number of children"             #                     
-,"PR"                    # "Province of residence"          #                        
-)
-identity <- c(
- "FOL"                   # "First language"                 # identity            
-,"OLN"                   # "Conversational language"        #                                        
-,"DVISMIN"               # "Visible minority"               #                   
-,"ABDERR"                # "Aboriginal Status"              #                    
-,"ABIDENT"               # "Aboriginal Identity (detail)"   #                               
-)
-economic <- c(
- "HCDD"                  # "Highest degree"                 # economic               
-,"COWD"                  # "Class of worker"                #                  
-,"NOCSBRD"               # "Occupation (broad)"             #                     
-,"TRMODE"                # "Ride to work"                   #               
-,"LOINCA"                # "Low income A"                   #               
-,"LOINCB"                # "Low income B"                   #               
-,"d_licoratio_da_bef"    # "Low income decile"              #                    
-,"RUINDFG"               # "Rural status"                   #                
-,"RPAIR"                 # "Need repair of dwelling?"       #                           
-)
-immigration <- c(
- "POBDER"                # "Place of birth"                 # immigration                 
-,"DPOB11N"               # "Contry of birth"                #                  
-,"IMMDER"                # "Immigration status"             #                     
-,"AGE_IMM_REVISED_group" # "Age at immigration"             #                     
-,"YRIM_group"            # "Year came to Canada"            #                      
-,"CITSM"                 # "Citizen of Canada"              #                    
-,"GENSTPOB"              # "Generation in Canada"           #                       
-)
-health <- c(
- "ADIFCLTY"              # "Problems with ADL"              #  health                  
-,"DISABFL"               # "Problems with ADL"              #                    
-,"DISABIL"               # "Problems with ADL (by type)"    #                              
-,"S_DEAD"                # "Dead in X years?"               #                   
-,"COD1"                  # "Cause of death (short)"         #                         
-,"COD1_CODES"            # "Cause of death (short): Codes"  #                                
-,"COD2"                  # "Cause of death (long)"          #                        
-,"COD2_CODES"            # "Cause of death (long): Codes"   #                               
-)
-```
-
-```r
 # create vector with names    
 block_names <- c("demographic", "identity", "economic", "immigration","health")
-item_names  <- c(demographic, identity, economic, immigration, health)
+item_names  <- c(demographic,    identity,   economic,   immigration,  health)
 # create a list object to hold all available metadata 
 ls_guide            <- list()
-ls_guide[["block"]] <- mget(section_names, envir = globalenv())
-```
-
-```
-## Error in mget(section_names, envir = globalenv()): object 'section_names' not found
+ls_guide[["block"]] <- mget(block_names, envir = globalenv())
+ls_guide[["item"]]  <- mget(item_names,  envir = globalenv())
 ```
 
 ```r
-ls_guide[["item"]]  <- mget(item_names,envir = globalenv())
-```
-
-```r
+# show components of this list object 
 ls_guide %>% lapply(names)
 ```
 
 ```
+## $block
+## [1] "demographic" "identity"    "economic"    "immigration" "health"     
+## 
 ## $item
 ##  [1] "SEX"                   "age_group"            
 ##  [3] "MARST"                 "EFCNT_PP_REVISED"     
@@ -624,31 +632,37 @@ ls_guide %>% lapply(names)
 ```
 
 ```r
-ls_guide$block$demographic 
+# show contents of an arbitrary `block` component
+ls_guide$block$demographic %>% str()
 ```
 
 ```
-## NULL
-```
-
-```r
-ls_guide$item$SEX
-```
-
-```
-## $levels
-##        1        2 
-## "Female"   "Male" 
-## 
-## $label
-## [1] "Sex"
-## 
-## $description
-## [1] "Sex"
+##  chr [1:6] "SEX" "age_group" "MARST" "EFCNT_PP_REVISED" "KID_group" ...
 ```
 
 ```r
-saveRDS(ls_guide, "./data-public/derived/ls_guide.rds")
+# show contents of an arbitrary `item` component
+ls_guide$item$KID_group %>% str()
+```
+
+```
+## List of 3
+##  $ levels     : Named chr [1:3] "no children" "one or two children" "three or more children"
+##   ..- attr(*, "names")= chr [1:3] "1" "2" "3"
+##  $ label      : chr "Number of children"
+##  $ description: chr "Children, total number in family (grouped)"
+```
+
+```r
+cat("Save results to ",path_save)
+```
+
+```
+## Save results to  ./data-unshared/derived/ls_guide.rds
+```
+
+```r
+saveRDS(ls_guide, path_save)
 ```
 
 The R session information (including the OS info, R version and all
@@ -674,17 +688,22 @@ sessionInfo()
 ## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## [1] grid      stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
 ## 
 ## other attached packages:
-## [1] magrittr_1.5
+## [1] RColorBrewer_1.1-2 dichromat_2.0-0    ggplot2_2.2.1     
+## [4] extrafont_0.17     magrittr_1.5      
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.15     dplyr_0.7.4      assertthat_0.2.0 R6_2.2.2        
-##  [5] evaluate_0.10.1  pillar_1.2.1     rlang_0.2.0      stringi_1.1.7   
-##  [9] bindrcpp_0.2     tools_3.4.4      stringr_1.3.1    glue_1.2.0      
-## [13] yaml_2.1.19      compiler_3.4.4   pkgconfig_2.0.1  bindr_0.1       
-## [17] knitr_1.20       tibble_1.4.2
+##  [1] Rcpp_0.12.15     Rttf2pt1_1.3.6   knitr_1.20       bindr_0.1       
+##  [5] hms_0.4.1        munsell_0.4.3    testit_0.7       colorspace_1.3-2
+##  [9] R6_2.2.2         rlang_0.2.0      highr_0.6        plyr_1.8.4      
+## [13] stringr_1.3.1    dplyr_0.7.4      tools_3.4.4      gtable_0.2.0    
+## [17] extrafontdb_1.0  lazyeval_0.2.1   yaml_2.1.19      assertthat_0.2.0
+## [21] tibble_1.4.2     bindrcpp_0.2     readr_1.1.1      glue_1.2.0      
+## [25] evaluate_0.10.1  stringi_1.1.7    compiler_3.4.4   pillar_1.2.1    
+## [29] scales_0.5.0     markdown_0.8     pkgconfig_2.0.1
 ```
 
 ```r
@@ -692,6 +711,6 @@ Sys.time()
 ```
 
 ```
-## [1] "2018-09-01 08:37:59 PDT"
+## [1] "2018-09-01 10:15:31 PDT"
 ```
 
