@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title></title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<p>This report was automatically generated with the R package <strong>knitr</strong>
+(version 1.20).</p>
+
+<pre><code class="r"># this script transcribes the meta data from https://drive.google.com/file/d/10idMxy8eX8nTHr6wr2Q40x4XOP3Y5ck7/view
+# and organizes the data documentation in a form convenient for reproducible analytics
+
+
+# knitr::stitch_rmd(script=&quot;./manipulation/0-assemble-meta-data.R&quot;, output=&quot;./manipulation/stitch_rmd/0-assemble-meta-data.md&quot;)
+# These first few lines run only when the file is run in RStudio, !!NOT when an Rmd/Rnw file calls it!!
+rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. This is not called by knitr, because it&#39;s above the first chunk.
+cat(&quot;\f&quot;) # clear console 
+</code></pre>
+
+
+<pre><code class="r">library(magrittr) #Pipes
+requireNamespace(&quot;dplyr&quot;, quietly=TRUE)
+</code></pre>
+
+<pre><code class="r">ABDERR &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot;  = &quot;Aboriginal Identity&quot;
+    ,&quot;2&quot; = &quot;Non-Aboriginal Identity&quot;
+    )
+  ,&quot;label&quot; = &quot;Aboriginal Status&quot;
+  ,&quot;description&quot;= &quot;Aboriginal identity status (detailed measure): Refers to those persons who reported identifying who reported identifying with at least one Aboriginal group (North American Indian, MÃ©tis or Inuit&quot;
+  )
+ABIDENT &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot;= &quot;North American Indian single response&quot;
+    ,&quot;2&quot; = &quot;Metis single response&quot;    
+    ,&quot;3&quot; = &quot;Inuit single response&quot;    
+    ,&quot;4&quot; = &quot;Multiple Aboriginal identity responses&quot;                     
+    ,&quot;5&quot; = &quot;Aboriginal responses not included elsewhere&quot;                           
+    ,&quot;6&quot; = &quot;Non-Aboriginal identity population&quot; 
+  )
+  ,&quot;label&quot; = &quot;Aboriginal Identity (detail)&quot;
+  ,&quot;description&quot;= &quot;Aboriginal identity status (detailed measure): Refers to those persons who reported identifying who reported identifying with at least one Aboriginal group (North American Indian, MÃ©tis or Inuit)&quot;
+  )
+ADIFCLTY &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;No&quot; 
+    ,&quot;2&quot; = &quot;Not stated&quot; 
+    ,&quot;3&quot; = &quot;Yes, often&quot;  
+    ,&quot;4&quot; = &quot;Yes, sometimes&quot;
+  )
+  ,&quot;label&quot; = &quot;Problems with ADL&quot;
+  ,&quot;description&quot;= &quot;Difficulties with activities of daily living: Difficulty with activities of daily living such as hearing, seeing, communicating, walking, climbing stairs, bending, learning or doing any similar activities.&quot;
+)
+AGE_IMM_REVISED_group &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot;  = &quot;&lt;5&quot;
+    ,&quot;2&quot;  = &quot; 5 to &lt; 10&quot;
+    ,&quot;3&quot;  = &quot;10 to &lt; 15&quot;
+    ,&quot;4&quot;  = &quot;15 to &lt; 20&quot;
+    ,&quot;5&quot;  = &quot;20 to &lt; 25&quot; 
+    ,&quot;6&quot;  = &quot;25 to &lt; 30&quot;
+    ,&quot;7&quot;  = &quot;30 to &lt; 35&quot;
+    ,&quot;8&quot;  = &quot;35 to &lt; 40&quot; 
+    ,&quot;9&quot;  = &quot;40 to &lt; 45&quot;
+    ,&quot;10&quot; = &quot;45 to &lt; 50&quot;
+    ,&quot;11&quot; = &quot;50 to &lt; 55&quot;
+    ,&quot;12&quot; = &quot;55 to &lt; 60&quot;
+    ,&quot;13&quot; = &quot;60 and over&quot;
+    ,&quot;14&quot; = &quot;Non-permanent residents&quot;
+    ,&quot;15&quot; = &quot;Non-immigrants and institutional residents&quot;
+  )
+  ,&quot;label&quot; = &quot;Age at immigration&quot;
+  ,&quot;description&quot;= &quot;Age at immigration (grouped): Refers to the age at which the respondent first obtained landed immigrant status. A landed immigrant is a person who has been granted the right to live in Canada permanently by immigration authorities.&quot;
+)
+CITSM &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;Canadian citizen by birth&quot;
+    ,&quot;2&quot; = &quot;Not a Canadian citizen by birth&quot;    
+  )
+  ,&quot;label&quot; = &quot;Citizen of Canada&quot;
+  ,&quot;description&quot;= &quot;Citizenship status: Refers to the legal citizenship status of the respondent as being &#39;&#39;Canadian citizen by birth&#39;&#39; or something else.&quot;
+)
+COD1 &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;Communicable, maternal, perinatal, and nutritional conditions&quot;
+    ,&quot;2&quot; = &quot;Noncommunicable diseases&quot;
+    ,&quot;3&quot; = &quot;Injuries&quot;
+    ,&quot;4&quot; = &quot;Other causes of death or cause of death not available&quot;
+    ,&quot;5&quot; = &quot;Did not die&quot;
+    )
+  ,&quot;label&quot; = &quot;Cause of death (short)&quot;
+  ,&quot;description&quot;= &quot;Cause of death according to Global Burden of Disease Level 1 codes (with ICD-10 codes for comparison, see COD1_CODES)&quot;
+)
+COD1_CODES &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;GBD: U001; ICD-10: A00â€“B99, G00â€“G04, N70â€“N73, J00â€“J06, J10â€“J18, J20â€“J22, H65â€“H66, O00â€“O99, P00â€“P96, E00â€“E02, E40â€“E46, E50, D50â€“D53, D64.9, E51â€“64&quot;
+    ,&quot;2&quot; = &quot;GBD: U059; ICD-10: C00â€“C97, D00â€“D48, D55â€“D64 (minus D 64.9) D65â€“D89, E03â€“E07, E10â€“E16, E20â€“E34, E65â€“E88, F01â€“F99, G06â€“G98, H00â€“H61, H68â€“H93, I00â€“I99, J30â€“J98, K00â€“K92, N00â€“N64, N75â€“N98, L00â€“L98, M00â€“M99, Q00â€“Q99&quot;
+    ,&quot;3&quot; = &quot;GBD: U148; ICD-10: V01â€“Y89&quot;
+    ,&quot;4&quot; = NA
+    ,&quot;5&quot; = NA
+  )
+  ,&quot;label&quot; = &quot;Cause of death (short): Codes&quot;
+  ,&quot;description&quot;= &quot;Respective GBD &amp; ICD-10 codes of COD1&quot;
+)
+COD2 &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot;  = &quot;Infectious and parasitic diseases&quot;                    
+    ,&quot;2&quot;  = &quot;Respiratory infections&quot;                               
+    ,&quot;3&quot;  = &quot;Colon and rectal cancers&quot;                             
+    ,&quot;4&quot;  = &quot;Female Breast cancer&quot;                                 
+    ,&quot;5&quot;  = &quot;Diabetes mellitus&quot;                                    
+    ,&quot;6&quot;  = &quot;Alzheimerâ€™s disease and other dementias&quot;              
+    ,&quot;7&quot;  = &quot;Ischemic heart disease&quot;                               
+    ,&quot;8&quot;  = &quot;Cerebrovascular disease&quot;                              
+    ,&quot;9&quot;  = &quot;Respiratory diseases&quot;                                 
+    ,&quot;10&quot; = &quot;Digestive diseases&quot;                                   
+    ,&quot;11&quot; = &quot;Genitourinary diseases&quot;                               
+    ,&quot;12&quot; = &quot;Unintentional injuries&quot;                               
+    ,&quot;13&quot; = &quot;Other causes of death or cause of death not available&quot;
+    ,&quot;14&quot; = &quot;Did not die&quot;
+  )
+  ,&quot;label&quot; = &quot;Cause of death (long)&quot;
+  ,&quot;description&quot;= &quot;Cause of death 2: Select causes of death according to Global Burden of Disease Level 2 codes (with ICD-10 codes for comparison, see COD2_CODES)&quot;
+)
+COD2_CODES &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot;  = &quot;GBD: U002; A00â€“B99, G00, G03â€“G04, N70â€“N73&quot;
+    ,&quot;2&quot;  = &quot;GBD: U038; J00â€“J06, J10â€“J18, J20â€“J22, H65â€“H66&quot;
+    ,&quot;3&quot;  = &quot;GBD: U064; C18â€“C21&quot;
+    ,&quot;4&quot;  = &quot;GBD: U069; C50 &quot;
+    ,&quot;5&quot;  = &quot;GBD: U079; E10â€“E14&quot;
+    ,&quot;6&quot;  = &quot;GBD: U087; F01, F03, G30â€“G31&quot;
+    ,&quot;7&quot;  = &quot;GBD: U107; I20â€“I25&quot;
+    ,&quot;8&quot;  = &quot;GBD: U108; I60â€“I69&quot;
+    ,&quot;9&quot;  = &quot;GBD: U111; J30â€“J98&quot;
+    ,&quot;10&quot; = &quot;GBD: U115; K20â€“K92&quot;
+    ,&quot;11&quot; = &quot;GBD: U120; N00â€“N64, N75â€“N98&quot;
+    ,&quot;12&quot; = &quot;GBD: U149; V01â€“X59, Y40â€“Y86, Y88, Y89&quot;
+    ,&quot;13&quot; = &quot;GBD: U999&quot;
+    ,&quot;14&quot; = NA
+  )
+  ,&quot;label&quot; = &quot;Cause of death (long): Codes&quot;
+  ,&quot;description&quot;= &quot;Respective GBD &amp; ICD-10 codes of COD2&quot;
+)
+COWD &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;Unpaid family workers - Worked without pay for a relative in a family business or farm&quot;
+    ,&quot;2&quot; = &quot;Paid worker - Originally self-employed without paid help, incorporated&quot;
+    ,&quot;3&quot; = &quot;Paid worker - Originally self-employed with paid help, incorporated&quot;
+    ,&quot;4&quot; = &quot;Paid Worker - Working for wages, salary, tips or commission&quot;
+    ,&quot;5&quot; = &quot;Self-employed without paid help, not incorporated&quot;
+    ,&quot;6&quot; = &quot;Self-employed with paid help, not Incorporated&quot;
+    ,&quot;7&quot; = &quot;Not applicable&quot;
+  )
+  ,&quot;label&quot; = &quot;Class of worker&quot;
+  ,&quot;description&quot;= &quot;Class of worker: Refers to the classification of respondents who reported a job&quot;
+)
+DISABFL &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;No&quot;
+    ,&quot;2&quot; = &quot;Not stated&quot;
+    ,&quot;3&quot; = &quot;Yes, often&quot;
+    ,&quot;4&quot; = &quot;Yes, sometimes&quot;
+  )
+  ,&quot;label&quot; = &quot;Problems with ADL&quot;
+  ,&quot;description&quot;= &quot;Difficulties with activities of daily living: Refers to difficulty with daily activities and/or a physical condition or mental condition or health problem that reduces the amount or kind of activity that a person can do at home, at work or school or in other activities (e.g., transportation, leisure).&quot;
+)
+
+DISABIL &lt;- list(
+  &quot;levels&quot; = c(
+     &quot;1&quot;  = &quot;Difficulty with daily activities &amp; activities reduced at home and in other activities&quot;
+    ,&quot;2&quot;  = &quot;Difficulty with daily activities &amp; activities reduced at home and at work/school&quot;
+    ,&quot;3&quot;  = &quot;Difficulty with daily activities &amp; activities reduced at home at work/school and in other activities&quot;
+    ,&quot;4&quot;  = &quot;Difficulty with daily activities &amp; activities reduced at work/school and in other activities&quot;
+    ,&quot;5&quot;  = &quot;Difficulty with daily activities &amp; activities reduced at home&quot;
+    ,&quot;6&quot;  = &quot;Difficulty with daily activities &amp; activities reduced in other activities&quot;
+    ,&quot;7&quot;  = &quot;Difficulty with daily activities &amp; activities reduced at work/school&quot;
+    ,&quot;8&quot;  = &quot;Difficulty with daily activities&quot;
+    ,&quot;9&quot;  = &quot;No difficulty with daily activities and no reduced activities&quot;
+    ,&quot;10&quot; = &quot;Activities reduced at home and in other activities&quot;
+    ,&quot;11&quot; = &quot;Activities reduced at home and at work/school&quot;
+    ,&quot;12&quot; = &quot;Activities reduced at home, at work/school and in other activities&quot;
+    ,&quot;13&quot; = &quot;Activities reduced at work/school and in other activities&quot;
+    ,&quot;14&quot; = &quot;Activities reduced at home&quot;
+    ,&quot;15&quot; = &quot;Activities reduced in other activities&quot;
+    ,&quot;16&quot; = &quot;Activities reduced at work/school&quot;
+    ,&quot;17&quot; = &quot;Not stated&quot;
+  )
+  ,&quot;label&quot; = &quot;Problems with ADL (by type)&quot;
+  ,&quot;description&quot;= &quot;Difficulties with activities of daily living by type: Refers to having at least one of the activity difficulties/reductions, or having two or more in different combinations.&quot;
+)
+DPOB11N  &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;01&quot;= &quot;non-immigrant&quot;
+    ,&quot;02&quot;= &quot;Latin America and Caribbean &quot;
+    ,&quot;03&quot;= &quot;Western Europe&quot;
+    ,&quot;04&quot;= &quot;Eastern Europe&quot;
+    ,&quot;05&quot;= &quot;Sub-Saharan Africa  &quot;
+    ,&quot;06&quot;= &quot;North Africa, South West Asia, Middle East&quot;
+    ,&quot;07&quot;= &quot;South Asia&quot;
+    ,&quot;08&quot;= &quot;Southeast Asia&quot;
+    ,&quot;09&quot;= &quot;East Asia (incl Singapore)&quot;
+    ,&quot;10&quot;= &quot;Australia, New Zealand, Oceania, Greenland&quot;     
+  )
+  ,&quot;label&quot; = &quot;Contry of birth&quot;
+  ,&quot;description&quot;= &quot;Country of birth: Refers to the country of birth for those respondents not born in Canada&quot;
+)
+DVISMIN  &lt;- list(
+  &quot;levels&quot; = c(
+     &quot;1&quot;  =   &quot;Chinese&quot;
+    ,&quot;2&quot;  =   &quot;South Asian&quot;
+    ,&quot;3&quot;  =   &quot;Black&quot;
+    ,&quot;4&quot;  =   &quot;Filipino&quot;
+    ,&quot;5&quot;  =   &quot;Latin American&quot;
+    ,&quot;6&quot;  =   &quot;Southeast Asian&quot;
+    ,&quot;7&quot;  =   &quot;Arab&quot;
+    ,&quot;8&quot;  =   &quot;West Asian&quot;
+    ,&quot;9&quot;  =   &quot;Korean&quot;
+    ,&quot;10&quot;  =  &quot;Japanese&quot;
+    ,&quot;11&quot;  =  &quot;Visible minority, n.i.e.&quot;
+    ,&quot;12&quot;  =  &quot;Multiple visible minority&quot;
+    ,&quot;13&quot;  =  &quot;Aboriginal self-reporting&quot;
+    ,&quot;14&quot;  =  &quot;Not a visible minority&quot;
+  )
+  ,&quot;label&quot; = &quot;Visible minority&quot;
+  ,&quot;description&quot;= &quot;Visible minority: Refers to the visible minority group to which the respondent belongs. The Employment Equity Act defines visible minorities as &#39;persons, other than Aboriginal peoples, who are non-Caucasian in race or non-white in colour&#39;.&quot;
+)
+EFCNT_PP_REVISED &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot;  = &quot;1 person&quot;
+    ,&quot;2&quot;  = &quot;2 family members&quot;
+    ,&quot;3&quot;  = &quot;3 family members&quot;
+    ,&quot;4&quot;  = &quot;4 family members&quot;
+    ,&quot;5&quot;  = &quot;5 family members&quot;
+    ,&quot;6&quot;  = &quot;6 family members&quot;
+    ,&quot;7&quot;  = &quot;7 family members&quot;
+    ,&quot;8&quot;  = &quot;8 family members&quot;
+    ,&quot;9&quot;  = &quot;9 family members&quot;
+    ,&quot;10&quot; = &quot;10 or more family members&quot;   
+  )
+  ,&quot;label&quot; = &quot;Family size&quot;
+  ,&quot;description&quot;= &quot;Number of persons in the family: Refers to the number of persons in the individuals family.&quot;
+)
+FOL  &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;English &quot;
+    ,&quot;2&quot; = &quot;French &quot;
+    ,&quot;3&quot; = &quot;English and French &quot;
+    ,&quot;4&quot; = &quot;Neither English nor French&quot; 
+  )
+  ,&quot;label&quot; = &quot;First language&quot;
+  ,&quot;description&quot;= &quot;First official language: First official language spoken  &quot;
+)
+FPTIM    &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;Worked mainly full-time weeks&quot;
+    ,&quot;2&quot; = &quot;Worked mainly part-time weeks&quot;
+    ,&quot;3&quot; = &quot;Not applicable (didnâ€™t work)&quot;
+  )
+  ,&quot;label&quot; = &quot;Employment last year&quot;
+  ,&quot;description&quot;= &quot;Labour Market Activities: Full and part time employment. Persons were asked to report whether the weeks they worked in the year prior to the survey were full-time weeks (30 hours or more per week) or not, on the basis of all jobs held.&quot;
+)
+GENSTPOB &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;1st generation - Respondent born outside Canada&quot;
+    ,&quot;2&quot; = &quot;2nd generation - Respondent born in Canada of at least one foreign-born parent&quot;
+    ,&quot;3&quot; = &quot;3rd generation - Respondent born in Canada and both parents born in Canada&quot;
+  )
+  ,&quot;label&quot; = &quot;Generation in Canada&quot;
+  ,&quot;description&quot;= &quot;Generation status: Refers to the generational status of the respondent, that is, 1st generation, 2nd generation or 3rd generation or more.Generation status is derived from place of birth of respondent, place of birth of father and place of birth of mother.&quot;
+)
+HCDD &lt;- list(
+  &quot;levels&quot; = c(
+     &quot;1&quot;  = &quot;None&quot;
+    ,&quot;2&quot;  = &quot;High school graduation certificate or equivalency certificate&quot;
+    ,&quot;3&quot;  = &quot;Other trades certificate or diploma&quot;
+    ,&quot;4&quot;  = &quot;Registered apprenticeship certificate&quot;
+    ,&quot;5&quot;  = &quot;College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year&quot;
+    ,&quot;6&quot;  = &quot;College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years&quot;
+    ,&quot;7&quot;  = &quot;College, CEGEP or other non-university certificate or diploma from a program of more than 2 years&quot;
+    ,&quot;8&quot;  = &quot;University certificate or diploma below bachelor level&quot;
+    ,&quot;9&quot;  = &quot;Bachelors degree&quot;
+    ,&quot;10&quot; = &quot;University certificate or diploma above bachelor level&quot;
+    ,&quot;11&quot; = &quot;Degree in medicine, dentistry, veterinary medicine or optometry&quot;
+    ,&quot;12&quot; = &quot;Masters degree&quot;
+    ,&quot;13&quot; = &quot;Earned doctorate degree&quot;   
+  )
+  ,&quot;label&quot; = &quot;Highest degree&quot;
+  ,&quot;description&quot;= &quot;Highest certificate, diploma or degree: Information indicating the persons most advanced certificate, diploma or degree.&quot;
+)   
+IMMDER &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;Immigrants&quot;
+    ,&quot;2&quot; = &quot;Non-permanent residents&quot;
+    ,&quot;3&quot; = &quot;Non-immigrants&quot;
+  )
+  ,&quot;label&quot; = &quot;Immigration status&quot;
+  ,&quot;description&quot;= &quot;Immigration status: Indicates whether the respondent is a non-immigrant, an immigrant or a non-permanent resident.&quot;
+)
+KID_group   &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;no children&quot;
+    ,&quot;2&quot; = &quot;one or two children&quot;
+    ,&quot;3&quot; = &quot;three or more children&quot; 
+  )
+  ,&quot;label&quot; = &quot;Number of children&quot;
+  ,&quot;description&quot;= &quot;Children, total number in family (grouped)&quot;
+)
+LOINCA &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;non-low income&quot;
+    ,&quot;2&quot; = &quot;low income&quot;
+    ,&quot;3&quot; = &quot;Concept not applicable (economic familes, persons not in economic families in the Yukon, NWT, Nunavut and on Indian Reserves)&quot;
+  )
+  ,&quot;label&quot; = &quot;Low income A&quot;
+  ,&quot;description&quot;= &quot;Low income status (after taxes): Refers to the low income status of the respondent in relation to Statistics Canadas Low Income before tax cutoffs&quot;
+)
+LOINCB &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;non-low income&quot;
+    ,&quot;2&quot; = &quot;low income&quot;
+    ,&quot;3&quot; = &quot;Concept not applicable (economic familes, persons not in economic families in the Yukon, NWT, Nunavut and on Indian Reserves)&quot;
+    )
+  ,&quot;label&quot; = &quot;Low income B&quot;
+  ,&quot;description&quot;= &quot;Low income status (before taxes): Refers to the low income status of the respondent in relation to Statistics Canadas Low Income before tax cutoffs&quot;
+)   
+MARST   &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;Divorced&quot;
+    ,&quot;2&quot; = &quot;Legally married (and not separated)&quot;
+    ,&quot;3&quot; = &quot;Separated, but still legally married&quot;
+    ,&quot;4&quot; = &quot;Never legally married (single)&quot;
+    ,&quot;5&quot; = &quot;Widowed&quot;
+  )
+  ,&quot;label&quot; = &quot;Marital status&quot;
+  ,&quot;description&quot;= &quot;Marital Status: Refers to the legal marital status of the person.&quot;
+)
+NOCSBRD &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot;  = &quot;A Management occupations&quot;
+    ,&quot;2&quot;  = &quot;B Business, finance and administrative occupations&quot;
+    ,&quot;3&quot;  = &quot;C Natural and applied sciences and related occupations&quot;
+    ,&quot;4&quot;  = &quot;D Health occupations&quot;
+    ,&quot;5&quot;  = &quot;E Occupations in social science, education, government service and religion&quot;
+    ,&quot;6&quot;  = &quot;F Occupations in art, culture, recreation and sport&quot;
+    ,&quot;7&quot;  = &quot;G Sales and service occupations&quot;
+    ,&quot;8&quot;  = &quot;H Trades, transport and equipment operators and related occupations&quot;
+    ,&quot;9&quot;  = &quot;I Occupations unique to primary industry&quot;
+    ,&quot;10&quot; = &quot;J Occupations unique to processing, manufacturing and utilities&quot;
+    ,&quot;11&quot; = &quot;Not Applicable&quot;
+    )
+  ,&quot;label&quot; = &quot;Occupation (broad)&quot;
+  ,&quot;description&quot;= &quot;Occupation broad categories: Refers to the kind of work persons were doing during the reference week, as determined by their kind of work and the description of the main activities in their job.&quot;
+)
+OLN &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;English only&quot;
+    ,&quot;2&quot; = &quot;French only&quot;
+    ,&quot;3&quot; = &quot;Both English and French&quot;
+    ,&quot;4&quot; = &quot;Neither English nor French&quot;
+  )
+  ,&quot;label&quot; = &quot;Conversational language&quot;
+  ,&quot;description&quot;= &quot;Official language: Refers to the ability to conduct a conversation in English only, in French only, in both English and French or in none of the official languages of Canada&quot;
+)
+POBDER &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot; Born in province of residence&quot;
+    ,&quot;2&quot; = &quot; Born in another province&quot;
+    ,&quot;3&quot; = &quot; Born outside Canada &quot;
+  )
+  ,&quot;label&quot; = &quot;Place of birth&quot;
+  ,&quot;description&quot;= &quot;Place of birth: Indicates whether the respondent was born in the same province that they lived in at the time of survey, born in a different province than they lived in at the time of the survey or born outside Canada.&quot;
+)   
+PR &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;10&quot; = &quot;Newfoundland and Labrador&quot;
+    ,&quot;11&quot; = &quot;Prince Edward Island&quot;
+    ,&quot;12&quot; = &quot;Nova Scotia&quot;
+    ,&quot;13&quot; = &quot;New Brunswick&quot;
+    ,&quot;24&quot; = &quot;Quebec&quot;
+    ,&quot;35&quot; = &quot;Ontario&quot;
+    ,&quot;46&quot; = &quot;Manitoba&quot;
+    ,&quot;47&quot; = &quot;Saskatchewan&quot;
+    ,&quot;48&quot; = &quot;Alberta&quot;
+    ,&quot;59&quot; = &quot;British Columbia&quot;
+    ,&quot;60&quot; = &quot;Yukon&quot;
+    ,&quot;61&quot; = &quot;Northwest Territories&quot;
+    ,&quot;62&quot; = &quot;Nunavut&quot;   
+  )
+  ,&quot;label&quot; = &quot;Province of residence&quot;
+  ,&quot;description&quot;= &quot;Province or territory of residence&quot;
+)
+RPAIR   &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;No, only regular maintenance&quot;
+    ,&quot;2&quot; = &quot;Yes, minor repairs are needed&quot;
+    ,&quot;3&quot; = &quot;Yes, major repairs are needed &quot;
+    ,&quot;4&quot; = &quot;Not applicable&quot;
+  )
+  ,&quot;label&quot; = &quot;Need repair of dwelling?&quot;
+  ,&quot;description&quot;= &quot;Condition of dwelling: Refers to whether, in the judgement of the respondent, the dwelling requires any repairs (excluding desirable remodelling or additions).&quot;
+)
+RUINDFG &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;Rural&quot; 
+    ,&quot;2&quot; = &quot;Urban&quot;  
+  )
+  ,&quot;label&quot; = &quot;Rural status&quot; 
+  ,&quot;description&quot;= &quot;Rural urban classification: Blocks falling inside urban areas are classified as urban.  Blocks falling outside of urban areas are classified as rural.&quot;
+)
+SEX &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;Female&quot; 
+    ,&quot;2&quot; = &quot;Male&quot;
+  )
+  ,&quot;label&quot; = &quot;Sex&quot;
+  ,&quot;description&quot;= &quot;Sex&quot;
+  )
+S_DEAD  &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;Dead&quot;
+    ,&quot;2&quot; = &quot;Not dead&quot;
+  )
+  ,&quot;label&quot; = &quot;Dead in X years?&quot;
+  ,&quot;description&quot;= &quot;Mortality status: Refers to whether or not the respondent died during the X years following the survey response&quot;
+)
+TRMODE &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;Bicycle&quot;
+    ,&quot;2&quot; = &quot;Car, truck, van as driver&quot;
+    ,&quot;3&quot; = &quot;Motorcycle&quot;
+    ,&quot;4&quot; = &quot;Other mode&quot;
+    ,&quot;5&quot; = &quot;Car, truck, van as passenger&quot;
+    ,&quot;6&quot; = &quot;Taxicab&quot;
+    ,&quot;7&quot; = &quot;Public transit&quot;
+    ,&quot;8&quot; = &quot;Walked&quot;
+    ,&quot;9&quot; = &quot;Not applicable&quot;
+  )
+  ,&quot;label&quot; = &quot;Ride to work&quot;
+  ,&quot;description&quot;= &quot;Mode of transportation to work: Refers to the mode of transportation to work of respondents 15 years of age and over who have worked since January 1, 2005.&quot;
+)   
+YRIM_group &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot; = &quot;2002 or later&quot;
+    ,&quot;2&quot; = &quot;between 1997 and 2001&quot;
+    ,&quot;3&quot; = &quot;between 1996 and 1987&quot;
+    ,&quot;4&quot; = &quot;1986 or earlier&quot;
+    ,&quot;5&quot; = &quot;Non-permanent residents&quot;
+    ,&quot;6&quot; = &quot;Non-immigrants and institutional residents&quot;)
+  ,&quot;label&quot; = &quot;Year came to Canada&quot;
+  ,&quot;description&quot;= &quot;Year of immigration: Refers to the year landed immigrant status was first obtained in Canada. Includes immigrants who landed in Canada prior to the survey collection.&quot;
+)   
+age_group   &lt;- list(
+  &quot;levels&quot; = c(
+    &quot;1&quot;  = &quot;19 to 24&quot;
+    ,&quot;2&quot;  = &quot;25 to 29&quot;
+    ,&quot;3&quot;  = &quot;30 to 34&quot;
+    ,&quot;4&quot;  = &quot;35 to 39&quot;
+    ,&quot;5&quot;  = &quot;40 to 44&quot;
+    ,&quot;6&quot;  = &quot;45 to 49&quot;
+    ,&quot;7&quot;  = &quot;50 to 54&quot;
+    ,&quot;8&quot;  = &quot;55 to 59&quot;
+    ,&quot;9&quot;  = &quot;60 to 64&quot;
+    ,&quot;10&quot; = &quot;65 to 69&quot;
+    ,&quot;11&quot; = &quot;70 to 74&quot;
+    ,&quot;12&quot; = &quot;75 to 79&quot;
+    ,&quot;13&quot; = &quot;80 to 84&quot;
+    ,&quot;14&quot; = &quot;85 to 89&quot;
+    ,&quot;15&quot; = &quot;90 and older&quot;
+  )
+  ,&quot;label&quot; = &quot;Age&quot;
+  ,&quot;description&quot;= &quot;Age: grouped&quot;
+)
+d_licoratio_da_bef &lt;- list(
+  &quot;levels&quot; = c(
+     &quot;1&quot;  = &quot;1st  decile&quot;   
+    ,&quot;2&quot;  = &quot;2nd  decile&quot;   
+    ,&quot;3&quot;  = &quot;3rd  decile&quot;   
+    ,&quot;4&quot;  = &quot;4th  decile&quot;   
+    ,&quot;5&quot;  = &quot;5th  decile&quot;   
+    ,&quot;6&quot;  = &quot;6th  decile&quot;   
+    ,&quot;7&quot;  = &quot;7th  decile&quot;   
+    ,&quot;8&quot;  = &quot;8th  decile&quot;   
+    ,&quot;9&quot;  = &quot;9th  decile&quot;   
+    ,&quot;10&quot; = &quot;10th decile&quot;    
+  )
+  ,&quot;label&quot; = &quot;Low income decile&quot;
+  ,&quot;description&quot;= &quot;Low-income area-based deciles: The ratio of total income to Statistics Canada low-income cut-offs for the applicable family size and community size. Ratios were calculated by each CMA/CA or by provincial rural residual levels and divided into the regional level deciles for before tax income.&quot;
+)   
+</code></pre>
+
+<pre><code class="r"># ABDERR                 &quot;Aboriginal Status&quot;
+# ABIDENT                &quot;Aboriginal Identity (detail)&quot;
+# ADIFCLTY               &quot;Problems with ADL&quot;
+# AGE_IMM_REVISED_group  &quot;Age at immigration&quot;
+# CITSM                  &quot;Citizen of Canada&quot;
+# COD1                   &quot;Cause of death (short)&quot;
+# COD1_CODES             &quot;Cause of death (short): Codes&quot;
+# COD2                   &quot;Cause of death (long)&quot;
+# COD2_CODES             &quot;Cause of death (long): Codes&quot;
+# COWD                   &quot;Class of worker&quot;
+# DISABFL                &quot;Problems with ADL&quot;
+# DISABIL                &quot;Problems with ADL (by type)&quot;
+# DPOB11N                &quot;Contry of birth&quot;
+# DVISMIN                &quot;Visible minority&quot;
+# EFCNT_PP_REVISED       &quot;Family size&quot;
+# FOL                    &quot;First language&quot;
+# GENSTPOB               &quot;Generation in Canada&quot;
+# HCDD                   &quot;Highest degree&quot;
+# IMMDER                 &quot;Immigration status&quot;
+# KID_group              &quot;Number of children&quot;
+# LOINCA                 &quot;Low income A&quot;
+# LOINCB                 &quot;Low income B&quot;
+# MARST                  &quot;Marital status&quot;
+# NOCSBRD                &quot;Occupation (broad)&quot;
+# OLN                    &quot;Conversational language&quot;
+# POBDER                 &quot;Place of birth&quot;
+# PR                     &quot;Province of residence&quot;
+# RPAIR                  &quot;Need repair of dwelling?&quot;
+# RUINDFG                &quot;Rural status&quot; 
+# SEX                    &quot;Sex&quot;
+# S_DEAD                 &quot;Dead in X years?&quot;
+# TRMODE                 &quot;Ride to work&quot;
+# YRIM_group             &quot;Year came to Canada&quot;
+# age_group              &quot;Age&quot;
+# d_licoratio_da_bef     &quot;Low income decile&quot;
+</code></pre>
+
+<pre><code class="r">demographic &lt;- c(
+ &quot;SEX&quot;                   # &quot;Sex&quot;                            # demographics      
+,&quot;age_group&quot;             # &quot;Age&quot;                            #      
+,&quot;MARST&quot;                 # &quot;Marital status&quot;                 #                 
+,&quot;EFCNT_PP_REVISED&quot;      # &quot;Family size&quot;                    #              
+,&quot;KID_group&quot;             # &quot;Number of children&quot;             #                     
+,&quot;PR&quot;                    # &quot;Province of residence&quot;          #                        
+)
+identity &lt;- c(
+ &quot;FOL&quot;                   # &quot;First language&quot;                 # identity            
+,&quot;OLN&quot;                   # &quot;Conversational language&quot;        #                                        
+,&quot;DVISMIN&quot;               # &quot;Visible minority&quot;               #                   
+,&quot;ABDERR&quot;                # &quot;Aboriginal Status&quot;              #                    
+,&quot;ABIDENT&quot;               # &quot;Aboriginal Identity (detail)&quot;   #                               
+)
+economic &lt;- c(
+ &quot;HCDD&quot;                  # &quot;Highest degree&quot;                 # economic               
+,&quot;COWD&quot;                  # &quot;Class of worker&quot;                #                  
+,&quot;NOCSBRD&quot;               # &quot;Occupation (broad)&quot;             #                     
+,&quot;TRMODE&quot;                # &quot;Ride to work&quot;                   #               
+,&quot;LOINCA&quot;                # &quot;Low income A&quot;                   #               
+,&quot;LOINCB&quot;                # &quot;Low income B&quot;                   #               
+,&quot;d_licoratio_da_bef&quot;    # &quot;Low income decile&quot;              #                    
+,&quot;RUINDFG&quot;               # &quot;Rural status&quot;                   #                
+,&quot;RPAIR&quot;                 # &quot;Need repair of dwelling?&quot;       #                           
+)
+immigration &lt;- c(
+ &quot;POBDER&quot;                # &quot;Place of birth&quot;                 # immigration                 
+,&quot;DPOB11N&quot;               # &quot;Contry of birth&quot;                #                  
+,&quot;IMMDER&quot;                # &quot;Immigration status&quot;             #                     
+,&quot;AGE_IMM_REVISED_group&quot; # &quot;Age at immigration&quot;             #                     
+,&quot;YRIM_group&quot;            # &quot;Year came to Canada&quot;            #                      
+,&quot;CITSM&quot;                 # &quot;Citizen of Canada&quot;              #                    
+,&quot;GENSTPOB&quot;              # &quot;Generation in Canada&quot;           #                       
+)
+health &lt;- c(
+ &quot;ADIFCLTY&quot;              # &quot;Problems with ADL&quot;              #  health                  
+,&quot;DISABFL&quot;               # &quot;Problems with ADL&quot;              #                    
+,&quot;DISABIL&quot;               # &quot;Problems with ADL (by type)&quot;    #                              
+,&quot;S_DEAD&quot;                # &quot;Dead in X years?&quot;               #                   
+,&quot;COD1&quot;                  # &quot;Cause of death (short)&quot;         #                         
+,&quot;COD1_CODES&quot;            # &quot;Cause of death (short): Codes&quot;  #                                
+,&quot;COD2&quot;                  # &quot;Cause of death (long)&quot;          #                        
+,&quot;COD2_CODES&quot;            # &quot;Cause of death (long): Codes&quot;   #                               
+)
+</code></pre>
+
+<pre><code class="r"># create vector with names    
+block_names &lt;- c(&quot;demographic&quot;, &quot;identity&quot;, &quot;economic&quot;, &quot;immigration&quot;,&quot;health&quot;)
+item_names  &lt;- c(demographic, identity, economic, immigration, health)
+# create a list object to hold all available metadata 
+ls_guide            &lt;- list()
+ls_guide[[&quot;block&quot;]] &lt;- mget(section_names, envir = globalenv())
+</code></pre>
+
+<pre><code>## Error in mget(section_names, envir = globalenv()): object &#39;section_names&#39; not found
+</code></pre>
+
+<pre><code class="r">ls_guide[[&quot;item&quot;]]  &lt;- mget(item_names,envir = globalenv())
+</code></pre>
+
+<pre><code class="r">ls_guide %&gt;% lapply(names)
+</code></pre>
+
+<pre><code>## $item
+##  [1] &quot;SEX&quot;                   &quot;age_group&quot;            
+##  [3] &quot;MARST&quot;                 &quot;EFCNT_PP_REVISED&quot;     
+##  [5] &quot;KID_group&quot;             &quot;PR&quot;                   
+##  [7] &quot;FOL&quot;                   &quot;OLN&quot;                  
+##  [9] &quot;DVISMIN&quot;               &quot;ABDERR&quot;               
+## [11] &quot;ABIDENT&quot;               &quot;HCDD&quot;                 
+## [13] &quot;COWD&quot;                  &quot;NOCSBRD&quot;              
+## [15] &quot;TRMODE&quot;                &quot;LOINCA&quot;               
+## [17] &quot;LOINCB&quot;                &quot;d_licoratio_da_bef&quot;   
+## [19] &quot;RUINDFG&quot;               &quot;RPAIR&quot;                
+## [21] &quot;POBDER&quot;                &quot;DPOB11N&quot;              
+## [23] &quot;IMMDER&quot;                &quot;AGE_IMM_REVISED_group&quot;
+## [25] &quot;YRIM_group&quot;            &quot;CITSM&quot;                
+## [27] &quot;GENSTPOB&quot;              &quot;ADIFCLTY&quot;             
+## [29] &quot;DISABFL&quot;               &quot;DISABIL&quot;              
+## [31] &quot;S_DEAD&quot;                &quot;COD1&quot;                 
+## [33] &quot;COD1_CODES&quot;            &quot;COD2&quot;                 
+## [35] &quot;COD2_CODES&quot;
+</code></pre>
+
+<pre><code class="r">ls_guide$block$demographic 
+</code></pre>
+
+<pre><code>## NULL
+</code></pre>
+
+<pre><code class="r">ls_guide$item$SEX
+</code></pre>
+
+<pre><code>## $levels
+##        1        2 
+## &quot;Female&quot;   &quot;Male&quot; 
+## 
+## $label
+## [1] &quot;Sex&quot;
+## 
+## $description
+## [1] &quot;Sex&quot;
+</code></pre>
+
+<pre><code class="r">saveRDS(ls_guide, &quot;./data-public/derived/ls_guide.rds&quot;)
+</code></pre>
+
+<p>The R session information (including the OS info, R version and all
+packages used):</p>
+
+<pre><code class="r">sessionInfo()
+</code></pre>
+
+<pre><code>## R version 3.4.4 (2018-03-15)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows &gt;= 8 x64 (build 9200)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] magrittr_1.5
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.15     dplyr_0.7.4      assertthat_0.2.0 R6_2.2.2        
+##  [5] evaluate_0.10.1  pillar_1.2.1     rlang_0.2.0      stringi_1.1.7   
+##  [9] bindrcpp_0.2     tools_3.4.4      stringr_1.3.1    glue_1.2.0      
+## [13] yaml_2.1.19      compiler_3.4.4   pkgconfig_2.0.1  bindr_0.1       
+## [17] knitr_1.20       tibble_1.4.2
+</code></pre>
+
+<pre><code class="r">Sys.time()
+</code></pre>
+
+<pre><code>## [1] &quot;2018-09-01 08:37:59 PDT&quot;
+</code></pre>
+
+</body>
+
+</html>
