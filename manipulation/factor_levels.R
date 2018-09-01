@@ -1,12 +1,17 @@
+# this script transcribes the meta data from https://drive.google.com/file/d/10idMxy8eX8nTHr6wr2Q40x4XOP3Y5ck7/view
+# and organizes the data documentation in a form convenient for reproducible analytics
+
+rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. This is not called by knitr, because it's above the first chunk.
+
 
 ABDERR <- list(
   "levels" = c(
     "1"  = "Aboriginal Identity"
     ,"2" = "Non-Aboriginal Identity"
-    )
+    ),
+  "label" = "Aboriginal Status"
   ,"description"= "Aboriginal identity status (detailed measure): Refers to those persons who reported identifying who reported identifying with at least one Aboriginal group (North American Indian, Métis or Inuit"
   )
-
 
 ABIDENT <- list(
   "levels" = c(
@@ -16,10 +21,10 @@ ABIDENT <- list(
     ,"4" = "Multiple Aboriginal identity responses"                     
     ,"5" = "Aboriginal responses not included elsewhere"                           
     ,"6" = "Non-Aboriginal identity population" 
-  )
+  ),
+  "label" = "Aboriginal Identity (detail)"
   ,"description"= "Aboriginal identity status (detailed measure): Refers to those persons who reported identifying who reported identifying with at least one Aboriginal group (North American Indian, Métis or Inuit)"
   )
-
 
 ADIFCLTY <- list(
   "levels" = c(
@@ -27,10 +32,10 @@ ADIFCLTY <- list(
     ,"2" = "Not stated" 
     ,"3" = "Yes, often"  
     ,"4" = "Yes, sometimes"
-  )
+  ),
+  "label" = "Problems with ADL"
   ,"description"= "Difficulties with activities of daily living: Difficulty with activities of daily living such as hearing, seeing, communicating, walking, climbing stairs, bending, learning or doing any similar activities."
 )
-
 
 AGE_IMM_REVISED_group <- list(
   "levels" = c(
@@ -49,7 +54,8 @@ AGE_IMM_REVISED_group <- list(
     ,"13" = "60 and over"
     ,"14" = "Non-permanent residents"
     ,"15" = "Non-immigrants and institutional residents"
-  )
+  ),
+  "label" = "Age at immigration"
   ,"description"= "Age at immigration (grouped): Refers to the age at which the respondent first obtained landed immigrant status. A landed immigrant is a person who has been granted the right to live in Canada permanently by immigration authorities."
 )
 
@@ -57,10 +63,10 @@ CITSM <- list(
   "levels" = c(
     "1" = "Canadian citizen by birth"
     ,"2" = "Not a Canadian citizen by birth"	
-  )
+  ),
+  "label" = "Citizen of Canada"
   ,"description"= "Citizenship status: Refers to the legal citizenship status of the respondent as being ''Canadian citizen by birth'' or something else."
 )
-
 
 COD1 <- list(
   "levels" = c(
@@ -68,12 +74,11 @@ COD1 <- list(
     ,"2" = "Noncommunicable diseases"
     ,"3" = "Injuries"
     ,"4" = "Other causes of death or cause of death not available"
-    ,"5" = "Did not die	"
-    
-  )
+    ,"5" = "Did not die"
+    ),
+  "label" = "Cause of death (short)"
   ,"description"= "Cause of death according to Global Burden of Disease Level 1 codes (with ICD-10 codes for comparison, see COD1_CODES)"
 )
-                                      
 
 COD1_CODES <- list(
   "levels" = c(
@@ -82,7 +87,8 @@ COD1_CODES <- list(
     ,"3" = "GBD: U148; ICD-10: V01–Y89"
     ,"4" = NA
     ,"5" = NA
-  )
+  ),
+  "label" = "Cause of death (short): Codes"
   ,"description"= "Respective GBD & ICD-10 codes of COD1"
 )
 
@@ -102,7 +108,8 @@ COD2 <- list(
     ,"12" = "Unintentional injuries"                               
     ,"13" = "Other causes of death or cause of death not available"
     ,"14" = "Did not die"
-  )
+  ),
+  "label" = "Cause of death (long)"
   ,"description"= "Cause of death 2: Select causes of death according to Global Burden of Disease Level 2 codes (with ICD-10 codes for comparison, see COD2_CODES)"
 )
 
@@ -122,7 +129,8 @@ COD2_CODES <- list(
     ,"12" = "GBD: U149; V01–X59, Y40–Y86, Y88, Y89"
     ,"13" = "GBD: U999"
     ,"14" = NA
-  )
+  ),
+  "label" = "Cause of death (long): Codes"
   ,"description"= "Respective GBD & ICD-10 codes of COD2"
 )
 
@@ -135,8 +143,8 @@ COWD <- list(
     ,"5" = "Self-employed without paid help, not incorporated"
     ,"6" = "Self-employed with paid help, not Incorporated"
     ,"7" = "Not applicable"
-    
-  )
+  ),
+  "label" = "Class of worker"
   ,"description"= "Class of worker: Refers to the classification of respondents who reported a job"
 )
 
@@ -146,7 +154,8 @@ DISABFL <- list(
     ,"2" = "Not stated"
     ,"3" = "Yes, often"
     ,"4" = "Yes, sometimes"
-  )
+  ),
+  "label" = "Problems with ADL"
   ,"description"= "Difficulties with activities of daily living: Refers to difficulty with daily activities and/or a physical condition or mental condition or health problem that reduces the amount or kind of activity that a person can do at home, at work or school or in other activities (e.g., transportation, leisure)."
 )
 
@@ -170,6 +179,7 @@ DISABIL <- list(
     ,"16" = "Activities reduced at work/school"
     ,"17" = "Not stated"
   )
+  ,"label" = "Problems with ADL (by type)"
   ,"description"= "Difficulties with activities of daily living by type: Refers to having at least one of the activity difficulties/reductions, or having two or more in different combinations."
 )
 
@@ -186,6 +196,7 @@ DPOB11N	 <- list(
     ,"09"= "East Asia (incl Singapore)"
     ,"10"= "Australia, New Zealand, Oceania, Greenland" 	
   )
+  ,"label" = "Contry of birth"
   ,"description"= "Country of birth: Refers to the country of birth for those respondents not born in Canada"
 )
 
@@ -206,11 +217,9 @@ DVISMIN	 <- list(
     ,"13"  =  "Aboriginal self-reporting"
     ,"14"  =  "Not a visible minority"
   )
+  ,"label" = "Visible minority"
   ,"description"= "Visible minority: Refers to the visible minority group to which the respondent belongs. The Employment Equity Act defines visible minorities as 'persons, other than Aboriginal peoples, who are non-Caucasian in race or non-white in colour'."
 )
-
-	
-	
 
 EFCNT_PP_REVISED <- list(
   "levels" = c(
@@ -225,6 +234,7 @@ EFCNT_PP_REVISED <- list(
     ,"9"  = "9 family members"
     ,"10" = "10 or more family members"	  
   )
+  ,"label" = "Family size"
   ,"description"= "Number of persons in the family: Refers to the number of persons in the individuals family."
 )
 
@@ -235,9 +245,9 @@ FOL	 <- list(
     ,"3" = "English and French "
     ,"4" = "Neither English nor French" 
   )
+  ,"label" = "First language"
   ,"description"= "First official language: First official language spoken	"
 )
-
 
 FPTIM	 <- list(
   "levels" = c(
@@ -245,9 +255,9 @@ FPTIM	 <- list(
     ,"2" = "Worked mainly part-time weeks"
     ,"3" = "Not applicable (didn’t work)"
   )
+  ,"label" = "Employment last year"
   ,"description"= "Labour Market Activities: Full and part time employment. Persons were asked to report whether the weeks they worked in the year prior to the survey were full-time weeks (30 hours or more per week) or not, on the basis of all jobs held."
 )
-
 
 GENSTPOB <- list(
   "levels" = c(
@@ -255,9 +265,9 @@ GENSTPOB <- list(
     ,"2" = "2nd generation - Respondent born in Canada of at least one foreign-born parent"
     ,"3" = "3rd generation - Respondent born in Canada and both parents born in Canada"
   )
+  ,"label" = "Generation in Canada"
   ,"description"= "Generation status: Refers to the generational status of the respondent, that is, 1st generation, 2nd generation or 3rd generation or more.Generation status is derived from place of birth of respondent, place of birth of father and place of birth of mother."
 )
-
 
 HCDD <- list(
   "levels" = c(
@@ -275,13 +285,9 @@ HCDD <- list(
     ,12 = "Masters degree"
     ,13 = "Earned doctorate degree"	
   )
+  ,"label" = "Highest degree"
   ,"description"= "Highest certificate, diploma or degree: Information indicating the persons most advanced certificate, diploma or degree."
 )	
-
-
-
-	
-
 
 IMMDER <- list(
   "levels" = c(
@@ -289,6 +295,7 @@ IMMDER <- list(
     ,"2" = "Non-permanent residents"
     ,"3" = "Non-immigrants"
   )
+  ,"label" = "Immigration status"
   ,"description"= "Immigration status: Indicates whether the respondent is a non-immigrant, an immigrant or a non-permanent resident."
 )
 
@@ -298,10 +305,9 @@ KID_group	<- list(
     ,"2" = "one or two children"
     ,"3" = "three or more children"	
   )
+  ,"label" = "Number of children"
   ,"description"= "Children, total number in family (grouped)"
 )
-
-
 
 LOINCA <- list(
   "levels" = c(
@@ -309,24 +315,19 @@ LOINCA <- list(
     ,"2" = "low income"
     ,"3" = "Concept not applicable (economic familes, persons not in economic families in the Yukon, NWT, Nunavut and on Indian Reserves)"
   )
+  ,"label" = "Low income A"
   ,"description"= "Low income status (after taxes): Refers to the low income status of the respondent in relation to Statistics Canadas Low Income before tax cutoffs"
 )
-
-
-	
-
 
 LOINCB <- list(
   "levels" = c(
     "1" = "non-low income"
-    "2" = "low income"
-    "3" = "Concept not applicable (economic familes, persons not in economic families in the Yukon, NWT, Nunavut and on Indian Reserves)"
+    ,"2" = "low income"
+    ,"3" = "Concept not applicable (economic familes, persons not in economic families in the Yukon, NWT, Nunavut and on Indian Reserves)"
     )
+  ,"label" = "Low income B"
   ,"description"= "Low income status (before taxes): Refers to the low income status of the respondent in relation to Statistics Canadas Low Income before tax cutoffs"
 )	
-
-	
-
 
 MARST	<- list(
   "levels" = c(
@@ -336,9 +337,9 @@ MARST	<- list(
     ,"4" = "Never legally married (single)"
     ,"5" = "Widowed"
   )
+  ,"label" = "Marital status"
   ,"description"= "Marital Status: Refers to the legal marital status of the person."
 )
-
 
 NOCSBRD	<- list(
   "levels" = c(
@@ -354,10 +355,9 @@ NOCSBRD	<- list(
     ,"10" = "J Occupations unique to processing, manufacturing and utilities"
     ,"11" = "Not Applicable"
     )
-  ,"description"= "Occupation broad categories: Refers to the kind of work persons were doing during the reference week, as determined by their kind of work and the description of the main activities in their job.	
-"
+  ,"label" = "Occupation (broad)"
+  ,"description"= "Occupation broad categories: Refers to the kind of work persons were doing during the reference week, as determined by their kind of work and the description of the main activities in their job."
 )
-
 
 OLN	<- list(
   "levels" = c(
@@ -366,11 +366,9 @@ OLN	<- list(
     ,"3" = "Both English and French"
     ,"4" = "Neither English nor French"
   )
+  ,"label" = "Conversational language"
   ,"description"= "Official language: Refers to the ability to conduct a conversation in English only, in French only, in both English and French or in none of the official languages of Canada"
 )
-
-	
-
 
 POBDER <- list(
   "levels" = c(
@@ -378,9 +376,9 @@ POBDER <- list(
     ,"2" = " Born in another province"
     ,"3" = " Born outside Canada "
   )
+  ,"label" = "Place of birth"
   ,"description"= "Place of birth: Indicates whether the respondent was born in the same province that they lived in at the time of survey, born in a different province than they lived in at the time of the survey or born outside Canada."
 )	
-
 
 PR <- list(
   "levels" = c(
@@ -398,10 +396,9 @@ PR <- list(
     ,"61" = "Northwest Territories"
     ,"62" = "Nunavut"	
   )
+  ,"label" = "Province of residence"
   ,"description"= "Province or territory of residence"
 )
-
-
 
 RPAIR	<- list(
   "levels" = c(
@@ -410,42 +407,37 @@ RPAIR	<- list(
     ,"3" = "Yes, major repairs are needed "
     ,"4" = "Not applicable"
   )
+  ,"label" = "Need repair of dwelling?"
   ,"description"= "Condition of dwelling: Refers to whether, in the judgement of the respondent, the dwelling requires any repairs (excluding desirable remodelling or additions)."
 )
-
-	
-
 
 RUINDFG	<- list(
   "levels" = c(
     "1" = "Rural" 
     ,"2" = "Urban" 	
   )
+  ,"label" = "Rural status" 
   ,"description"= "Rural urban classification: Blocks falling inside urban areas are classified as urban.  Blocks falling outside of urban areas are classified as rural."
 )
 
-
 SEX	<- list(
   "levels" = c(
-
+    "1" = "Female" 
+    ,"2" = "Male"
   )
+  ,"label" = "Sex"
   ,"description"= "Sex"
   )
-"1" = "Female" 
-"2" = "Male"
-
 
 S_DEAD	<- list(
   "levels" = c(
     "1" = "Dead"
     ,"2" = "Not dead"
   )
+  ,"label" = "Dead in X years?"
   ,"description"= "Mortality status: Refers to whether or not the respondent died during the X years following the survey response"
 )
 	
-
-
-
 TRMODE <- list(
   "levels" = c(
     "1" = "Bicycle"
@@ -458,11 +450,9 @@ TRMODE <- list(
     ,"8" = "Walked"
     ,"9" = "Not applicable"
   )
+  ,"label" = "Ride to work"
   ,"description"= "Mode of transportation to work: Refers to the mode of transportation to work of respondents 15 years of age and over who have worked since January 1, 2005."
 )	
-
-
-
 
 YRIM_group <- list(
   "levels" = c(
@@ -471,13 +461,10 @@ YRIM_group <- list(
     ,"3" = "between 1996 and 1987"
     ,"4" = "1986 or earlier"
     ,"5" = "Non-permanent residents"
-    ,"6" = "Non-immigrants and institutional residents"
-    
-  )
+    ,"6" = "Non-immigrants and institutional residents")
+  ,"label" = "Year came to Canada"
   ,"description"= "Year of immigration: Refers to the year landed immigrant status was first obtained in Canada. Includes immigrants who landed in Canada prior to the survey collection. 	"
 )	
-
-
 
 age_group	<- list(
   "levels" = c(
@@ -497,10 +484,9 @@ age_group	<- list(
     ,"14" = "85 to 89"
     ,"15" = "90 and older"
   )
+  ,"label" = "Age"
   ,"description"= "Age: grouped"
 )
-
-	
 
 d_licoratio_da_bef <- list(
   "levels" = c(
@@ -515,13 +501,16 @@ d_licoratio_da_bef <- list(
     ,"9"  = "9th  decile"   
     ,"10" = "10th decile"    
   )
+  ,"label" = "Low income decile"
   ,"description"= "Low-income area-based deciles: The ratio of total income to Statistics Canada low-income cut-offs for the applicable family size and community size. Ratios were calculated by each CMA/CA or by provincial rural residual levels and divided into the regional level deciles for before tax income."
 )	
 
+factor_levels <- ls()
+for(i in objects()){
+  factor_levels[[paste(i)]] <- i
+}
 
-
-
-
+object_names <- objects()
 
 
 
