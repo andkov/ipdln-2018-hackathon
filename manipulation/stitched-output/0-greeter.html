@@ -214,6 +214,7 @@ hr {
 #   script = &quot;./manipulation/0-greeter.R&quot;,
 #   output = &quot;./manipulation/stitched-output/0-greeter.md&quot;
 # )
+# this command is typically executed by the ./manipulation/governor.R
 
 rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. 
 # This is not called by knitr, because it&#39;s above the first chunk.
@@ -226,10 +227,12 @@ requireNamespace(&quot;dplyr&quot;, quietly=TRUE)
 </code></pre>
 
 <pre><code class="r"># link to the source of the location mapping
-path_input &lt;- &quot;./data-unshared/raw/ipdln_synth_final.csv&quot;
+path_input_micro &lt;- &quot;./data-unshared/raw/ipdln_synth_final.csv&quot;
+path_input_meta  &lt;- &quot;./data-unshared/derived/ls_guide.rds&quot;
 
 # test whether the file exists / the link is good
-testit::assert(&quot;File does not exist&quot;, base::file.exists(path_input))
+testit::assert(&quot;File does not exist&quot;, base::file.exists(path_input_micro))
+testit::assert(&quot;File does not exist&quot;, base::file.exists(path_input_meta))
 
 # declare where you will store the product of this script
 path_save &lt;- &quot;./data-unshared/derived/0-greeted.rds&quot;
@@ -239,26 +242,10 @@ source(&quot;./manipulation/object-glossary.R&quot;)   # object definitions
 </code></pre>
 
 <pre><code class="r"># functions, the use of which is localized to this script
-
-# Count frequencies of unique values in each column (helpful to see scale)
-col_freqs &lt;- function(d, pandoc=F){
-  for(i in names(d)){
-    d %&gt;% 
-      group_by_(.dots = i) %&gt;% 
-      dplyr::summarize(n = n()) %&gt;% 
-      dplyr::arrange(desc(n)) 
-    if(pandoc){
-      d %&gt;% knitr::kable(format = &quot;pandoc&quot;) %&gt;% print()
-    }else{
-      d %&gt;% print()
-    }
-  }  
-} 
-# how to use:
-# ds %&gt;% col_freqs()
+# for commonly used function see ./manipulation/function-support.R
 </code></pre>
 
-<pre><code class="r">ds0 &lt;- readr::read_csv(path_input ) %&gt;% tibble::as_tibble()
+<pre><code class="r">ds0      &lt;- readr::read_csv(path_input_micro) %&gt;% as.data.frame()
 </code></pre>
 
 <pre><code>## Parsed with column specification:
@@ -268,6 +255,9 @@ col_freqs &lt;- function(d, pandoc=F){
 </code></pre>
 
 <pre><code>## See spec(...) for full column specifications.
+</code></pre>
+
+<pre><code class="r">ls_guide &lt;- readRDS(path_input_meta)
 </code></pre>
 
 <pre><code class="r"># basic inspection
@@ -312,14 +302,7 @@ ds0 %&gt;% dplyr::glimpse(50)
 ## $ age_group_synth          &lt;int&gt; 5, 3, 10, 1,...
 </code></pre>
 
-<pre><code class="r"># ds0 %&gt;% str() # reveals that columsn has attributes, hidden to avoid clutter
-</code></pre>
-
-<pre><code class="r"># remove attributes of the imported object
-attr(ds0, &quot;row.names&quot;) &lt;- NULL
-attr(ds0, &quot;spec&quot;) &lt;- NULL
-
-# remove the unnecessary suffix in the name of variables
+<pre><code class="r"># remove the unnecessary suffix in the name of variables
 names(ds0) &lt;- gsub(&quot;_synth$&quot;, &quot;&quot;, names(ds0 ))
 names(ds0)
 </code></pre>
@@ -338,13 +321,81 @@ names(ds0)
 ## [34] &quot;age_group&quot;
 </code></pre>
 
+<pre><code class="r"># augment the micro data with meta data
+
+# function to augment micro data with meta data
+augment_with_meta &lt;- function(
+  d,  # a dataframe with the original raw data, prepared by the ./manipulation/0-greeter.R
+  l   # a list object with organized meta data, prepared by the ./manipulation/0-metador.R
+){
+  for(name_i in names(d)){
+    # name_i &lt;- &quot;SEX&quot;
+    # d_ &lt;- ds0[1:1000,c(&quot;SEX&quot;,&quot;S_DEAD&quot;)]
+    # l_ &lt;- ls_guide
+    d &lt;- d %&gt;% 
+      dplyr::rename_(&quot;target_variable&quot; = name_i) %&gt;% 
+      dplyr::mutate(
+        target_variable = factor(
+          target_variable, 
+          levels = l$item[[name_i]]$levels %&gt;% names(), 
+          labels = l$item[[name_i]]$levels
+        )
+      ) 
+    names(d) &lt;- gsub(&quot;^target_variable$&quot;,name_i, names(d))
+    # d1 %&gt;% dplyr::glimpse()
+  }
+  return(d)
+}
+# how to use
+ds1 &lt;- ds0 %&gt;% augment_with_meta(ls_guide)
+ds1 %&gt;% dplyr::glimpse(50)
+</code></pre>
+
+<pre><code>## Observations: 4,346,649
+## Variables: 34
+## $ ABDERR             &lt;fct&gt; Non-Aboriginal Ide...
+## $ ABIDENT            &lt;fct&gt; Non-Aboriginal ide...
+## $ ADIFCLTY           &lt;fct&gt; No, No, No, No, No...
+## $ CITSM              &lt;fct&gt; Not a Canadian cit...
+## $ COWD               &lt;fct&gt; Paid Worker - Work...
+## $ DISABFL            &lt;fct&gt; No, No, Yes, somet...
+## $ DISABIL            &lt;fct&gt; No difficulty with...
+## $ DVISMIN            &lt;fct&gt; Not a visible mino...
+## $ FOL                &lt;fct&gt; English , English ...
+## $ FPTIM              &lt;fct&gt; NA, NA, NA, NA, NA...
+## $ GENSTPOB           &lt;fct&gt; 1st generation - R...
+## $ HCDD               &lt;fct&gt; Bachelors degree, ...
+## $ IMMDER             &lt;fct&gt; Immigrants, Immigr...
+## $ LOINCA             &lt;fct&gt; non-low income, no...
+## $ LOINCB             &lt;fct&gt; non-low income, no...
+## $ MARST              &lt;fct&gt; Legally married (a...
+## $ NOCSBRD            &lt;fct&gt; D Health occupatio...
+## $ OLN                &lt;fct&gt; Both English and F...
+## $ POBDER             &lt;fct&gt;  Born outside Cana...
+## $ SEX                &lt;fct&gt; Female, Female, Fe...
+## $ TRMODE             &lt;fct&gt; Car, truck, van as...
+## $ RPAIR              &lt;fct&gt; Yes, major repairs...
+## $ PR                 &lt;fct&gt; Ontario, Manitoba,...
+## $ RUINDFG            &lt;fct&gt; Rural, Rural, Urba...
+## $ d_licoratio_da_bef &lt;fct&gt; 5th  decile, 3rd  ...
+## $ S_DEAD             &lt;fct&gt; Not dead, Not dead...
+## $ EFCNT_PP_R         &lt;fct&gt; NA, NA, NA, NA, NA...
+## $ AGE_IMM_R_group    &lt;fct&gt; NA, NA, NA, NA, NA...
+## $ COD1               &lt;fct&gt; Did not die, Did n...
+## $ COD2               &lt;fct&gt; Did not die, Did n...
+## $ DPOB11N            &lt;fct&gt; NA, NA, NA, NA, NA...
+## $ KID_group          &lt;fct&gt; one or two childre...
+## $ YRIM_group         &lt;fct&gt; 2002 or later, 200...
+## $ age_group          &lt;fct&gt; 40 to 44, 30 to 34...
+</code></pre>
+
 <pre><code class="r">cat(&quot;Save results to &quot;,path_save)
 </code></pre>
 
 <pre><code>## Save results to  ./data-unshared/derived/0-greeted.rds
 </code></pre>
 
-<pre><code class="r">saveRDS(ds0, path_save)
+<pre><code class="r">saveRDS(ds1, path_save)
 </code></pre>
 
 <p>The R session information (including the OS info, R version and all
@@ -367,28 +418,30 @@ packages used):</p>
 ## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
-## [1] grid      stats     graphics  grDevices utils     datasets  methods  
-## [8] base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] RColorBrewer_1.1-2 dichromat_2.0-0    ggplot2_2.2.1     
-## [4] extrafont_0.17     magrittr_1.5      
+## [1] bindrcpp_0.2.2 ggplot2_3.0.0  magrittr_1.5  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.15     Rttf2pt1_1.3.6   knitr_1.20       bindr_0.1       
-##  [5] hms_0.4.1        munsell_0.4.3    testit_0.7       colorspace_1.3-2
-##  [9] R6_2.2.2         rlang_0.2.0      highr_0.6        plyr_1.8.4      
-## [13] stringr_1.3.1    dplyr_0.7.4      tools_3.4.4      gtable_0.2.0    
-## [17] extrafontdb_1.0  lazyeval_0.2.1   yaml_2.1.19      assertthat_0.2.0
-## [21] tibble_1.4.2     bindrcpp_0.2     readr_1.1.1      glue_1.2.0      
-## [25] evaluate_0.10.1  stringi_1.1.7    compiler_3.4.4   pillar_1.2.1    
-## [29] scales_0.5.0     markdown_0.8     pkgconfig_2.0.1
+##  [1] Rcpp_0.12.18       rstudioapi_0.7     knitr_1.20        
+##  [4] bindr_0.1.1        hms_0.4.1          tidyselect_0.2.3  
+##  [7] munsell_0.5.0      testit_0.7         colorspace_1.3-2  
+## [10] R6_2.2.2           rlang_0.2.0        stringr_1.3.1     
+## [13] plyr_1.8.4         dplyr_0.7.6        tools_3.4.4       
+## [16] grid_3.4.4         gtable_0.2.0       utf8_1.1.3        
+## [19] cli_1.0.0          withr_2.1.1        lazyeval_0.2.1    
+## [22] yaml_2.1.19        assertthat_0.2.0   tibble_1.4.2      
+## [25] crayon_1.3.4       RColorBrewer_1.1-2 purrr_0.2.4       
+## [28] readr_1.1.1        evaluate_0.10.1    glue_1.2.0        
+## [31] stringi_1.1.7      compiler_3.4.4     pillar_1.2.1      
+## [34] scales_1.0.0       pkgconfig_2.0.1
 </code></pre>
 
 <pre><code class="r">Sys.time()
 </code></pre>
 
-<pre><code>## [1] &quot;2018-09-01 10:13:04 PDT&quot;
+<pre><code>## [1] &quot;2018-09-01 17:21:47 PDT&quot;
 </code></pre>
 
 </body>

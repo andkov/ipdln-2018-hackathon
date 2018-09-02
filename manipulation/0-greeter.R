@@ -8,23 +8,27 @@
 #   script = "./manipulation/0-greeter.R",
 #   output = "./manipulation/stitched-output/0-greeter.md"
 # )
+# this command is typically executed by the ./manipulation/governor.R
 
 rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. 
 # This is not called by knitr, because it's above the first chunk.
 cat("\f") # clear console when working in RStudio
 
-# ---- load-sources ------------------------------------------------------------
-
 # ---- load-packages -----------------------------------------------------------
 library(magrittr) #Pipes
 requireNamespace("dplyr", quietly=TRUE)
 
+# ---- load-sources ------------------------------------------------------------
+
+
 # ---- declare-globals ---------------------------------------------------------
 # link to the source of the location mapping
-path_input <- "./data-unshared/raw/ipdln_synth_final.csv"
+path_input_micro <- "./data-unshared/raw/ipdln_synth_final.csv"
+path_input_meta  <- "./data-unshared/derived/ls_guide.rds"
 
 # test whether the file exists / the link is good
-testit::assert("File does not exist", base::file.exists(path_input))
+testit::assert("File does not exist", base::file.exists(path_input_micro))
+testit::assert("File does not exist", base::file.exists(path_input_meta))
 
 # declare where you will store the product of this script
 path_save <- "./data-unshared/derived/0-greeted.rds"
@@ -34,43 +38,53 @@ source("./manipulation/object-glossary.R")   # object definitions
 
 # ---- utility-functions ----------------------------------------------------- 
 # functions, the use of which is localized to this script
+# for commonly used function see ./manipulation/function-support.R
 
-# Count frequencies of unique values in each column (helpful to see scale)
-col_freqs <- function(d, pandoc=F){
-  for(i in names(d)){
-    d %>% 
-      group_by_(.dots = i) %>% 
-      dplyr::summarize(n = n()) %>% 
-      dplyr::arrange(desc(n)) 
-    if(pandoc){
-      d %>% knitr::kable(format = "pandoc") %>% print()
-    }else{
-      d %>% print()
-    }
-  }  
-} 
-# how to use:
-# ds %>% col_freqs()
 # ---- load-data ---------------------------------------------------------------
-ds0 <- readr::read_csv(path_input ) %>% tibble::as_tibble()
+ds0      <- readr::read_csv(path_input_micro) %>% as.data.frame()
+ls_guide <- readRDS(path_input_meta)
 
 # ---- inspect-data -----------------------------------------------------------
 # basic inspection
 ds0 %>% dplyr::glimpse(50)
-# ds0 %>% str() # reveals that columsn has attributes, hidden to avoid clutter
 
 # ---- tweak-data -------------------------------------------------------------
-# remove attributes of the imported object
-attr(ds0, "row.names") <- NULL
-attr(ds0, "spec") <- NULL
-
 # remove the unnecessary suffix in the name of variables
 names(ds0) <- gsub("_synth$", "", names(ds0 ))
 names(ds0)
 
+# augment the micro data with meta data
+
+# function to augment micro data with meta data
+augment_with_meta <- function(
+  d,  # a dataframe with the original raw data, prepared by the ./manipulation/0-greeter.R
+  l   # a list object with organized meta data, prepared by the ./manipulation/0-metador.R
+){
+  for(name_i in names(d)){
+    # name_i <- "SEX"
+    # d_ <- ds0[1:1000,c("SEX","S_DEAD")]
+    # l_ <- ls_guide
+    d <- d %>% 
+      dplyr::rename_("target_variable" = name_i) %>% 
+      dplyr::mutate(
+        target_variable = factor(
+          target_variable, 
+          levels = l$item[[name_i]]$levels %>% names(), 
+          labels = l$item[[name_i]]$levels
+        )
+      ) 
+    names(d) <- gsub("^target_variable$",name_i, names(d))
+    # d1 %>% dplyr::glimpse()
+  }
+  return(d)
+}
+# how to use
+ds1 <- ds0 %>% augment_with_meta(ls_guide)
+ds1 %>% dplyr::glimpse(50)
+
 # ---- save-to-disk -------------
 cat("Save results to ",path_save)
-saveRDS(ds0, path_save)
+saveRDS(ds1, path_save)
 
 
 
