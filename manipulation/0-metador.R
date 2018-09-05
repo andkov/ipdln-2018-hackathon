@@ -39,7 +39,7 @@ path_save <- "./data-unshared/derived/ls_guide.rds"
 # DISABIL                "Problems with ADL (by type)"
 # DPOB11N                "Contry of birth"
 # DVISMIN                "Visible minority"
-# EFCNT_PP_REVISED       "Family size"
+# EFCNT_PP_R             "Family size"
 # FOL                    "First language"
 # GENSTPOB               "Generation in Canada"
 # HCDD                   "Highest degree"
@@ -66,7 +66,7 @@ demographic <- c(
   "SEX"                    # "Sex"                            # demographics      
   ,"age_group"             # "Age"                            #      
   ,"MARST"                 # "Marital status"                 #                 
-  ,"EFCNT_PP_REVISED"      # "Family size"                    #              
+  ,"EFCNT_PP_R"            # "Family size"                    #              
   ,"KID_group"             # "Number of children"             #                     
   ,"PR"                    # "Province of residence"          #                        
 )
@@ -313,7 +313,7 @@ DVISMIN	 <- list(
   ,"label" = "Visible minority"
   ,"description"= "Visible minority: Refers to the visible minority group to which the respondent belongs. The Employment Equity Act defines visible minorities as 'persons, other than Aboriginal peoples, who are non-Caucasian in race or non-white in colour'."
 )
-EFCNT_PP_REVISED <- list(
+EFCNT_PP_R <- list(
   "levels" = c(
     "1"  = "1 person"
     ,"2"  = "2 family members"

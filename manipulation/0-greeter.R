@@ -52,6 +52,7 @@ ds0 %>% dplyr::glimpse(50)
 # remove the unnecessary suffix in the name of variables
 names(ds0) <- gsub("_synth$", "", names(ds0 ))
 names(ds0)
+ds0 %>% dplyr::glimpse(50)
 
 # augment the micro data with meta data
 

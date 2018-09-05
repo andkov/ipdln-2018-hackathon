@@ -51,7 +51,7 @@ path_save <- "./data-unshared/derived/ls_guide.rds"
 # DISABIL                "Problems with ADL (by type)"
 # DPOB11N                "Contry of birth"
 # DVISMIN                "Visible minority"
-# EFCNT_PP_REVISED       "Family size"
+# EFCNT_PP_R             "Family size"
 # FOL                    "First language"
 # GENSTPOB               "Generation in Canada"
 # HCDD                   "Highest degree"
@@ -79,7 +79,7 @@ demographic <- c(
   "SEX"                    # "Sex"                            # demographics      
   ,"age_group"             # "Age"                            #      
   ,"MARST"                 # "Marital status"                 #                 
-  ,"EFCNT_PP_REVISED"      # "Family size"                    #              
+  ,"EFCNT_PP_R"            # "Family size"                    #              
   ,"KID_group"             # "Number of children"             #                     
   ,"PR"                    # "Province of residence"          #                        
 )
@@ -327,7 +327,7 @@ DVISMIN	 <- list(
   ,"label" = "Visible minority"
   ,"description"= "Visible minority: Refers to the visible minority group to which the respondent belongs. The Employment Equity Act defines visible minorities as 'persons, other than Aboriginal peoples, who are non-Caucasian in race or non-white in colour'."
 )
-EFCNT_PP_REVISED <- list(
+EFCNT_PP_R <- list(
   "levels" = c(
     "1"  = "1 person"
     ,"2"  = "2 family members"
@@ -612,7 +612,7 @@ ls_guide %>% lapply(names)
 ## 
 ## $item
 ##  [1] "SEX"                   "age_group"            
-##  [3] "MARST"                 "EFCNT_PP_REVISED"     
+##  [3] "MARST"                 "EFCNT_PP_R"           
 ##  [5] "KID_group"             "PR"                   
 ##  [7] "FOL"                   "OLN"                  
 ##  [9] "DVISMIN"               "ABDERR"               
@@ -637,7 +637,7 @@ ls_guide$block$demographic %>% str()
 ```
 
 ```
-##  chr [1:6] "SEX" "age_group" "MARST" "EFCNT_PP_REVISED" "KID_group" ...
+##  chr [1:6] "SEX" "age_group" "MARST" "EFCNT_PP_R" "KID_group" "PR"
 ```
 
 ```r
@@ -688,22 +688,18 @@ sessionInfo()
 ## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
-## [1] grid      stats     graphics  grDevices utils     datasets  methods  
-## [8] base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] RColorBrewer_1.1-2 dichromat_2.0-0    ggplot2_2.2.1     
-## [4] extrafont_0.17     magrittr_1.5      
+## [1] bindrcpp_0.2.2 magrittr_1.5  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.15     Rttf2pt1_1.3.6   knitr_1.20       bindr_0.1       
-##  [5] hms_0.4.1        munsell_0.4.3    testit_0.7       colorspace_1.3-2
-##  [9] R6_2.2.2         rlang_0.2.0      highr_0.6        plyr_1.8.4      
-## [13] stringr_1.3.1    dplyr_0.7.4      tools_3.4.4      gtable_0.2.0    
-## [17] extrafontdb_1.0  lazyeval_0.2.1   yaml_2.1.19      assertthat_0.2.0
-## [21] tibble_1.4.2     bindrcpp_0.2     readr_1.1.1      glue_1.2.0      
-## [25] evaluate_0.10.1  stringi_1.1.7    compiler_3.4.4   pillar_1.2.1    
-## [29] scales_0.5.0     markdown_0.8     pkgconfig_2.0.1
+##  [1] Rcpp_0.12.18     dplyr_0.7.6      assertthat_0.2.0 R6_2.2.2        
+##  [5] evaluate_0.10.1  pillar_1.2.1     stringi_1.1.7    rlang_0.2.0     
+##  [9] testit_0.7       tools_3.4.4      stringr_1.3.1    readr_1.1.1     
+## [13] glue_1.2.0       markdown_0.8     purrr_0.2.4      hms_0.4.1       
+## [17] yaml_2.1.19      compiler_3.4.4   pkgconfig_2.0.1  knitr_1.20      
+## [21] bindr_0.1.1      tidyselect_0.2.3 tibble_1.4.2
 ```
 
 ```r
@@ -711,6 +707,6 @@ Sys.time()
 ```
 
 ```
-## [1] "2018-09-01 10:15:31 PDT"
+## [1] "2018-09-05 14:47:03 PDT"
 ```
 

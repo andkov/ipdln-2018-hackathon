@@ -243,7 +243,7 @@ path_save &lt;- &quot;./data-unshared/derived/ls_guide.rds&quot;
 # DISABIL                &quot;Problems with ADL (by type)&quot;
 # DPOB11N                &quot;Contry of birth&quot;
 # DVISMIN                &quot;Visible minority&quot;
-# EFCNT_PP_REVISED       &quot;Family size&quot;
+# EFCNT_PP_R             &quot;Family size&quot;
 # FOL                    &quot;First language&quot;
 # GENSTPOB               &quot;Generation in Canada&quot;
 # HCDD                   &quot;Highest degree&quot;
@@ -270,7 +270,7 @@ path_save &lt;- &quot;./data-unshared/derived/ls_guide.rds&quot;
   &quot;SEX&quot;                    # &quot;Sex&quot;                            # demographics      
   ,&quot;age_group&quot;             # &quot;Age&quot;                            #      
   ,&quot;MARST&quot;                 # &quot;Marital status&quot;                 #                 
-  ,&quot;EFCNT_PP_REVISED&quot;      # &quot;Family size&quot;                    #              
+  ,&quot;EFCNT_PP_R&quot;            # &quot;Family size&quot;                    #              
   ,&quot;KID_group&quot;             # &quot;Number of children&quot;             #                     
   ,&quot;PR&quot;                    # &quot;Province of residence&quot;          #                        
 )
@@ -517,7 +517,7 @@ DVISMIN  &lt;- list(
   ,&quot;label&quot; = &quot;Visible minority&quot;
   ,&quot;description&quot;= &quot;Visible minority: Refers to the visible minority group to which the respondent belongs. The Employment Equity Act defines visible minorities as &#39;persons, other than Aboriginal peoples, who are non-Caucasian in race or non-white in colour&#39;.&quot;
 )
-EFCNT_PP_REVISED &lt;- list(
+EFCNT_PP_R &lt;- list(
   &quot;levels&quot; = c(
     &quot;1&quot;  = &quot;1 person&quot;
     ,&quot;2&quot;  = &quot;2 family members&quot;
@@ -799,7 +799,7 @@ ls_guide %&gt;% lapply(names)
 ## 
 ## $item
 ##  [1] &quot;SEX&quot;                   &quot;age_group&quot;            
-##  [3] &quot;MARST&quot;                 &quot;EFCNT_PP_REVISED&quot;     
+##  [3] &quot;MARST&quot;                 &quot;EFCNT_PP_R&quot;           
 ##  [5] &quot;KID_group&quot;             &quot;PR&quot;                   
 ##  [7] &quot;FOL&quot;                   &quot;OLN&quot;                  
 ##  [9] &quot;DVISMIN&quot;               &quot;ABDERR&quot;               
@@ -822,7 +822,7 @@ ls_guide %&gt;% lapply(names)
 ls_guide$block$demographic %&gt;% str()
 </code></pre>
 
-<pre><code>##  chr [1:6] &quot;SEX&quot; &quot;age_group&quot; &quot;MARST&quot; &quot;EFCNT_PP_REVISED&quot; &quot;KID_group&quot; ...
+<pre><code>##  chr [1:6] &quot;SEX&quot; &quot;age_group&quot; &quot;MARST&quot; &quot;EFCNT_PP_R&quot; &quot;KID_group&quot; &quot;PR&quot;
 </code></pre>
 
 <pre><code class="r"># show contents of an arbitrary `item` component
@@ -865,28 +865,24 @@ packages used):</p>
 ## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
-## [1] grid      stats     graphics  grDevices utils     datasets  methods  
-## [8] base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] RColorBrewer_1.1-2 dichromat_2.0-0    ggplot2_2.2.1     
-## [4] extrafont_0.17     magrittr_1.5      
+## [1] bindrcpp_0.2.2 magrittr_1.5  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.15     Rttf2pt1_1.3.6   knitr_1.20       bindr_0.1       
-##  [5] hms_0.4.1        munsell_0.4.3    testit_0.7       colorspace_1.3-2
-##  [9] R6_2.2.2         rlang_0.2.0      highr_0.6        plyr_1.8.4      
-## [13] stringr_1.3.1    dplyr_0.7.4      tools_3.4.4      gtable_0.2.0    
-## [17] extrafontdb_1.0  lazyeval_0.2.1   yaml_2.1.19      assertthat_0.2.0
-## [21] tibble_1.4.2     bindrcpp_0.2     readr_1.1.1      glue_1.2.0      
-## [25] evaluate_0.10.1  stringi_1.1.7    compiler_3.4.4   pillar_1.2.1    
-## [29] scales_0.5.0     markdown_0.8     pkgconfig_2.0.1
+##  [1] Rcpp_0.12.18     dplyr_0.7.6      assertthat_0.2.0 R6_2.2.2        
+##  [5] evaluate_0.10.1  pillar_1.2.1     stringi_1.1.7    rlang_0.2.0     
+##  [9] testit_0.7       tools_3.4.4      stringr_1.3.1    readr_1.1.1     
+## [13] glue_1.2.0       markdown_0.8     purrr_0.2.4      hms_0.4.1       
+## [17] yaml_2.1.19      compiler_3.4.4   pkgconfig_2.0.1  knitr_1.20      
+## [21] bindr_0.1.1      tidyselect_0.2.3 tibble_1.4.2
 </code></pre>
 
 <pre><code class="r">Sys.time()
 </code></pre>
 
-<pre><code>## [1] &quot;2018-09-01 10:15:31 PDT&quot;
+<pre><code>## [1] &quot;2018-09-05 14:47:03 PDT&quot;
 </code></pre>
 
 </body>
