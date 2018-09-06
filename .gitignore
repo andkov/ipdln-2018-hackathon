@@ -60,3 +60,4 @@ Thumbs.db
 
 # Folder config file
 Desktop.ini
+reports/eda-1/figure-png/*.png
