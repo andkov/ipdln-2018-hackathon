@@ -28,7 +28,7 @@ path_save <- "./data-unshared/derived/ls_guide.rds"
 # ABDERR                 "Aboriginal Status"
 # ABIDENT                "Aboriginal Identity (detail)"
 # ADIFCLTY               "Problems with ADL"
-# AGE_IMM_REVISED_group  "Age at immigration"
+# AGE_IMM_R_group  "Age at immigration"
 # CITSM                  "Citizen of Canada"
 # COD1                   "Cause of death (short)"
 # COD1_CODES             "Cause of death (short): Codes"
@@ -92,7 +92,7 @@ immigration <- c(
   "POBDER"                 # "Place of birth"                 # immigration               
   ,"DPOB11N"               # "Contry of birth"                #                  
   ,"IMMDER"                # "Immigration status"             #                     
-  ,"AGE_IMM_REVISED_group" # "Age at immigration"             #                     
+  ,"AGE_IMM_R_group" # "Age at immigration"             #                     
   ,"YRIM_group"            # "Year came to Canada"            #                      
   ,"CITSM"                 # "Citizen of Canada"              #                    
   ,"GENSTPOB"              # "Generation in Canada"           #                       
@@ -103,9 +103,9 @@ health <- c(
   ,"DISABIL"               # "Problems with ADL (by type)"    #
   ,"S_DEAD"                # "Dead in X years?"               #                   
   ,"COD1"                  # "Cause of death (short)"         #                         
-  ,"COD1_CODES"            # "Cause of death (short): Codes"  #
+  # ,"COD1_CODES"            # "Cause of death (short): Codes"  #
   ,"COD2"                  # "Cause of death (long)"          #                        
-  ,"COD2_CODES"            # "Cause of death (long): Codes"   #                           
+  # ,"COD2_CODES"            # "Cause of death (long): Codes"   #                           
 )
 
 # ---- define-objects -----------------------
@@ -139,7 +139,7 @@ ADIFCLTY <- list(
   ,"label" = "Problems with ADL"
   ,"description"= "Difficulties with activities of daily living: Difficulty with activities of daily living such as hearing, seeing, communicating, walking, climbing stairs, bending, learning or doing any similar activities."
 )
-AGE_IMM_REVISED_group <- list(
+AGE_IMM_R_group <- list(
   "levels" = c(
     "1"  = "<5"
     ,"2"  = " 5 to < 10"
