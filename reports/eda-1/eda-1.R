@@ -50,23 +50,15 @@ ds %>% dplyr::glimpse()
 # ---- define-utility-functions ---------------
 
 # ---- marginals ---------------------------------------------------------------
-ls_guide$block$demographic
-
-ds %>% TabularManifest::histogram_discrete("SEX")
-ds %>% TabularManifest::histogram_discrete("age_group")
-ds %>% TabularManifest::histogram_discrete("MARST")
-ds %>% TabularManifest::histogram_discrete("EFCNT_PP_REVISED")
-ds %>% TabularManifest::histogram_discrete("KID_group")
-ds %>% TabularManifest::histogram_discrete("PR")
-
-
 for(block_i in names(ls_guide$block) ){
+# for(block_i in "demographic" ){
   # block_i <- "demographic"
-  cat("\n#",block_i,"\n")
+  cat("\n#group(",block_i,")\n")
   for(item_i in ls_guide$block[[block_i]]){
   # item_i <- "SEX"
     cat("\n##",item_i,"\n")
     ds %>% TabularManifest::histogram_discrete(item_i) %>% print()
+    cat("\n")
   }
 }
 
