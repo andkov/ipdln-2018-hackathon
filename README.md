@@ -18,9 +18,15 @@ ls_guide <- readRDS("./data-unshared/derived/0-metador.rds")
 
 ```
 
+# Analytic Reports
+
+- [`./reports/eda-1/][eda1] - prints frequency distributions of all variables. 
+
+
 [info_participants]:https://drive.google.com/open?id=1OwqD0gHfuTQeBwqh4fkgkR7r-jUXuSzM
 [data_codebook]:https://drive.google.com/open?id=10idMxy8eX8nTHr6wr2Q40x4XOP3Y5ck7
 
 [governor]:https://github.com/andkov/ipdln-2018-hackathon/blob/master/manipulation/governor.R
 [0-meta-report]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/manipulation/stitched-output/0-metador.html
 [0-greeter-report]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/manipulation/stitched-output/0-greeter.html
+[eda1]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/reports/eda-1/eda-1.html
