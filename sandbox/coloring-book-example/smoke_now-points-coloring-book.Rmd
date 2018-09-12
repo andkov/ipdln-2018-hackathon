@@ -1,0 +1,148 @@
+---
+title: "Visualizing logistic regression"
+output:
+  html_document:
+    css: ~/GitHub/ialsa-2016-groningen/libs/css/sidebar.css
+    highlight: kate
+    keep_md: yes
+    theme: flatly
+    toc: yes
+---
+
+<!-- These two chunks should be added in the beginning of every .Rmd that you want to source an .R script -->
+<!--  The 1st mandatory chunck  -->
+<!--  Set the working directory to the repository's base directory -->
+```{r, echo=F, message=F} 
+#Don't combine this call with any other chunk 
+# cat("Working directory: ", getwd()) # check where you are
+  library(knitr)
+# Rmd is in "./reports/reportA/reportA.Rmd", but now the root is "./"
+  knitr::opts_knit$set(root.dir='../../') 
+```
+
+<!--  The 2nd mandatory chunck  -->
+<!-- Set the report-wide options, and point to the external code file. -->
+```{r set_options, echo=F}
+# set options shared by all chunks
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 9, 
+  fig.width = 13, 
+  out.width = "700px",
+  fig.path = 'smoke_now-coloring-book/',     
+  dev = "png",
+  dpi = 400
+  # fig.path = 'figure_pdf/',     
+  # dev = "pdf"#,
+  # dev.args=list(pdf = list(colormodel = 'cmyk'))
+)
+echoChunks <- FALSE
+options(width=120) #So the output is 50% wider than the default.
+# connect to the file with the underlying R script  
+read_chunk("./models/poor_health/smoke_now-points-coloring-book.R") 
+```
+
+This report explores possible visualization solution for logistic regression modeling.  
+
+
+<!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
+```{r load-packages, echo=echoChunks, message=FALSE}
+```
+
+
+<!-- Load the sources.  Suppress the output when loading sources. --> 
+```{r load-sources, echo=echoChunks, message=FALSE}
+```
+
+
+<!-- Load any Global functions and variables declared in the R file.  Suppress the output. --> 
+```{r declare-globals, echo=echoChunks, results='show', message=FALSE}
+```
+
+<!-- Declare any global functions specific to a Rmd output.  Suppress the output. --> 
+```{r, echo=echoChunks, message=FALSE}
+#Put code in here.  It doesn't call a chunk in the codebehind file.
+```
+# (I) Exposition
+
+> This report is a record of interaction with a data transfer object (dto) produced by `./manipulation/0-ellis-island.R`. 
+
+The next section recaps this script, exposes the architecture of the DTO, and demonstrates the language of interacting with it.   
+
+## (I.A) Ellis Island
+
+> All data land on Ellis Island.
+
+The script `0-ellis-island.R` is the first script in the analytic workflow. It accomplished the following: 
+
+- (1) Reads in raw data files from the candidate studies   
+- (2) Extract, combines, and exports their metadata (specifically, variable names and labels, if provided) into `./data/shared/derived/meta-data-live.csv`, which is updated every time Ellis Island script is executed.   
+- (3) Augments raw metadata with instructions for renaming and classifying variables. The instructions are provided as manually entered values in `./data/shared/meta-data-map.csv`. They are used by automatic scripts in later harmonization and analysis.  
+- (4) Combines unit and metadata into a single DTO to serve as a starting point to all subsequent analyses.   
+
+<!-- Load the datasets.   -->
+```{r load-data, echo=T, results='asis', message=FALSE}
+```
+
+<!-- Inspect the datasets.   -->
+```{r inspect-data, echo=T, results='show', message=FALSE}
+```
+
+
+###  Meta
+```{r meta-table, echo=TRUE, results='show', message=FALSE}
+```
+
+<!-- Tweak the datasets.   -->
+```{r tweak-data, echo=echoChunks, results='show', message=FALSE}
+```
+
+<!-- Basic table view.   -->
+```{r basic-table, echo=TRUE, results='show', message=FALSE}
+```
+
+# (II) Development
+
+## (II.A) Pre-Assembly
+
+### Combined data
+
+```{r combine-from-dto, echo=TRUE, results='show', message=FALSE}
+```
+
+
+```{r assemble, echo=TRUE, results='show', message=FALSE}
+```
+
+### Fit
+```{r fit-model, echo=TRUE}
+```
+
+## Graphs
+
+### Global prob
+```{r 1-global-probability, echo=echoChunks}
+```
+
+### Global odds
+```{r 3-global-odds, echo=echoChunks}
+```
+
+### Local prob
+```{r 2-local-probability, echo=echoChunks}
+```
+
+### Global odds
+```{r 4-local-odds, echo=echoChunks}
+```
+
+
+
+
+
+
+
+
