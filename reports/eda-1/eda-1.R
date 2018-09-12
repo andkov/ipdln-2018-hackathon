@@ -59,6 +59,9 @@ for(block_i in names(ls_guide$block) ){
     cat("\n##",item_i,"\n")
     ds %>% TabularManifest::histogram_discrete(item_i) %>% print()
     cat("\n")
+    
+    ls_guide$item[item_i] %>% print()
+    cat("\n")
   }
 }
 
