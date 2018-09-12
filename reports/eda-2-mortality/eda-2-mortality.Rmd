@@ -1,0 +1,87 @@
+---
+date: "Date: `r Sys.Date()`"
+output: 
+  html_document: 
+    keep_md: yes
+    toc: yes
+    toc_float: yes
+    output:
+    highlight: tango
+    theme: spacelab
+---
+This report  conducts the initial exploration of the data set of the banff-2018-hackathon
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of two directories.-->
+```{r, echo=F, message=F} 
+# cat("Working directory: ", getwd())
+library(knitr)
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+```
+
+<!-- Set the report-wide options, and point to the external code file. -->
+```{r set-options, echo=F}
+# cat("Working directory: ", getwd())
+report_render_start_time <- Sys.time()
+opts_chunk$set(
+  results      = 'show', 
+  comment      = NA, 
+  tidy         = FALSE,
+  # dpi        = 400,
+  out.width  = "900px", #This affects only the markdown, not the underlying png file.  The height will be scaled appropriately.
+  fig.width    = 9, 
+  fig.height   = 5, 
+  fig.path     = 'figure-png/'
+)
+
+echo_chunks    <- FALSE #Toggle for debugging.
+message_chunks <- FALSE #Toggle for debugging.
+options(width=100) #So the output is 25% wider than the default.
+read_chunk("./reports/eda-2/eda-2-mortality.R") #This allows knitr to call chunks tagged in the underlying *.R file.
+```
+
+<!-- Load the sources.  Suppress the output when loading sources. --> 
+```{r load-sources, echo=echo_chunks, message=message_chunks}
+```
+
+<!-- Load 'sourced' R files.  Suppress the output when loading packages. --> 
+```{r load-packages, echo=echo_chunks, message=message_chunks}
+```
+
+<!-- Load any global functions and variables declared in the R file.  Suppress the output. --> 
+```{r declare-globals, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+<!-- Declare any global functions specific to a Rmd output.  Suppress the output. --> 
+```{r rmd-specific, echo=echo_chunks, message=message_chunks}
+# Put presentation-specific code in here.  It doesn't call a chunk in the codebehind file.
+#   It should be rare (and used cautiously), but sometimes it makes sense to include code in Rmd 
+#   that doesn't live in the codebehind R file.
+```
+
+<!-- Load the datasets.   -->
+```{r load-data, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+<!-- Tweak the datasets.   -->
+```{r tweak-data, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+
+
+```{r marginals, echo=echo_chunks, results= "asis",message=message_chunks}
+```
+
+
+```{r scatterplots, echo=echo_chunks, message=message_chunks, fig.width=10}
+```
+
+
+
+
+
+# Session Information
+For the sake of documentation and reproducibility, the current report was rendered on a system using the following software.
+```{r session-info, echo=FALSE}
+report_render_duration_in_seconds <- round(as.numeric(difftime(Sys.time(), report_render_start_time, units="secs")))
+cat("Report rendered by", Sys.info()["user"], "at", strftime(Sys.time(), "%Y-%m-%d, %H:%M %z"), "in", report_render_duration_in_seconds, "seconds." )
+sessionInfo()
+```
