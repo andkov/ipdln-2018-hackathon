@@ -101,12 +101,15 @@ graph_logistic_point_simple <- function(
   # browser()
   palette_color <- assign_color(color_group)
   g <- ggplot2::ggplot(ds, aes_string(x=x_name)) +
-    geom_point(aes_string(y=y_name, color=color_group), shape=16, alpha=alpha_level) +
+    # geom_point(aes_string(y=y_name, color=color_group), shape=16, alpha=alpha_level) +
+    geom_jitter(aes_string(y=y_name, color=color_group), shape=16, alpha=alpha_level) +
+
     scale_color_manual(values = palette_color) +
     facet_grid(. ~ PR) + 
     main_theme +
     theme(
       legend.position="right"
+      # ,axis.text.x = element_text(angle = 90)
     ) +
     labs(x=x_title, y = y_title, color = color_title) +
     guides(color = guide_legend(override.aes = list(alpha=1, size=6, shape=15)))
@@ -157,7 +160,7 @@ graph_logistic_point_complex_4 <- function(
   plot3 <- plot3 + theme(legend.position="none")+ coord_cartesian(ylim =y_range) 
   
   
-  plot4 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[4], alpha_level, x_title = "Age", y_title = y_title, color_title = "Poor health") 
+  plot4 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[4], alpha_level, x_title = "Age (floor of 5-year group )", y_title = y_title, color_title = "Poor health") 
   legend4 <- g_legend(plot4)
   plot4 <- plot4 + theme(legend.position="none")+ coord_cartesian(ylim = y_range) 
   

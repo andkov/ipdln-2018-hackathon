@@ -37,13 +37,13 @@ testit::assert("File does not exist", base::file.exists(path_input_micro))
 testit::assert("File does not exist", base::file.exists(path_input_meta))
 
 # declare where you will store the product of this script
-# path_save <- "./data-unshared/derived/0-greeted.rds"
+# path_save <- "./data-unshared/derived/object.rds"
 
 # See definitions of commonly  used objects in:
 source("./manipulation/object-glossary.R")   # object definitions
 # ---- load-data ---------------------------------------------------------------
-ds      <- readRDS(path_input_micro) # 'ds' stands for 'datasets'
-ls_guide <- readRDS(path_input_meta)
+ds      <- readRDS(path_input_micro) #  product of `./manipulation/0-greeter.R`
+ls_guide <- readRDS(path_input_meta) #  product of `./manipulation/0-metador.R`
 
 # ---- tweak-data --------------------------------------------------------------
 ds %>% dplyr::glimpse()
@@ -72,12 +72,12 @@ get_a_subsample <- function(d, sample_size, seed = 42){
 
 # ---- transform-into-new-variables --------------------------------------
 # new variables are 
-ds %>% group_by(PR) %>% summarize(n = n())
-ds %>% group_by(SEX) %>% summarize(n = n())
-ds %>% group_by(MARST) %>% summarize(n = n())
-ds %>% group_by(HCDD) %>% summarize(n = n())
-ds %>% group_by(ADIFCLTY) %>% summarize(n = n())
-ds %>% group_by(DISABFL) %>% summarize(n = n())
+ds %>% group_by(PR)        %>% summarize(n = n())
+ds %>% group_by(SEX)       %>% summarize(n = n())
+ds %>% group_by(MARST)     %>% summarize(n = n())
+ds %>% group_by(HCDD)      %>% summarize(n = n())
+ds %>% group_by(ADIFCLTY)  %>% summarize(n = n())
+ds %>% group_by(DISABFL)   %>% summarize(n = n())
 ds %>% group_by(age_group) %>% summarize(n = n())
 
 # transform the scale of some variable (to be used in the model)
@@ -112,9 +112,9 @@ ds <- ds %>%
     # ;'Masters degree'                                                                                                = 'university or more' 
     # ;'Earned doctorate degree'                                                                                       = 'university or more' 
     # ")
-    ,educ4 = car::recode(
+    ,educ3 = car::recode(
       HCDD, "
-     'None'                                                                                                          = 'less then high school'
+     'None'                                                                                                          = 'less than high school'
     ;'High school graduation certificate or equivalency certificate'                                                 = 'high school'  
     ;'Other trades certificate or diploma'                                                                           = 'more than high school' 
     ;'Registered apprenticeship certificate'                                                                         = 'more than high school' 
@@ -133,7 +133,7 @@ ds <- ds %>%
                           DISABFL %in% c("Yes, often","Yes, sometimes"),
                           TRUE, FALSE
                           )
-    ,age_in_years = car::recode(
+    ,age_group_low = car::recode(
       age_group, 
       "
       '19 to 24'      = '19'
@@ -155,8 +155,12 @@ ds <- ds %>%
     )
   ) %>% 
   dplyr::mutate(
-    age_in_years = as.numeric( as.character(age_in_years))
+    age_in_years = as.numeric( as.character(age_group_low))
     ,age_in_years = age_in_years + sample(c(0:4),1)
+  ) %>% 
+  # replace for convenience
+  dplyr::mutate(
+    age_group = age_group_low
   )
 
 ds %>% glimpse(50)
@@ -167,44 +171,47 @@ selected_provinces <- c("Alberta","British Columbia", "Ontario", "Quebec")
 
 # middle aged immigrants in british columbia
 ds1 <- ds %>% 
-  # dplyr::filter(age_group == "40 to 44") %>% 
   dplyr::filter(PR %in% selected_provinces) %>% 
   dplyr::filter(IMMDER == "Immigrants") %>% 
   dplyr::filter(GENSTPOB == "1st generation - Respondent born outside Canada") %>% 
   get_a_subsample(10000)
-ds <- ds1
+
 # ---- assemble ------------------------
-dv_name <- "S_DEAD"
-dv_label_prob <- "Dead in X years"
-dv_label_odds <- "Odds(Dead)"
-covar_order_values <- c("female","marital","educ4","poor_health")
+dv_name            <- "S_DEAD"
+dv_label_prob      <- "Dead in X years"
+dv_label_odds      <- "Odds(Dead)"
+covar_order_values <- c("female","marital","educ3","poor_health") # rows in display matrix
 
 
 # basic counts
-table(ds$PR, ds$S_DEAD, useNA = "ifany")
-table(ds$PR, ds$FOL) %>% knitr::kable()
-table(ds$PR, ds$female, useNA = "always")
-table(ds$PR, ds$marital, useNA = "always")
-table(ds$PR, ds$educ4, useNA = "always")
+table(ds1$PR, ds1$S_DEAD,  useNA = "ifany" )
+table(ds1$PR, ds1$FOL                      ) 
+table(ds1$PR, ds1$female,  useNA = "always")
+table(ds1$PR, ds1$marital, useNA = "always")
+table(ds1$PR, ds1$educ4,   useNA = "always")
 
 # ---- fit-model ----------------------------------------
-ds2 <- ds %>% 
-  dplyr::select_("person_id", "PR", "S_DEAD", 
-                 "age_in_years", "female", "marital", "educ4","poor_health", "FOL","OLN") %>% 
+ds2 <- ds1 %>% 
+  dplyr::select_("person_id", "PR", "S_DEAD"
+                 # ,"age_in_years"
+                 ,"age_group"
+                 , "female", "marital", "educ3","poor_health", "FOL","OLN") %>% 
   na.omit() %>% 
   dplyr::rename_(
     "dv" = dv_name
   ) 
 eq_global_string <- paste0(
-  "dv ~ -1 + PR + age_in_years + female + marital + educ4 + poor_health + FOL + OLN"
+  # "dv ~ -1 + PR + age_in_years + female + marital + educ3 + poor_health + FOL + OLN"
+  "dv ~ -1 + PR + age_group + female + marital + educ3 + poor_health + FOL + OLN"
 )
 eq_global <- as.formula(eq_global_string)
 
-eq_local_string <- paste0(
-  "dv ~ -1 + age_in_years +female+ marital + educ4 + poor_health + FOL + OLN"
-)
-
-eq_local <- as.formula(eq_local_string)
+# model specification for using PROVINCE as a stratum, not a predictor in the model
+# eq_local_string <- paste0(
+#   # "dv ~ -1 + age_in_years +female+ marital + educ4 + poor_health + FOL + OLN"
+#   "dv ~ -1 + age_group +female+ marital + educ4 + poor_health + FOL + OLN"
+# )
+# eq_local <- as.formula(eq_local_string)
 
 model_global <- glm(
   eq_global,
@@ -215,18 +222,20 @@ summary(model_global)
 coefficients(model_global)
 ds2$dv_p <- predict(model_global)
 
-
+# create levels of 
 ds_predicted_global <- ds2 %>% 
   dplyr::select_(
     "PR",
-    "age_in_years", 
+    # "age_in_years", 
+    "age_group", 
     "female",        
-    "educ4",       
+    "educ3",       
     "marital" ,
     "poor_health", 
     "FOL",
     "OLN"
-  ) 
+  ) %>% 
+  dplyr::distinct()
 
 ds_predicted_global$dv_hat    <- as.numeric(predict(model_global, newdata=ds_predicted_global)) #logged-odds of probability (ie, linear)
 ds_predicted_global$dv_hat_p  <- plogis(ds_predicted_global$dv_hat) 
@@ -236,7 +245,7 @@ assign_color <- function(color_group){
   if( color_group == "female") {
     # http://colrd.com/image-dna/25114/
     palette_color <- c("TRUE"=reference_color, "FALSE"=increased_risk_1) # 98aab9
-  } else if( color_group %in% c("educ4") ) { 
+  } else if( color_group %in% c("educ3") ) { 
     # http://colrd.com/image-dna/24382/
     palette_color <- c("high school"=reference_color, "less than high school"=increased_risk_1, "more than high school"=descreased_risk_1) # 54a992, e8c571
   } else if( color_group %in% c("marital") ) {
@@ -269,13 +278,14 @@ descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
 source("./scripts/graphing/graph-logistic.R")
 graph_logistic_point_complex_4(
   ds = ds_predicted_global,
-  x_name = "age_in_years",
+  x_name = "age_group",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
   alpha_level = .4,
   y_title = dv_label_prob,
-  y_range = c(0, .8)) 
-summary(ds_predicted_study_list)
+  y_range = c(0, 1)
+) 
+summary(ds_predicted_global)
 
 # 2 step of color logic:
 increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
@@ -293,15 +303,14 @@ reference_color <- "#4daf4a"   # green  - REFERENCE  category
 
 graph_logistic_point_complex_4(
   ds = ds_predicted_global,
-  x_name = "age_in_years",
+  x_name = "age_group",
+  # x_name = "age_in_years",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
   alpha_level = .4,
   y_title = dv_label_prob,
-  y_range = c(0, .8)) 
-
-
-summary(ds_predicted_study_list)
+  y_range = c(0, 1)) 
+summary(ds_predicted_global)
 
 # 3 step of color logic:
 increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
@@ -320,13 +329,13 @@ reference_color <- "#4daf4a"   # green  - REFERENCE  category
 
 graph_logistic_point_complex_4(
   ds = ds_predicted_global,
-  x_name = "age_in_years",
+  x_name = "age_group",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
   alpha_level = .4,
   y_title = dv_label_prob,
-  y_range = c(0, .8)) 
-summary(ds_predicted_study_list)
+  y_range = c(0,1)) 
+summary(ds_predicted_global)
 
 # 4 step of color logic:
 increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
@@ -344,12 +353,12 @@ descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
 
 graph_logistic_point_complex_4(
   ds = ds_predicted_global,
-  x_name = "age_in_years",
+  x_name = "age_group",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
   alpha_level = .4,
   y_title = dv_label_prob,
-  y_range = c(0, .8)) 
+  y_range = c(0, 1)) 
 
 
 summary(ds_predicted_study_list)
@@ -363,10 +372,10 @@ descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
 
 graph_logistic_point_complex_4(
   ds = ds_predicted_global,
-  x_name = "age_in_years",
+  x_name = "age_group",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
   alpha_level = .4,
   y_title = dv_label_prob,
-  y_range = c(0, .8)) 
+  y_range = c(0, 1)) 
 summary(ds_predicted_study_list)
