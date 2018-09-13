@@ -14,7 +14,8 @@ cat("\f") # clear console when working in RStudio
 # ---- load-sources ------------------------------------------------------------
 # Call `base::source()` on any repo file that defines functions needed below.  
 # Ideally, no real operations are performed.
-
+base::source("./scripts/graphing/graph-logistic.R")
+base::source("./scripts/graphing/graph-presets.R") # fonts, colors, themes 
 # ---- load-packages -----------------------------------------------------------
 # Attach these packages so their functions don't need to be qualified: http://r-pkgs.had.co.nz/namespace.html#search-path
 library(ggplot2) #For graphing
@@ -71,6 +72,7 @@ get_a_subsample <- function(d, sample_size, seed = 42){
 
 # ---- transform-into-new-variables --------------------------------------
 # new variables are 
+ds %>% group_by(PR) %>% summarize(n = n())
 ds %>% group_by(SEX) %>% summarize(n = n())
 ds %>% group_by(MARST) %>% summarize(n = n())
 ds %>% group_by(HCDD) %>% summarize(n = n())
@@ -94,21 +96,37 @@ ds <- ds %>%
      ;'Never legally married (single)'        = 'single' 
      ;'Widowed'                               = 'widowed'
     ")
+    # ,educ4 = car::recode(
+    #  HCDD, "
+    #  'None'                                                                                                          = 'less then high school'
+    # ;'High school graduation certificate or equivalency certificate'                                                 = 'high-trade-college'  
+    # ;'Other trades certificate or diploma'                                                                           = 'high-trade-college'  
+    # ;'Registered apprenticeship certificate'                                                                         = 'high-trade-college'  
+    # ;'College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year'  = 'high-trade-college'  
+    # ;'College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years'             = 'high-trade-college'  
+    # ;'College, CEGEP or other non-university certificate or diploma from a program of more than 2 years'             = 'university or more'  
+    # ;'University certificate or diploma below bachelor level'                                                        = 'university or more'  
+    # ;'Bachelors degree'                                                                                              = 'university or more'  
+    # ;'University certificate or diploma above bachelor level'                                                        = 'university or more' 
+    # ;'Degree in medicine, dentistry, veterinary medicine or optometry'                                               = 'university or more' 
+    # ;'Masters degree'                                                                                                = 'university or more' 
+    # ;'Earned doctorate degree'                                                                                       = 'university or more' 
+    # ")
     ,educ4 = car::recode(
-     HCDD, "
+      HCDD, "
      'None'                                                                                                          = 'less then high school'
-    ;'High school graduation certificate or equivalency certificate'                                                 = 'high-trade-college'  
-    ;'Other trades certificate or diploma'                                                                           = 'high-trade-college'  
-    ;'Registered apprenticeship certificate'                                                                         = 'high-trade-college'  
-    ;'College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year'  = 'high-trade-college'  
-    ;'College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years'             = 'high-trade-college'  
-    ;'College, CEGEP or other non-university certificate or diploma from a program of more than 2 years'             = 'university or more'  
-    ;'University certificate or diploma below bachelor level'                                                        = 'university or more'  
-    ;'Bachelors degree'                                                                                              = 'university or more'  
-    ;'University certificate or diploma above bachelor level'                                                        = 'university or more' 
-    ;'Degree in medicine, dentistry, veterinary medicine or optometry'                                               = 'university or more' 
-    ;'Masters degree'                                                                                                = 'university or more' 
-    ;'Earned doctorate degree'                                                                                       = 'university or more' 
+    ;'High school graduation certificate or equivalency certificate'                                                 = 'high school'  
+    ;'Other trades certificate or diploma'                                                                           = 'more than high school' 
+    ;'Registered apprenticeship certificate'                                                                         = 'more than high school' 
+    ;'College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year'  = 'more than high school' 
+    ;'College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years'             = 'more than high school' 
+    ;'College, CEGEP or other non-university certificate or diploma from a program of more than 2 years'             = 'more than high school' 
+    ;'University certificate or diploma below bachelor level'                                                        = 'more than high school' 
+    ;'Bachelors degree'                                                                                              = 'more than high school' 
+    ;'University certificate or diploma above bachelor level'                                                        = 'more than high school'
+    ;'Degree in medicine, dentistry, veterinary medicine or optometry'                                               = 'more than high school'
+    ;'Masters degree'                                                                                                = 'more than high school'
+    ;'Earned doctorate degree'                                                                                       = 'more than high school'
     ")
     ,poor_health = ifelse(ADIFCLTY %in% c("Yes, often","Yes, sometimes")
                           &
@@ -212,3 +230,143 @@ ds_predicted_global <- ds2 %>%
 
 ds_predicted_global$dv_hat    <- as.numeric(predict(model_global, newdata=ds_predicted_global)) #logged-odds of probability (ie, linear)
 ds_predicted_global$dv_hat_p  <- plogis(ds_predicted_global$dv_hat) 
+
+
+assign_color <- function(color_group){
+  if( color_group == "female") {
+    # http://colrd.com/image-dna/25114/
+    palette_color <- c("TRUE"=reference_color, "FALSE"=increased_risk_1) # 98aab9
+  } else if( color_group %in% c("educ4") ) { 
+    # http://colrd.com/image-dna/24382/
+    palette_color <- c("high school"=reference_color, "less than high school"=increased_risk_1, "more than high school"=descreased_risk_1) # 54a992, e8c571
+  } else if( color_group %in% c("marital") ) {
+    # http://colrd.com/image-dna/23318/
+    palette_color <- c("mar_cohab"=descreased_risk_1, "sep_divorced"= increased_risk_2, "single"=reference_color, "widowed"=increased_risk_1)
+  } else if( color_group %in% c("poor_health") ) {
+    # http://colrd.com/palette/18841/
+    palette_color <- c("FALSE"=reference_color, "TRUE"=descreased_risk_2)
+  } else {
+    stop("The palette for this variable is not defined.")
+  }
+  
+}
+
+# ---- palette-color-1 ---------------------------
+
+# ---- 1-global-probability ----------------------
+# 1 step of color logic:
+increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
+increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
+reference_color <- "#bdbdbd"   # green  - REFERENCE  category
+descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
+descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
+
+# increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
+# increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
+# reference_color <- "#4daf4a"   # green  - REFERENCE  category
+# descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
+# descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
+
+graph_logistic_point_complex_4(
+  ds = ds_predicted_global,
+  x_name = "age_in_years",
+  y_name = "dv_hat_p",
+  covar_order = covar_order_values,
+  alpha_level = .4,
+  y_title = dv_label_prob,
+  y_range = c(0, .8)) 
+summary(ds_predicted_study_list)
+
+# 2 step of color logic:
+increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
+increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
+reference_color <- "#bdbdbd"   # green  - REFERENCE  category
+descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
+descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
+
+# increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
+# increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
+reference_color <- "#4daf4a"   # green  - REFERENCE  category
+# descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
+# descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
+
+
+graph_logistic_point_complex_4(
+  ds = ds_predicted_global,
+  x_name = "age_in_years",
+  y_name = "dv_hat_p",
+  covar_order = covar_order_values,
+  alpha_level = .4,
+  y_title = dv_label_prob,
+  y_range = c(0, .8)) 
+
+
+summary(ds_predicted_study_list)
+
+# 3 step of color logic:
+increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
+increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
+reference_color <- "#bdbdbd"   # green  - REFERENCE  category
+descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
+descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
+
+# increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
+increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
+reference_color <- "#4daf4a"   # green  - REFERENCE  category
+# descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
+# descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
+
+
+
+graph_logistic_point_complex_4(
+  ds = ds_predicted_global,
+  x_name = "age_in_years",
+  y_name = "dv_hat_p",
+  covar_order = covar_order_values,
+  alpha_level = .4,
+  y_title = dv_label_prob,
+  y_range = c(0, .8)) 
+summary(ds_predicted_study_list)
+
+# 4 step of color logic:
+increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
+increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
+reference_color <- "#bdbdbd"   # green  - REFERENCE  category
+descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
+descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
+
+# increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
+increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
+reference_color <- "#4daf4a"   # green  - REFERENCE  category
+descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
+# descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
+
+
+graph_logistic_point_complex_4(
+  ds = ds_predicted_global,
+  x_name = "age_in_years",
+  y_name = "dv_hat_p",
+  covar_order = covar_order_values,
+  alpha_level = .4,
+  y_title = dv_label_prob,
+  y_range = c(0, .8)) 
+
+
+summary(ds_predicted_study_list)
+
+# 5 step of color logic:
+increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
+increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
+reference_color <- "#4daf4a"   # green  - REFERENCE  category
+descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
+descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
+
+graph_logistic_point_complex_4(
+  ds = ds_predicted_global,
+  x_name = "age_in_years",
+  y_name = "dv_hat_p",
+  covar_order = covar_order_values,
+  alpha_level = .4,
+  y_title = dv_label_prob,
+  y_range = c(0, .8)) 
+summary(ds_predicted_study_list)
