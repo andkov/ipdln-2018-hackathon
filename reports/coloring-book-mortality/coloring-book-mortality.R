@@ -69,6 +69,19 @@ get_a_subsample <- function(d, sample_size, seed = 42){
 # how to use 
 # ds1 <- ds0 %>% get_a_subsample(10000)  
 
+quick_save <- function(g,name){
+  ggplot2::ggsave(
+    filename= paste0(name,".png"), 
+    plot=g,
+    device = png,
+    path = "./reports/coloring-book-mortality/prints/",
+    width = 1200,
+    height = 1000,
+    # units = "cm",
+    dpi = 400,
+    limitsize = FALSE
+  )
+}
 
 # ---- transform-into-new-variables --------------------------------------
 # new variables are 
@@ -210,6 +223,9 @@ ds2 <- ds1 %>%
   dplyr::select_("person_id", "PR", "S_DEAD"
                  ,"age_group"
                  , "female", "marital", "educ3","poor_health", "FOL","OLN") %>% 
+  dplyr::mutate(
+    poor_health = factor(poor_health)
+  ) %>% 
   na.omit() %>% 
   dplyr::rename_(
     "dv" = dv_name # to ease serialization and string handling
@@ -345,8 +361,9 @@ graph_logistic_point_complex_4(
   alpha_level = .4,
   y_title = dv_label_prob,
   y_range = c(0, 1)
-) 
-summary(ds_predicted_global)
+) %>% 
+  quick_save(name = "a1")
+summary(ds_predicted_province_list)
 
 # 2 step of color logic:
 increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
@@ -370,8 +387,11 @@ graph_logistic_point_complex_4(
   covar_order = covar_order_values,
   alpha_level = .4,
   y_title = dv_label_prob,
-  y_range = c(0, 1)) 
-summary(ds_predicted_global)
+  y_range = c(0, 1)) %>% 
+  quick_save(name = "a2")
+
+
+# summary(ds_predicted_province)
 
 # 3 step of color logic:
 increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
@@ -395,8 +415,11 @@ graph_logistic_point_complex_4(
   covar_order = covar_order_values,
   alpha_level = .4,
   y_title = dv_label_prob,
-  y_range = c(0,1)) 
-summary(ds_predicted_global)
+  y_range = c(0,1)) %>% 
+  quick_save("a3")
+
+
+# summary(ds_predicted_global)
 
 # 4 step of color logic:
 increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
@@ -419,7 +442,8 @@ graph_logistic_point_complex_4(
   covar_order = covar_order_values,
   alpha_level = .4,
   y_title = dv_label_prob,
-  y_range = c(0, 1)) 
+  y_range = c(0, 1)) %>% 
+  quick_save("a4")
 
 
 summary(ds_predicted_study_list)
@@ -438,5 +462,7 @@ graph_logistic_point_complex_4(
   covar_order = covar_order_values,
   alpha_level = .4,
   y_title = dv_label_prob,
-  y_range = c(0, 1)) 
+  y_range = c(0, 1)) %>% 
+  quick_save("a5")
+
 summary(ds_predicted_study_list)
