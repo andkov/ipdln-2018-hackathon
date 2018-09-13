@@ -266,7 +266,7 @@ descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
 # reference_color <- "#4daf4a"   # green  - REFERENCE  category
 # descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
 # descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
-
+source("./scripts/graphing/graph-logistic.R")
 graph_logistic_point_complex_4(
   ds = ds_predicted_global,
   x_name = "age_in_years",

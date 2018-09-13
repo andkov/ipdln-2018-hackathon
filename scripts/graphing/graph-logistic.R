@@ -98,11 +98,12 @@ graph_logistic_point_simple <- function(
   y_title = y_name,
   color_title = color_group
 ){
+  # browser()
   palette_color <- assign_color(color_group)
   g <- ggplot2::ggplot(ds, aes_string(x=x_name)) +
     geom_point(aes_string(y=y_name, color=color_group), shape=16, alpha=alpha_level) +
     scale_color_manual(values = palette_color) +
-    facet_grid(. ~ pr) + 
+    facet_grid(. ~ PR) + 
     main_theme +
     theme(
       legend.position="right"
@@ -133,6 +134,7 @@ graph_logistic_point_complex_4 <- function(
   color_title = "predictor",
   y_range =NULL
 ){
+  # browser()
   # function for stripping legends from plots
   g_legend<-function(a.gplot){
     tmp <- ggplot_gtable(ggplot_build(a.gplot))
