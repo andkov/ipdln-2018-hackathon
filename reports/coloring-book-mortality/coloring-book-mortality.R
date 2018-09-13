@@ -76,6 +76,7 @@ ds %>% group_by(MARST) %>% summarize(n = n())
 ds %>% group_by(HCDD) %>% summarize(n = n())
 ds %>% group_by(ADIFCLTY) %>% summarize(n = n())
 ds %>% group_by(DISABFL) %>% summarize(n = n())
+ds %>% group_by(age_group) %>% summarize(n = n())
 
 # transform the scale of some variable (to be used in the model)
 ds <- ds %>% 
@@ -114,6 +115,30 @@ ds <- ds %>%
                           DISABFL %in% c("Yes, often","Yes, sometimes"),
                           TRUE, FALSE
                           )
+    ,age_in_years = car::recode(
+      age_group, 
+      "
+      '19 to 24'      = '19'
+      ;'25 to 29'     = '25'
+      ;'30 to 34'     = '30'
+      ;'35 to 39'     = '35'
+      ;'40 to 44'     = '40'
+      ;'45 to 49'     = '45'
+      ;'50 to 54'     = '50'
+      ;'55 to 59'     = '55'
+      ;'60 to 64'     = '60'
+      ;'65 to 69'     = '65'
+      ;'70 to 74'     = '70'
+      ;'75 to 79'     = '75'
+      ;'80 to 84'     = '80'
+      ;'85 to 89'     = '85'
+      ;'90 and older' = '90'  
+      "
+    )
+  ) %>% 
+  dplyr::mutate(
+    age_in_years = as.numeric( as.character(age_in_years))
+    ,age_in_years = age_in_years + sample(c(0:4),1)
   )
 
 ds %>% glimpse(50)
