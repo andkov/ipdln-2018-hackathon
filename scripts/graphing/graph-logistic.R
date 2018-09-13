@@ -99,19 +99,22 @@ graph_logistic_point_simple <- function(
   color_title = color_group
 ){
   # browser()
+  set.seed(42) # for constant jitter
   palette_color <- assign_color(color_group)
   g <- ggplot2::ggplot(ds, aes_string(x=x_name)) +
     # geom_point(aes_string(y=y_name, color=color_group), shape=16, alpha=alpha_level) +
     geom_jitter(
       aes_string(
         y      = y_name
-        ,fill = color_group
-        # ,color = color_group
+        # ,fill = color_group
+        ,color = color_group
       )
-      ,shape = 21, alpha = alpha_level, color = "grey70") +
+      ,shape = 16, alpha = alpha_level) +
+      # ,shape = 21, alpha = alpha_level, color = "grey70") +
+      # ,shape = 21, alpha = alpha_level) +
 
-    # scale_color_manual(values = palette_color) +
-    scale_fill_manual(values = palette_color) +
+    scale_color_manual(values = palette_color) +
+    # scale_fill_manual(values = palette_color) +
     facet_grid(. ~ PR) + 
     main_theme +
     theme(
@@ -121,12 +124,12 @@ graph_logistic_point_simple <- function(
     labs(
       x=x_title
       , y = y_title
-      # , color = color_title
-      , fill = color_title
+      , color = color_title
+      # , fill = color_title
       ) +
     guides(
-      fill = guide_legend(override.aes = list(alpha=1, size=6, shape=15))
-      # color = guide_legend(override.aes = list(alpha=1, size=6, shape=15))
+      # fill = guide_legend(override.aes = list(alpha=1, size=6, shape=15))
+      color = guide_legend(override.aes = list(alpha=1, size=6, shape=15))
       )
   # return(g)
 }
