@@ -74,11 +74,11 @@ quick_save <- function(g,name){
     filename= paste0(name,".png"), 
     plot=g,
     device = png,
-    path = "./reports/coloring-book-mortality/prints/",
+    path = "./reports/coloring-book-mortality/prints2/",
     width = 1600,
     height = 1200,
     # units = "cm",
-    dpi = 600,
+    dpi = 200,
     limitsize = FALSE
   )
 }
@@ -207,7 +207,8 @@ ds1 <- plyr::ldply(dmls,data.frame,.id = "PR")
 dv_name            <- "S_DEAD"
 dv_label_prob      <- "Alive in X years"
 dv_label_odds      <- "Odds(Dead)"
-covar_order_values <- c("female","marital","educ3","poor_health") # rows in display matrix
+# covar_order_values <- c("female","marital","educ3","poor_health") # rows in display matrix
+covar_order_values <- c("educ3","poor_health", "FOL","OLN") # rows in display matrix
 
 
 # basic counts
@@ -216,6 +217,8 @@ table(ds1$PR, ds1$FOL                      )
 table(ds1$PR, ds1$female,  useNA = "always")
 table(ds1$PR, ds1$marital, useNA = "always")
 table(ds1$PR, ds1$educ3,   useNA = "always")
+table(ds1$PR, ds1$FOL,   useNA = "always")
+table(ds1$PR, ds1$OLN,   useNA = "always")
 
 # ---- model-specification ----------------------------------------
 
@@ -331,6 +334,13 @@ assign_color <- function(color_group){
   } else if( color_group %in% c("poor_health") ) {
     # http://colrd.com/palette/18841/
     palette_color <- c("FALSE"=reference_color, "TRUE"=increased_risk_2)
+  } else if( color_group %in% c("FOL","ONL") ) {
+    # http://colrd.com/image-dna/23318/
+    palette_color <- c("Both English and French"     = descreased_risk_2,
+                       "English only"                = reference_color, 
+                       "French only"                 = increased_risk_1,
+                       "Neither English nor French"  = increased_risk_2
+                       )
   } else {
     stop("The palette for this variable is not defined.")
   }
@@ -340,6 +350,9 @@ assign_color <- function(color_group){
 # ---- palette-color-1 ---------------------------
 
 # ---- 1-global-probability ----------------------
+
+common_alpha <- .8
+
 # 1 step of color logic:
 increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
 increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
@@ -358,7 +371,7 @@ graph_logistic_point_complex_4(
   x_name = "age_group",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
-  alpha_level = .4,
+  alpha_level = common_alpha,
   y_title = dv_label_prob,
   y_range = c(0, 1)
 ) %>% 
@@ -385,7 +398,7 @@ graph_logistic_point_complex_4(
   # x_name = "age_in_years",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
-  alpha_level = .4,
+  alpha_level = common_alpha,
   y_title = dv_label_prob,
   y_range = c(0, 1)) %>% 
   quick_save(name = "a2")
@@ -413,7 +426,7 @@ graph_logistic_point_complex_4(
   x_name = "age_group",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
-  alpha_level = .4,
+  alpha_level = common_alpha,
   y_title = dv_label_prob,
   y_range = c(0,1)) %>% 
   quick_save("a3")
@@ -440,7 +453,7 @@ graph_logistic_point_complex_4(
   x_name = "age_group",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
-  alpha_level = .4,
+  alpha_level = common_alpha,
   y_title = dv_label_prob,
   y_range = c(0, 1)) %>% 
   quick_save("a4")
@@ -466,7 +479,7 @@ graph_logistic_point_complex_4(
   x_name = "age_group",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
-  alpha_level = .4,
+  alpha_level = common_alpha,
   y_title = dv_label_prob,
   y_range = c(0, 1)) %>% 
   quick_save("a5")
@@ -484,7 +497,7 @@ graph_logistic_point_complex_4(
   x_name = "age_group",
   y_name = "dv_hat_p",
   covar_order = covar_order_values,
-  alpha_level = .4,
+  alpha_level = common_alpha,
   y_title = dv_label_prob,
   y_range = c(0, 1)) %>% 
   quick_save("a0")

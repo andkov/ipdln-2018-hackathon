@@ -82,6 +82,7 @@ graph_logitstic_curve_complex_4 <- function(
 
 
 
+
 # ---- simple-point-plot ------------------------------------
 # ds = ds_predicted_global
 # x_name = "age_in_years"
@@ -172,21 +173,25 @@ graph_logistic_point_complex_4 <- function(
     legend
   }
   
-  plot1 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[1], alpha_level, x_title ="", y_title = y_title, color_title = "Female") 
+  # plot1 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[1], alpha_level, x_title ="", y_title = y_title, color_title = "Female") 
+  plot1 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[1], alpha_level, x_title ="", y_title = y_title, color_title = "Education") 
   legend1 <- g_legend(plot1)
   plot1 <- plot1 + theme(legend.position="none") + coord_cartesian(ylim = y_range) 
   
-  plot2 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[2], alpha_level, x_title ="", y_title = y_title, color_title = "Marital Status") 
+  # plot2 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[2], alpha_level, x_title ="", y_title = y_title, color_title = "Marital Status") 
+  plot2 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[2], alpha_level, x_title ="", y_title = y_title, color_title = "Poor Health") 
   legend2 <- g_legend(plot2)
   plot2 <- plot2 + theme(legend.position="none")+ coord_cartesian(ylim = y_range) 
   
   
-  plot3 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[3], alpha_level, x_title ="", y_title = y_title, color_title = "Education") 
+  # plot3 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[3], alpha_level, x_title ="", y_title = y_title, color_title = "Education") 
+  plot3 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[3], alpha_level, x_title ="", y_title = y_title, color_title = "First Language") 
   legend3 <- g_legend(plot3)
   plot3 <- plot3 + theme(legend.position="none")+ coord_cartesian(ylim =y_range) 
   
   
-  plot4 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[4], alpha_level, x_title = "Age (floor of a 5-year group)", y_title = y_title, color_title = "Poor health") 
+  # plot4 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[4], alpha_level, x_title = "Age (floor of a 5-year group)", y_title = y_title, color_title = "Poor health") 
+  plot4 <- graph_logistic_point_simple(ds,x_name, y_name, covar_order[4], alpha_level, x_title = "Age (floor of a 5-year group)", y_title = y_title, color_title = "Conversational") 
   legend4 <- g_legend(plot4)
   plot4 <- plot4 + theme(legend.position="none")+ coord_cartesian(ylim = y_range) 
   
@@ -202,7 +207,7 @@ graph_logistic_point_complex_4 <- function(
   # )
   cowplot::plot_grid( main_title,blankPlot, plot1, legend1, plot2, legend2, plot3, legend3, plot4, legend4,
                            ncol=2,  nrow=5,
-                           rel_widths = c(9,1.5), align = "none", 
+                           rel_widths = c(9,3), align = "left", 
                            rel_heights=c(.2, 1, 1, 1, 1)
   )
 } # close function

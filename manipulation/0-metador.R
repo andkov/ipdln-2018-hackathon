@@ -331,10 +331,10 @@ EFCNT_PP_R <- list(
 )
 FOL	 <- list(
   "levels" = c(
-    "1" = "English "
-    ,"2" = "French "
-    ,"3" = "English and French "
-    ,"4" = "Neither English nor French" 
+    "1" = "English only"
+    ,"2" = "French only"
+    ,"3" = "Both English and French"
+    ,"4" = "Neither English nor French"
   )
   ,"label" = "First language"
   ,"description"= "First official language: First official language spoken	"
