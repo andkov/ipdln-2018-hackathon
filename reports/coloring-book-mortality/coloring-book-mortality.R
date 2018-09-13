@@ -172,26 +172,22 @@ table(ds$PR, ds$educ4, useNA = "always")
 # ---- fit-model ----------------------------------------
 ds2 <- ds %>% 
   dplyr::select_("person_id", "PR", "S_DEAD", 
-                 "age_group", "female", "marital", "educ4", "FOL","OLN") %>% 
+                 "age_in_years", "female", "marital", "educ4","poor_health", "FOL","OLN") %>% 
   na.omit() %>% 
   dplyr::rename_(
     "dv" = dv_name
   ) 
-#eq <- as.formula(paste0("smoke_now ~ -1 + study_name + age_in_years + female + marital_f + educ3_f + poor_health"))
-# eq <- as.formula(paste0("smoke_now ~ -1 + age_in_years + female + educ3_f + poor_health"))
 eq_global_string <- paste0(
-  # "smoke_now ~ -1 + study_name + age_in_years + female + marital_f + educ3_f + poor_health + female:marital_f + female:educ3_f + female:poor_health + marital_f:educ3_f + marital_f:poor_health"
-  "dv ~ -1 + PR + age_group + female + marital + educ4 + FOL + OLN"
+  "dv ~ -1 + PR + age_in_years + female + marital + educ4 + poor_health + FOL + OLN"
 )
 eq_global <- as.formula(eq_global_string)
 
 eq_local_string <- paste0(
-  # "smoke_now ~ -1 + age_in_years + female + marital_f + educ3_f + poor_health + female:marital_f + female:educ3_f + female:poor_health + marital_f:educ3_f + marital_f:poor_health"
-  "dv ~ -1 + age_group + marital + educ4 + FOL + OLN"
+  "dv ~ -1 + age_in_years +female+ marital + educ4 + poor_health + FOL + OLN"
 )
 
 eq_local <- as.formula(eq_local_string)
-# eq <- as.formula(paste0("smoke_now ~ -1 + age_in_years"))
+
 model_global <- glm(
   eq_global,
   data = ds2, 
@@ -201,24 +197,17 @@ summary(model_global)
 coefficients(model_global)
 ds2$dv_p <- predict(model_global)
 
-# ds_predicted_global <- expand.grid(
-#   study_name      = sort(unique(ds2$study_name)), #For the sake of repeating the same global line in all studies/panels in the facetted graphs
-#   age_in_years    = seq.int(40, 100, 10),
-#   female        = sort(unique(ds2$female)),
-#   educ3_f       = sort(unique(ds2$educ3_f)),
-#   # marital_f     = sort(unique(d$marital_f)),
-#   poor_health   = sort(unique(ds2$poor_health)),
-#   stringsAsFactors = FALSE
-# ) 
 
 ds_predicted_global <- ds2 %>% 
   dplyr::select_(
-    "study_name",
+    "PR",
     "age_in_years", 
     "female",        
-    "educ3_f",       
-    "marital_f" ,
-    "poor_health"  
+    "educ4",       
+    "marital" ,
+    "poor_health", 
+    "FOL",
+    "OLN"
   ) 
 
 ds_predicted_global$dv_hat    <- as.numeric(predict(model_global, newdata=ds_predicted_global)) #logged-odds of probability (ie, linear)
