@@ -42,20 +42,20 @@ testit::assert("File does not exist", base::file.exists(path_input_meta))
 # See definitions of commonly  used objects in:
 source("./manipulation/object-glossary.R")   # object definitions
 # ---- load-data ---------------------------------------------------------------
-ds      <- readRDS(path_input_micro) #  product of `./manipulation/0-greeter.R`
+ds0      <- readRDS(path_input_micro) #  product of `./manipulation/0-greeter.R`
 ls_guide <- readRDS(path_input_meta) #  product of `./manipulation/0-metador.R`
 
 # ---- tweak-data --------------------------------------------------------------
-ds %>% dplyr::glimpse()
+ds0 %>% dplyr::glimpse()
 
 # create an explicity person identifier
-ds <-  ds %>% 
+ds0 <-  ds0 %>% 
   tibble::rownames_to_column("person_id") %>% 
   dplyr::select(person_id, dplyr::everything())
 
 
 # ---- inspect-data ----------------------------
-ds %>% dplyr::glimpse(50)
+ds0 %>% dplyr::glimpse(50)
 
 # ---- define-utility-functions ---------------
 # create a function to subset a dataset in this context
@@ -67,21 +67,21 @@ get_a_subsample <- function(d, sample_size, seed = 42){
   return(d1)
 }
 # how to use 
-# ds1 <- ds %>% get_a_subsample(10000)  
+# ds1 <- ds0 %>% get_a_subsample(10000)  
 
 
 # ---- transform-into-new-variables --------------------------------------
 # new variables are 
-ds %>% group_by(PR)        %>% summarize(n = n())
-ds %>% group_by(SEX)       %>% summarize(n = n())
-ds %>% group_by(MARST)     %>% summarize(n = n())
-ds %>% group_by(HCDD)      %>% summarize(n = n())
-ds %>% group_by(ADIFCLTY)  %>% summarize(n = n())
-ds %>% group_by(DISABFL)   %>% summarize(n = n())
-ds %>% group_by(age_group) %>% summarize(n = n())
+ds0 %>% group_by(PR)        %>% summarize(n = n())
+ds0 %>% group_by(SEX)       %>% summarize(n = n())
+ds0 %>% group_by(MARST)     %>% summarize(n = n())
+ds0 %>% group_by(HCDD)      %>% summarize(n = n())
+ds0 %>% group_by(ADIFCLTY)  %>% summarize(n = n())
+ds0 %>% group_by(DISABFL)   %>% summarize(n = n())
+ds0 %>% group_by(age_group) %>% summarize(n = n())
 
 # transform the scale of some variable (to be used in the model)
-ds <- ds %>% 
+ds0 <- ds0 %>% 
   dplyr::mutate(
     female = car::recode(
       SEX, "
@@ -163,22 +163,36 @@ ds <- ds %>%
     age_group = age_group_low
   )
 
-ds %>% glimpse(50)
+ds0 %>% glimpse(50)
 
 
 # ---- a-1 ---------------------------------------------------------------
 selected_provinces <- c("Alberta","British Columbia", "Ontario", "Quebec")
+sample_size = 10000
 
 # middle aged immigrants in british columbia
-ds1 <- ds %>% 
+ds1 <- ds0 %>% 
   dplyr::filter(PR %in% selected_provinces) %>% 
   dplyr::filter(IMMDER == "Immigrants") %>% 
-  dplyr::filter(GENSTPOB == "1st generation - Respondent born outside Canada") %>% 
-  get_a_subsample(10000)
+  dplyr::filter(GENSTPOB == "1st generation - Respondent born outside Canada") #%>% 
+  # get_a_subsample(sample_size) # representative sample across provinces
+
+
+dmls <- list() # dummy list
+for(province_i in selected_provinces){
+  # province_i = "British Columbia"
+  dmls[[province_i]] <-  ds1 %>%
+  dplyr::filter(PR == province_i) %>% 
+    get_a_subsample(sample_size)
+}
+lapply(dmls, names) # view the contents of the list object
+# overwrite, making it a stratified sample across selected provinces (same size)
+ds1 <- plyr::ldply(dmls,data.frame,.id = "PR")
+
 
 # ---- assemble ------------------------
 dv_name            <- "S_DEAD"
-dv_label_prob      <- "Dead in X years"
+dv_label_prob      <- "Alive in X years"
 dv_label_odds      <- "Odds(Dead)"
 covar_order_values <- c("female","marital","educ3","poor_health") # rows in display matrix
 
@@ -188,45 +202,49 @@ table(ds1$PR, ds1$S_DEAD,  useNA = "ifany" )
 table(ds1$PR, ds1$FOL                      ) 
 table(ds1$PR, ds1$female,  useNA = "always")
 table(ds1$PR, ds1$marital, useNA = "always")
-table(ds1$PR, ds1$educ4,   useNA = "always")
+table(ds1$PR, ds1$educ3,   useNA = "always")
 
-# ---- fit-model ----------------------------------------
+# ---- model-specification ----------------------------------------
+
 ds2 <- ds1 %>% 
   dplyr::select_("person_id", "PR", "S_DEAD"
-                 # ,"age_in_years"
                  ,"age_group"
                  , "female", "marital", "educ3","poor_health", "FOL","OLN") %>% 
   na.omit() %>% 
   dplyr::rename_(
-    "dv" = dv_name
+    "dv" = dv_name # to ease serialization and string handling
   ) 
+
+# define the model equation 
 eq_global_string <- paste0(
-  # "dv ~ -1 + PR + age_in_years + female + marital + educ3 + poor_health + FOL + OLN"
   "dv ~ -1 + PR + age_group + female + marital + educ3 + poor_health + FOL + OLN"
 )
 eq_global <- as.formula(eq_global_string)
 
 # model specification for using PROVINCE as a stratum, not a predictor in the model
-# eq_local_string <- paste0(
-#   # "dv ~ -1 + age_in_years +female+ marital + educ4 + poor_health + FOL + OLN"
-#   "dv ~ -1 + age_group +female+ marital + educ4 + poor_health + FOL + OLN"
-# )
-# eq_local <- as.formula(eq_local_string)
+eq_local_string <- paste0(
+  #        + PR  (notice the absence of this term!) 
+  "dv ~ -1      + age_group + female + marital + educ3 + poor_health + FOL + OLN"
+)
+eq_local <- as.formula(eq_local_string)
+
+# ---- estimate-global-solutions ---------------------------------
+# this solution enters PR as one of the predictors
+
 
 model_global <- glm(
   eq_global,
-  data = ds2, 
+  data   = ds2, 
   family = binomial(link="logit")
 ) 
 summary(model_global)
 coefficients(model_global)
-ds2$dv_p <- predict(model_global)
+# ds2$dv_p <- predict(model_global) # fast check
 
-# create levels of 
+# create levels of the predictors for which we will generate predictions using model solution
 ds_predicted_global <- ds2 %>% 
   dplyr::select_(
     "PR",
-    # "age_in_years", 
     "age_group", 
     "female",        
     "educ3",       
@@ -237,8 +255,51 @@ ds_predicted_global <- ds2 %>%
   ) %>% 
   dplyr::distinct()
 
-ds_predicted_global$dv_hat    <- as.numeric(predict(model_global, newdata=ds_predicted_global)) #logged-odds of probability (ie, linear)
+# compute predicted values of the criterion based on model solution and levels of predictors
+#logged-odds of probability (ie, linear)
+ds_predicted_global$dv_hat    <- as.numeric(predict(model_global, newdata=ds_predicted_global)) 
+#probability (ie, s-curve)
 ds_predicted_global$dv_hat_p  <- plogis(ds_predicted_global$dv_hat) 
+
+
+# ----- estimate-local-solutions ------------------------
+# these models are estimated without PR in their predictors
+# instead, they use PR to subset data which is then fed to the estimation routine
+
+ds_predicted_province_list <- list()
+model_province_list <- list()
+for( province_i in selected_provinces) {
+  d_province <- ds2 %>% dplyr::filter(PR == province_i)
+  model_province <- glm(eq_local, data=d_province,  family=binomial(link="logit")) 
+  model_province_list[[province_i]] <- model_province
+  
+  d_predicted <- ds2 %>% 
+    dplyr::select_(
+      # "PR", (notice the absence of this term!)
+      "age_group", 
+      "female",        
+      "educ3",       
+      "marital" ,
+      "poor_health", 
+      "FOL",
+      "OLN"
+    ) %>% 
+    dplyr::distinct()
+  # compute predicted values of the criterion based on model solution and levels of predictors
+  #logged-odds of probability (ie, linear)
+  d_predicted$dv_hat      <- as.numeric(predict(model_province, newdata=d_predicted)) 
+  #probability (ie, s-curve)
+  d_predicted$dv_hat_p    <- plogis(d_predicted$dv_hat)
+  # store
+  ds_predicted_province_list[[province_i]] <- d_predicted
+}
+# collapse into a single data set
+ds_predicted_province <- ds_predicted_province_list %>% 
+  dplyr::bind_rows(.id="PR")
+
+lapply(model_province_list, summary)
+sapply(model_province_list, coefficients)
+
 
 
 assign_color <- function(color_group){
