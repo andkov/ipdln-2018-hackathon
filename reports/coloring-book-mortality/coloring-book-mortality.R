@@ -19,6 +19,7 @@ cat("\f") # clear console when working in RStudio
 # Attach these packages so their functions don't need to be qualified: http://r-pkgs.had.co.nz/namespace.html#search-path
 library(ggplot2) #For graphing
 library(magrittr) # Pipes
+library(dplyr)
 requireNamespace("dplyr", quietly=TRUE)
 requireNamespace("TabularManifest") # devtools::install_github("Melinae/TabularManifest")
 requireNamespace("knitr")
@@ -69,25 +70,53 @@ get_a_subsample <- function(d, sample_size, seed = 42){
 
 
 # ---- transform-into-new-variables --------------------------------------
-
 # new variables are 
+ds %>% group_by(SEX) %>% summarize(n = n())
+ds %>% group_by(MARST) %>% summarize(n = n())
+ds %>% group_by(HCDD) %>% summarize(n = n())
+ds %>% group_by(ADIFCLTY) %>% summarize(n = n())
+ds %>% group_by(DISABFL) %>% summarize(n = n())
 
-# female
-# marital 
-#  - mar_cohab
-#  - sep_divorced
-#  - single
-#  - widows
-# educ3
-# -less then highschool
-# - highschool
-# - more than highschool
-# 
-# poor_health
-# - yes
-# - no
+# transform the scale of some variable (to be used in the model)
+ds <- ds %>% 
+  dplyr::mutate(
+    female = car::recode(
+      SEX, "
+      'Female' = 'TRUE'
+      ;'Male'  = 'FALSE'
+      ")
+    ,marital = car::recode(
+      MARST, "
+      'Divorced'                              = 'sep_divorced'
+     ;'Legally married (and not separated)'   = 'mar_cohab' 
+     ;'Separated, but still legally married'  = 'sep_divorced' 
+     ;'Never legally married (single)'        = 'single' 
+     ;'Widowed'                               = 'widowed'
+    ")
+    ,educ4 = car::recode(
+     HCDD, "
+     'None'                                                                                                          = 'less then high school'
+    ;'High school graduation certificate or equivalency certificate'                                                 = 'high-trade-college'  
+    ;'Other trades certificate or diploma'                                                                           = 'high-trade-college'  
+    ;'Registered apprenticeship certificate'                                                                         = 'high-trade-college'  
+    ;'College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year'  = 'high-trade-college'  
+    ;'College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years'             = 'high-trade-college'  
+    ;'College, CEGEP or other non-university certificate or diploma from a program of more than 2 years'             = 'university or more'  
+    ;'University certificate or diploma below bachelor level'                                                        = 'university or more'  
+    ;'Bachelors degree'                                                                                              = 'university or more'  
+    ;'University certificate or diploma above bachelor level'                                                        = 'university or more' 
+    ;'Degree in medicine, dentistry, veterinary medicine or optometry'                                               = 'university or more' 
+    ;'Masters degree'                                                                                                = 'university or more' 
+    ;'Earned doctorate degree'                                                                                       = 'university or more' 
+    ")
+    ,poor_health = ifelse(ADIFCLTY %in% c("Yes, often","Yes, sometimes")
+                          &
+                          DISABFL %in% c("Yes, often","Yes, sometimes"),
+                          TRUE, FALSE
+                          )
+  )
 
-
+ds %>% glimpse(50)
 
 
 # ---- a-1 ---------------------------------------------------------------
@@ -105,25 +134,21 @@ ds <- ds1
 dv_name <- "S_DEAD"
 dv_label_prob <- "Dead in X years"
 dv_label_odds <- "Odds(Dead)"
-# covar_order_values <- c("female","marital_f","educ3_f","poor_health")
+covar_order_values <- c("female","marital","educ4","poor_health")
 
 
 # basic counts
 table(ds$PR, ds$S_DEAD, useNA = "ifany")
 table(ds$PR, ds$FOL) %>% knitr::kable()
-table(ds$study_name, ds$female, useNA = "always")
-table(ds$study_name, ds$marital, useNA = "always")
-table(ds$study_name, ds$educ3, useNA = "always")
+table(ds$PR, ds$female, useNA = "always")
+table(ds$PR, ds$marital, useNA = "always")
+table(ds$PR, ds$educ4, useNA = "always")
 
 # ---- fit-model ----------------------------------------
 ds2 <- ds %>% 
   dplyr::select_("person_id", "PR", "S_DEAD", 
-                 "age_group", "SEX", "MARST", "FOL","OLN") %>% 
+                 "age_group", "female", "marital", "educ4", "FOL","OLN") %>% 
   na.omit() %>% 
-  # dplyr::mutate(
-  #   marital_f         = as.factor(marital),
-  #   educ3_f           = as.factor(educ3)
-  # ) %>% 
   dplyr::rename_(
     "dv" = dv_name
   ) 
@@ -131,13 +156,13 @@ ds2 <- ds %>%
 # eq <- as.formula(paste0("smoke_now ~ -1 + age_in_years + female + educ3_f + poor_health"))
 eq_global_string <- paste0(
   # "smoke_now ~ -1 + study_name + age_in_years + female + marital_f + educ3_f + poor_health + female:marital_f + female:educ3_f + female:poor_health + marital_f:educ3_f + marital_f:poor_health"
-  "dv ~ -1 + PR + age_group + SEX + MARST + FOL + OLN"
+  "dv ~ -1 + PR + age_group + female + marital + educ4 + FOL + OLN"
 )
 eq_global <- as.formula(eq_global_string)
 
 eq_local_string <- paste0(
   # "smoke_now ~ -1 + age_in_years + female + marital_f + educ3_f + poor_health + female:marital_f + female:educ3_f + female:poor_health + marital_f:educ3_f + marital_f:poor_health"
-  "dv ~ -1 + age_group + SEX + MARST + FOL + OLN"
+  "dv ~ -1 + age_group + marital + educ4 + FOL + OLN"
 )
 
 eq_local <- as.formula(eq_local_string)
