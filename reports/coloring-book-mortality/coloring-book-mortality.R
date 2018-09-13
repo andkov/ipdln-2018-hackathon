@@ -75,10 +75,10 @@ quick_save <- function(g,name){
     plot=g,
     device = png,
     path = "./reports/coloring-book-mortality/prints/",
-    width = 1200,
-    height = 1000,
+    width = 1600,
+    height = 1200,
     # units = "cm",
-    dpi = 400,
+    dpi = 600,
     limitsize = FALSE
   )
 }
@@ -330,7 +330,7 @@ assign_color <- function(color_group){
     palette_color <- c("mar_cohab"=descreased_risk_1, "sep_divorced"= increased_risk_2, "single"=reference_color, "widowed"=increased_risk_1)
   } else if( color_group %in% c("poor_health") ) {
     # http://colrd.com/palette/18841/
-    palette_color <- c("FALSE"=reference_color, "TRUE"=descreased_risk_2)
+    palette_color <- c("FALSE"=reference_color, "TRUE"=increased_risk_2)
   } else {
     stop("The palette for this variable is not defined.")
   }
@@ -402,7 +402,7 @@ descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
 
 # increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
 increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
-reference_color <- "#4daf4a"   # green  - REFERENCE  category
+# reference_color <- "#4daf4a"   # green  - REFERENCE  category
 # descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
 # descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
 
@@ -419,7 +419,7 @@ graph_logistic_point_complex_4(
   quick_save("a3")
 
 
-# summary(ds_predicted_global)
+
 
 # 4 step of color logic:
 increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
@@ -429,8 +429,8 @@ descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
 descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
 
 # increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
-increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
-reference_color <- "#4daf4a"   # green  - REFERENCE  category
+# increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
+# reference_color <- "#4daf4a"   # green  - REFERENCE  category
 descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
 # descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
 
@@ -446,9 +446,33 @@ graph_logistic_point_complex_4(
   quick_save("a4")
 
 
-summary(ds_predicted_study_list)
+
 
 # 5 step of color logic:
+increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
+increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
+reference_color <- "#bdbdbd"   # green  - REFERENCE  category
+descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
+descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
+
+increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
+# increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
+# reference_color <- "#4daf4a"   # green  - REFERENCE  category
+# descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
+# descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
+
+graph_logistic_point_complex_4(
+  ds = ds_predicted_global,
+  x_name = "age_group",
+  y_name = "dv_hat_p",
+  covar_order = covar_order_values,
+  alpha_level = .4,
+  y_title = dv_label_prob,
+  y_range = c(0, 1)) %>% 
+  quick_save("a5")
+
+
+# All colors are in
 increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
 increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
 reference_color <- "#4daf4a"   # green  - REFERENCE  category
@@ -463,6 +487,5 @@ graph_logistic_point_complex_4(
   alpha_level = .4,
   y_title = dv_label_prob,
   y_range = c(0, 1)) %>% 
-  quick_save("a5")
+  quick_save("a0")
 
-summary(ds_predicted_study_list)
