@@ -102,17 +102,32 @@ graph_logistic_point_simple <- function(
   palette_color <- assign_color(color_group)
   g <- ggplot2::ggplot(ds, aes_string(x=x_name)) +
     # geom_point(aes_string(y=y_name, color=color_group), shape=16, alpha=alpha_level) +
-    geom_jitter(aes_string(y=y_name, color=color_group), shape=16, alpha=alpha_level) +
+    geom_jitter(
+      aes_string(
+        y      = y_name
+        ,fill = color_group
+        # ,color = color_group
+      )
+      ,shape = 21, alpha = alpha_level, color = "grey70") +
 
-    scale_color_manual(values = palette_color) +
+    # scale_color_manual(values = palette_color) +
+    scale_fill_manual(values = palette_color) +
     facet_grid(. ~ PR) + 
     main_theme +
     theme(
       legend.position="right"
       # ,axis.text.x = element_text(angle = 90)
     ) +
-    labs(x=x_title, y = y_title, color = color_title) +
-    guides(color = guide_legend(override.aes = list(alpha=1, size=6, shape=15)))
+    labs(
+      x=x_title
+      , y = y_title
+      # , color = color_title
+      , fill = color_title
+      ) +
+    guides(
+      fill = guide_legend(override.aes = list(alpha=1, size=6, shape=15))
+      # color = guide_legend(override.aes = list(alpha=1, size=6, shape=15))
+      )
   # return(g)
 }
 
