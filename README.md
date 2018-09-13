@@ -34,4 +34,4 @@ ls_guide <- readRDS("./data-unshared/derived/0-metador.rds")
 [0-greeter-report]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/manipulation/stitched-output/0-greeter.html
 [eda1]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/reports/eda-1/eda-1.html
 
-[final_image]:https://github.com/andkov/ipdln-2018-hackathon/blob/master/reports/coloring-book-mortality/a0.png
+[final_image]:https://raw.githubusercontent.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/a0.png
