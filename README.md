@@ -1,6 +1,11 @@
 # ipdln-2018-hackathon
 Repository to accompany a hackathon at IPDLN conference at Banff, Sep 2018
 
+
+![part2][part2]
+
+
+
 # Shared google docs
 
 - [Information for Participants][info_participants] 
@@ -24,7 +29,11 @@ ls_guide <- readRDS("./data-unshared/derived/0-metador.rds")
 
 # Model solution
 
-![][final_image]
+Model estimation and graph production is carried out in [`./reports/coloring-book-mortality/coloring-book-mortality.R`][colorbook]
+
+[colorbook]:https://github.com/andkov/ipdln-2018-hackathon/blob/master/reports/coloring-book-mortality/coloring-book-mortality.R
+![part1][part1]
+
 
 [info_participants]:https://drive.google.com/open?id=1OwqD0gHfuTQeBwqh4fkgkR7r-jUXuSzM
 [data_codebook]:https://drive.google.com/open?id=10idMxy8eX8nTHr6wr2Q40x4XOP3Y5ck7
@@ -33,5 +42,14 @@ ls_guide <- readRDS("./data-unshared/derived/0-metador.rds")
 [0-meta-report]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/manipulation/stitched-output/0-metador.html
 [0-greeter-report]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/manipulation/stitched-output/0-greeter.html
 [eda1]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/reports/eda-1/eda-1.html
+[part1]:https://raw.githubusercontent.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/results-part-1.gif
+[part2]:https://raw.githubusercontent.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/results-part-2.gif
 
-[final_image]:https://raw.githubusercontent.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/a0.png
+# Team
+- Stacey Fisher, Ph.D. Candidate, Ottawa Hospital Research Institute; ICES; University of Ottawa
+- Gareth Davies, MSc, Research Data Analyst, SAIL Databank, Swansea University
+- Andriy Koval, Health System Impact Fellow, BC Observatory for Population & Public Health
+
+
+
+
