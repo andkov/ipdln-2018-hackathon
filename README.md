@@ -29,6 +29,9 @@ ls_guide <- readRDS("./data-unshared/derived/0-metador.rds")
 
 # Model solution
 
+Model estimation and graph production is carried out in [`./reports/coloring-book-mortality/coloring-book-mortality.R`][colorbook]
+
+[colorbook]:https://github.com/andkov/ipdln-2018-hackathon/blob/master/reports/coloring-book-mortality/coloring-book-mortality.R
 ![part1][part1]
 
 
