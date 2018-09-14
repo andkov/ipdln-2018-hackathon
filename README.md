@@ -5,7 +5,7 @@ Repository to accompany a hackathon at IPDLN conference at Banff, Sep 2018
 
 ![part2][part2]
 
-[slidedeck]
+[slidedeck]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/ipdln-2018-banff-hackathon-results-2018-09-14.pdf
 
 # Shared google docs
 
