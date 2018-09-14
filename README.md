@@ -45,3 +45,11 @@ Model estimation and graph production is carried out in [`./reports/coloring-boo
 [part1]:https://raw.githubusercontent.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/results-part-1.gif
 [part2]:https://raw.githubusercontent.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/results-part-2.gif
 
+# Team
+- Stacey Fisher, Ph.D. Candidate, Ottawa Hospital Research Institute; ICES; University of Ottawa
+- Gareth Davies, MSc, Research Data Analyst, SAIL Databank, Swansea University
+- Andriy Koval, Health System Impact Fellow, BC Observatory for Population & Public Health
+
+
+
+
