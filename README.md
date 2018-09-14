@@ -1,10 +1,11 @@
 # ipdln-2018-hackathon
 Repository to accompany a hackathon at IPDLN conference at Banff, Sep 2018
 
+[Slide deck][slidedeck] with hackathon results.
 
 ![part2][part2]
 
-
+[slidedeck]
 
 # Shared google docs
 
