@@ -31,6 +31,7 @@ devtools.zip
 /data-unshared/*
 /data/unshared/*
 
+libs/materials/*
 reports/*/prints/*.png
 reports/*/prints/*/*.png
 reports/*/prints/*/*/*.png

@@ -74,7 +74,9 @@ quick_save <- function(g,name){
     filename= paste0(name,".png"), 
     plot=g,
     device = png,
-    path = "./reports/coloring-book-mortality/prints2/",
+    # path = "./reports/coloring-book-mortality/prints/1/", # female marital educ poor_healt
+    path = "./reports/coloring-book-mortality/prints/2/", # educ3 poor_health first conversational
+    # path = "./reports/coloring-book-mortality/prints/3/",
     width = 1600,
     height = 1200,
     # units = "cm",
@@ -82,6 +84,15 @@ quick_save <- function(g,name){
     limitsize = FALSE
   )
 }
+
+# ---- define-graph-controls --------------------------------------------
+dv_name            <- "S_DEAD"
+dv_label_prob      <- "Alive in X years"
+dv_label_odds      <- "Odds(Dead)"
+# covar_order_values <- c("female","marital","educ3","poor_health") # rows in display matrix
+covar_order_values <- c("educ3","poor_health", "FOL","OLN") # rows in display matrix
+# covar_order_values <- c("educ5","poor_health", "FOL","OLN") # rows in display matrix
+
 
 # ---- transform-into-new-variables --------------------------------------
 # new variables are 
@@ -101,6 +112,7 @@ ds0 <- ds0 %>%
       'Female' = 'TRUE'
       ;'Male'  = 'FALSE'
       ")
+    ,female = factor(female, levels = c("FALSE","TRUE"))
     ,marital = car::recode(
       MARST, "
       'Divorced'                              = 'sep_divorced'
@@ -108,28 +120,38 @@ ds0 <- ds0 %>%
      ;'Separated, but still legally married'  = 'sep_divorced' 
      ;'Never legally married (single)'        = 'single' 
      ;'Widowed'                               = 'widowed'
+    "),
+    marital = factor(marital, levels = c(
+      "sep_divorced","widowed","single","mar_cohab"))
+    ,educ5 = car::recode(
+     HCDD, "
+     'None'                                                                                                          = 'less then high school'
+    ;'High school graduation certificate or equivalency certificate'                                                 = 'high school'
+    ;'Other trades certificate or diploma'                                                                           = 'high school'
+    ;'Registered apprenticeship certificate'                                                                         = 'high school'
+    ;'College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year'  = 'college'
+    ;'College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years'             = 'college'
+    ;'College, CEGEP or other non-university certificate or diploma from a program of more than 2 years'             = 'college'
+    ;'University certificate or diploma below bachelor level'                                                        = 'college'
+    ;'Bachelors degree'                                                                                              = 'college'
+    ;'University certificate or diploma above bachelor level'                                                        = 'graduate'
+    ;'Degree in medicine, dentistry, veterinary medicine or optometry'                                               = 'graduate'
+    ;'Masters degree'                                                                                                = 'graduate'
+    ;'Earned doctorate degree'                                                                                       = 'Dr.'
     ")
-    # ,educ4 = car::recode(
-    #  HCDD, "
-    #  'None'                                                                                                          = 'less then high school'
-    # ;'High school graduation certificate or equivalency certificate'                                                 = 'high-trade-college'  
-    # ;'Other trades certificate or diploma'                                                                           = 'high-trade-college'  
-    # ;'Registered apprenticeship certificate'                                                                         = 'high-trade-college'  
-    # ;'College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year'  = 'high-trade-college'  
-    # ;'College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years'             = 'high-trade-college'  
-    # ;'College, CEGEP or other non-university certificate or diploma from a program of more than 2 years'             = 'university or more'  
-    # ;'University certificate or diploma below bachelor level'                                                        = 'university or more'  
-    # ;'Bachelors degree'                                                                                              = 'university or more'  
-    # ;'University certificate or diploma above bachelor level'                                                        = 'university or more' 
-    # ;'Degree in medicine, dentistry, veterinary medicine or optometry'                                               = 'university or more' 
-    # ;'Masters degree'                                                                                                = 'university or more' 
-    # ;'Earned doctorate degree'                                                                                       = 'university or more' 
-    # ")
+    ,educ5 = factor(educ5, levels = c( 
+      "less then high school"
+      ,"high school"          
+      ,"college"             
+      ,"graduate"            
+      ,"Dr."  
+      ) 
+    ) 
     ,educ3 = car::recode(
       HCDD, "
      'None'                                                                                                          = 'less than high school'
     ;'High school graduation certificate or equivalency certificate'                                                 = 'high school'  
-    ;'Other trades certificate or diploma'                                                                           = 'more than high school' 
+    ;'Other trades certificate or diploma'                                                                           = 'high school'  
     ;'Registered apprenticeship certificate'                                                                         = 'more than high school' 
     ;'College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year'  = 'more than high school' 
     ;'College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years'             = 'more than high school' 
@@ -141,11 +163,18 @@ ds0 <- ds0 %>%
     ;'Masters degree'                                                                                                = 'more than high school'
     ;'Earned doctorate degree'                                                                                       = 'more than high school'
     ")
+    ,educ3 = factor(educ3, levels = c(
+       "less than high school"
+      , "high school"
+      , "more than high school"
+      )
+    )
     ,poor_health = ifelse(ADIFCLTY %in% c("Yes, often","Yes, sometimes")
                           &
                           DISABFL %in% c("Yes, often","Yes, sometimes"),
                           TRUE, FALSE
                           )
+    ,poor_health = factor(poor_health, levels = c("TRUE","FALSE"))
     ,age_group_low = car::recode(
       age_group, 
       "
@@ -166,19 +195,32 @@ ds0 <- ds0 %>%
       ;'90 and older' = '90'  
       "
     )
-  ) %>% 
-  dplyr::mutate(
-    age_in_years = as.numeric( as.character(age_group_low))
-    ,age_in_years = age_in_years + sample(c(0:4),1)
-  ) %>% 
+  ) %>%  
   # replace for convenience
   dplyr::mutate(
     age_group = age_group_low
+  ) %>% 
+  dplyr::mutate(
+    FOL = factor(FOL,levels = c(
+       "Neither English nor French"
+      ,"French only"
+      ,"English only"
+      ,"Both English and French"
+      )
+    )
+    ,OLN = factor(FOL,levels = c(
+       "Neither English nor French"
+      ,"French only"
+      ,"English only"
+      ,"Both English and French"
+      )
+    )
   )
 
 ds0 %>% glimpse(50)
-
-
+ds0 %>% group_by(educ3) %>% summarize(n = n())
+ds0 %>% group_by(educ5) %>% summarize(n = n())
+ds0 %>% group_by(FOL) %>% summarize( n = n())
 # ---- a-1 ---------------------------------------------------------------
 selected_provinces <- c("Alberta","British Columbia", "Ontario", "Quebec")
 sample_size = 10000
@@ -202,13 +244,10 @@ lapply(dmls, names) # view the contents of the list object
 # overwrite, making it a stratified sample across selected provinces (same size)
 ds1 <- plyr::ldply(dmls,data.frame,.id = "PR")
 
+ds1 %>% group_by(educ3) %>% summarize(n = n())
+ds1 %>% group_by(educ5) %>% summarize(n = n())
 
 # ---- assemble ------------------------
-dv_name            <- "S_DEAD"
-dv_label_prob      <- "Alive in X years"
-dv_label_odds      <- "Odds(Dead)"
-# covar_order_values <- c("female","marital","educ3","poor_health") # rows in display matrix
-covar_order_values <- c("educ3","poor_health", "FOL","OLN") # rows in display matrix
 
 
 # basic counts
@@ -217,6 +256,7 @@ table(ds1$PR, ds1$FOL                      )
 table(ds1$PR, ds1$female,  useNA = "always")
 table(ds1$PR, ds1$marital, useNA = "always")
 table(ds1$PR, ds1$educ3,   useNA = "always")
+table(ds1$PR, ds1$educ5,   useNA = "always")
 table(ds1$PR, ds1$FOL,   useNA = "always")
 table(ds1$PR, ds1$OLN,   useNA = "always")
 
@@ -225,7 +265,8 @@ table(ds1$PR, ds1$OLN,   useNA = "always")
 ds2 <- ds1 %>% 
   dplyr::select_("person_id", "PR", "S_DEAD"
                  ,"age_group"
-                 , "female", "marital", "educ3","poor_health", "FOL","OLN") %>% 
+                 , "female", "marital", "educ3","poor_health", "FOL","OLN") %>%
+                 # , "female", "marital", "educ5","poor_health", "FOL","OLN") %>%
   dplyr::mutate(
     poor_health = factor(poor_health)
   ) %>% 
@@ -234,9 +275,12 @@ ds2 <- ds1 %>%
     "dv" = dv_name # to ease serialization and string handling
   ) 
 
+ds2 %>% group_by(educ5) %>% summarize(n = n())
+
 # define the model equation 
 eq_global_string <- paste0(
   "dv ~ -1 + PR + age_group + female + marital + educ3 + poor_health + FOL + OLN"
+  # "dv ~ -1 + PR + age_group + female + marital + educ5 + poor_health + FOL + OLN"
 )
 eq_global <- as.formula(eq_global_string)
 
@@ -244,6 +288,7 @@ eq_global <- as.formula(eq_global_string)
 eq_local_string <- paste0(
   #        + PR  (notice the absence of this term!) 
   "dv ~ -1      + age_group + female + marital + educ3 + poor_health + FOL + OLN"
+  # "dv ~ -1      + age_group + female + marital + educ5 + poor_health + FOL + OLN"
 )
 eq_local <- as.formula(eq_local_string)
 
@@ -266,7 +311,8 @@ ds_predicted_global <- ds2 %>%
     "PR",
     "age_group", 
     "female",        
-    "educ3",       
+    "educ3",
+    # "educ5",       
     "marital" ,
     "poor_health", 
     "FOL",
@@ -297,7 +343,8 @@ for( province_i in selected_provinces) {
       # "PR", (notice the absence of this term!)
       "age_group", 
       "female",        
-      "educ3",       
+      "educ3",
+      # "educ5",       
       "marital" ,
       "poor_health", 
       "FOL",
@@ -325,22 +372,42 @@ assign_color <- function(color_group){
   if( color_group == "female") {
     # http://colrd.com/image-dna/25114/
     palette_color <- c("TRUE"=reference_color, "FALSE"=increased_risk_1) # 98aab9
+  } else if( color_group %in% c("educ5") ) { 
+    # http://colrd.com/image-dna/24382/
+    palette_color <- c(
+       "less than high school" = increased_risk_2
+      ,"high school"           = increased_risk_1
+      , "college"              = reference_color
+      , "graduate"             = descreased_risk_1
+      , "Dr."                  = descreased_risk_2
+      ) # 54a992, e8c571
   } else if( color_group %in% c("educ3") ) { 
     # http://colrd.com/image-dna/24382/
-    palette_color <- c("high school"=reference_color, "less than high school"=increased_risk_1, "more than high school"=descreased_risk_1) # 54a992, e8c571
+    palette_color <- c(
+      "less than high school" = increased_risk_1
+      ,"high school"           = reference_color
+      , "more than high school"=descreased_risk_1
+     ) # 54a992, e8c571
   } else if( color_group %in% c("marital") ) {
     # http://colrd.com/image-dna/23318/
     palette_color <- c("mar_cohab"=descreased_risk_1, "sep_divorced"= increased_risk_2, "single"=reference_color, "widowed"=increased_risk_1)
   } else if( color_group %in% c("poor_health") ) {
     # http://colrd.com/palette/18841/
     palette_color <- c("FALSE"=reference_color, "TRUE"=increased_risk_2)
-  } else if( color_group %in% c("FOL","ONL") ) {
+  } else if( color_group %in% c("FOL") ) {
+    # http://colrd.com/image-dna/23318/
+    palette_color <- c("Both English and French"     = descreased_risk_1,
+                       "English only"                = reference_color, 
+                       "French only"                 = increased_risk_1,
+                       "Neither English nor French"  = increased_risk_2
+                       )
+  } else if( color_group %in% c("OLN") ) {
     # http://colrd.com/image-dna/23318/
     palette_color <- c("Both English and French"     = descreased_risk_2,
                        "English only"                = reference_color, 
                        "French only"                 = increased_risk_1,
                        "Neither English nor French"  = increased_risk_2
-                       )
+    )
   } else {
     stop("The palette for this variable is not defined.")
   }
@@ -351,21 +418,19 @@ assign_color <- function(color_group){
 
 # ---- 1-global-probability ----------------------
 
-common_alpha <- .8
+common_alpha <- .7
+common_natural <- "grey90"
+y_low = .2
+y_high = 1
 
-# 1 step of color logic:
-increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
-increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
-reference_color <- "#bdbdbd"   # green  - REFERENCE  category
-descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
-descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
-
-# increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
-# increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
-# reference_color <- "#4daf4a"   # green  - REFERENCE  category
-# descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
-# descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
 source("./scripts/graphing/graph-logistic.R")
+# 0 step : All colors are in
+increased_risk_2  <- "#e41a1c"  # red      - further increased risk factor
+increased_risk_1  <- "#ff7f00"  # organge  - increased risk factor
+reference_color   <- "#4daf4a"  # green    - REFERENCE  category
+descreased_risk_1 <-"#377eb8"   # blue     -  descreased risk factor
+descreased_risk_2 <- "#984ea3"  # purple   - further descrease in risk factor
+
 graph_logistic_point_complex_4(
   ds = ds_predicted_global,
   x_name = "age_group",
@@ -373,17 +438,40 @@ graph_logistic_point_complex_4(
   covar_order = covar_order_values,
   alpha_level = common_alpha,
   y_title = dv_label_prob,
-  y_range = c(0, 1)
+  y_range = c(y_low, y_high)) %>% 
+  quick_save("a0")
+
+# 1 step of color logic:
+increased_risk_2 <- common_natural  # red - further increased risk factor
+increased_risk_1 <- common_natural  # organge - increased risk factor
+reference_color <- common_natural   # green  - REFERENCE  category
+descreased_risk_1 <-common_natural  # blue - descreased risk factor
+descreased_risk_2 <- common_natural # purple - further descrease in risk factor
+
+# increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
+# increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
+# reference_color <- "#4daf4a"   # green  - REFERENCE  category
+# descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
+# descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
+
+graph_logistic_point_complex_4(
+  ds = ds_predicted_global,
+  x_name = "age_group",
+  y_name = "dv_hat_p",
+  covar_order = covar_order_values,
+  alpha_level = common_alpha,
+  y_title = dv_label_prob,
+  y_range = c(y_low, y_high)
 ) %>% 
   quick_save(name = "a1")
 summary(ds_predicted_province_list)
 
 # 2 step of color logic:
-increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
-increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
-reference_color <- "#bdbdbd"   # green  - REFERENCE  category
-descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
-descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
+increased_risk_2 <- common_natural  # red - further increased risk factor
+increased_risk_1 <- common_natural  # organge - increased risk factor
+reference_color <- common_natural   # green  - REFERENCE  category
+descreased_risk_1 <-common_natural  # blue - descreased risk factor
+descreased_risk_2 <- common_natural # purple - further descrease in risk factor
 
 # increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
 # increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
@@ -400,18 +488,18 @@ graph_logistic_point_complex_4(
   covar_order = covar_order_values,
   alpha_level = common_alpha,
   y_title = dv_label_prob,
-  y_range = c(0, 1)) %>% 
+  y_range = c(y_low, y_high)) %>%  
   quick_save(name = "a2")
 
 
 # summary(ds_predicted_province)
 
 # 3 step of color logic:
-increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
-increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
-reference_color <- "#bdbdbd"   # green  - REFERENCE  category
-descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
-descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
+increased_risk_2 <- common_natural  # red - further increased risk factor
+increased_risk_1 <- common_natural  # organge - increased risk factor
+reference_color <- common_natural   # green  - REFERENCE  category
+descreased_risk_1 <-common_natural  # blue - descreased risk factor
+descreased_risk_2 <- common_natural # purple - further descrease in risk factor
 
 # increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
 increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
@@ -428,18 +516,18 @@ graph_logistic_point_complex_4(
   covar_order = covar_order_values,
   alpha_level = common_alpha,
   y_title = dv_label_prob,
-  y_range = c(0,1)) %>% 
+  y_range = c(y_low, y_high)) %>% 
   quick_save("a3")
 
 
 
 
 # 4 step of color logic:
-increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
-increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
-reference_color <- "#bdbdbd"   # green  - REFERENCE  category
-descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
-descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
+increased_risk_2 <- common_natural  # red - further increased risk factor
+increased_risk_1 <- common_natural  # organge - increased risk factor
+reference_color <- common_natural   # green  - REFERENCE  category
+descreased_risk_1 <-common_natural  # blue - descreased risk factor
+descreased_risk_2 <- common_natural # purple - further descrease in risk factor
 
 # increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
 # increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
@@ -455,18 +543,18 @@ graph_logistic_point_complex_4(
   covar_order = covar_order_values,
   alpha_level = common_alpha,
   y_title = dv_label_prob,
-  y_range = c(0, 1)) %>% 
+  y_range = c(y_low, y_high)) %>% 
   quick_save("a4")
 
 
 
 
 # 5 step of color logic:
-increased_risk_2 <- "#bdbdbd"  # red - further increased risk factor
-increased_risk_1 <- "#bdbdbd"  # organge - increased risk factor
-reference_color <- "#bdbdbd"   # green  - REFERENCE  category
-descreased_risk_1 <-"#bdbdbd"  # blue - descreased risk factor
-descreased_risk_2 <- "#bdbdbd" # purple - further descrease in risk factor
+increased_risk_2 <- common_natural  # red - further increased risk factor
+increased_risk_1 <- common_natural  # organge - increased risk factor
+reference_color <- common_natural   # green  - REFERENCE  category
+descreased_risk_1 <-common_natural  # blue - descreased risk factor
+descreased_risk_2 <- common_natural # purple - further descrease in risk factor
 
 increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
 # increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
@@ -481,15 +569,20 @@ graph_logistic_point_complex_4(
   covar_order = covar_order_values,
   alpha_level = common_alpha,
   y_title = dv_label_prob,
-  y_range = c(0, 1)) %>% 
+  y_range = c(y_low, y_high)) %>% 
   quick_save("a5")
 
+# 6 step of color logic:
+increased_risk_2 <- common_natural  # red - further increased risk factor
+increased_risk_1 <- common_natural  # organge - increased risk factor
+reference_color <- common_natural   # green  - REFERENCE  category
+descreased_risk_1 <-common_natural  # blue - descreased risk factor
+descreased_risk_2 <- common_natural # purple - further descrease in risk factor
 
-# All colors are in
-increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
-increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
-reference_color <- "#4daf4a"   # green  - REFERENCE  category
-descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
+# increased_risk_2 <- "#e41a1c"  # red - further increased risk factor
+# increased_risk_1 <- "#ff7f00"  # organge - increased risk factor
+# reference_color <- "#4daf4a"   # green  - REFERENCE  category
+# descreased_risk_1 <-"#377eb8"  # blue - descreased risk factor
 descreased_risk_2 <- "#984ea3" # purple - further descrease in risk factor
 
 graph_logistic_point_complex_4(
@@ -499,6 +592,8 @@ graph_logistic_point_complex_4(
   covar_order = covar_order_values,
   alpha_level = common_alpha,
   y_title = dv_label_prob,
-  y_range = c(0, 1)) %>% 
-  quick_save("a0")
+  y_range = c(y_low, y_high)) %>% 
+  quick_save("a6")
+
+
 
