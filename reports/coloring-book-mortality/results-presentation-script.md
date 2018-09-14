@@ -2,7 +2,7 @@
 
 This is an approxinate script of the presentation given at the end of the hackathon (2018-09-14). 
 
-#Hackathon results - Group 4
+# Hackathon results - Group 4
 
 
 If any of you were at my talk on Wednesday, you already know that I am a big proponent of using data science techniques in health research, and of reproducible and transparent analyses. When our group met on Monday, we realized that we all share this interest. So due to the quick nature of this hackathon, we decided do something a little bit unconventional, we wanted to focus on how we looked at the data, and worry less about what we find in it.
