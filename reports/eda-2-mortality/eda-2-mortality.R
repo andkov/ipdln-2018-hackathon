@@ -84,7 +84,7 @@ g1 <- ds %>%
 # ---- save-to-disk ----------------------------
 
 # ---- publish ---------------------------------------
-path_report_1 <- "./reports/eda-2/eda-2-mortality.Rmd"
+path_report_1 <- "./reports/eda-2-mortality/eda-2-mortality.Rmd"
 # path_report_2 <- "./reports/*/report_2.Rmd"
 allReports <- c(path_report_1)
 
