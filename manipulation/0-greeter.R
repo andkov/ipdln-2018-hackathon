@@ -34,7 +34,7 @@ testit::assert("File does not exist", base::file.exists(path_input_meta))
 path_save <- "./data-unshared/derived/0-greeted.rds"
 
 # See definitions of commonly  used objects in:
-source("./manipulation/object-glossary.R")   # object definitions
+base::source("./manipulation/object-glossary.R")   # object definitions
 
 # ---- utility-functions ----------------------------------------------------- 
 # functions, the use of which is localized to this script
@@ -49,24 +49,26 @@ ls_guide <- readRDS(path_input_meta)
 ds0 %>% dplyr::glimpse(50)
 
 # ---- tweak-data -------------------------------------------------------------
-# remove the unnecessary suffix in the name of variables
-names(ds0) <- gsub("_synth$", "", names(ds0 ))
-names(ds0)
-ds0 %>% dplyr::glimpse(50)
+# remove suffix in the name of variables
+names(ds0) <- gsub("_synth$", "", names(ds0 )) # because it is redundant, all vars have it
+names(ds0) # to verify
+ds0 %>% dplyr::glimpse(50) # new look
 
 # augment the micro data with meta data
 
-# function to augment micro data with meta data
+# create a function to augment micro data with meta data
+# because you will need to add selected metadata on the spot
 augment_with_meta <- function(
   d,  # a dataframe with the original raw data, prepared by the ./manipulation/0-greeter.R
   l   # a list object with organized meta data, prepared by the ./manipulation/0-metador.R
 ){
   for(name_i in names(d)){
+    # declare loop values for development
+    # l      <- ls_guide
     # name_i <- "SEX"
-    # d_ <- ds0[1:1000,c("SEX","S_DEAD")]
-    # l_ <- ls_guide
+    # d      <- ds0[1:1000,c("SEX","S_DEAD")]
     d <- d %>% 
-      dplyr::rename_("target_variable" = name_i) %>% 
+      dplyr::rename_("target_variable" = name_i) %>% # to avoid NSE
       dplyr::mutate(
         target_variable = factor(
           target_variable, 
@@ -74,7 +76,7 @@ augment_with_meta <- function(
           labels = l$item[[name_i]]$levels
         )
       ) 
-    names(d) <- gsub("^target_variable$",name_i, names(d))
+    names(d) <- gsub("^target_variable$",name_i, names(d)) # back to NSE
     # d1 %>% dplyr::glimpse()
   }
   return(d)
