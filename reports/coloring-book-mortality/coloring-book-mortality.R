@@ -51,6 +51,7 @@ ds0 %>% dplyr::glimpse()
 # create an explicity person identifier
 ds0 <-  ds0 %>% 
   tibble::rownames_to_column("person_id") %>% 
+  dplyr::mutate( person_id = as.integer(person_id)) %>% 
   dplyr::select(person_id, dplyr::everything())
 
 
@@ -59,6 +60,7 @@ ds0 %>% dplyr::glimpse(50)
 
 # ---- define-utility-functions ---------------
 # create a function to subset a dataset in this context
+# because data is heavy and makes development cumbersome
 get_a_subsample <- function(d, sample_size, seed = 42){
   # sample_size <- 20000
   v_sample_ids <- sample(unique(d$person_id), sample_size)
@@ -69,13 +71,15 @@ get_a_subsample <- function(d, sample_size, seed = 42){
 # how to use 
 # ds1 <- ds0 %>% get_a_subsample(10000)  
 
+# define a function to print a graph onto disk as an image
+# because some aspects of appearances are easier to control during printing, not graphing
 quick_save <- function(g,name){
   ggplot2::ggsave(
     filename= paste0(name,".png"), 
     plot=g,
     device = png,
-    # path = "./reports/coloring-book-mortality/prints/1/", # female marital educ poor_healt
-    path = "./reports/coloring-book-mortality/prints/2/", # educ3 poor_health first conversational
+    path = "./reports/coloring-book-mortality/prints/1/", # female marital educ poor_healt
+    # path = "./reports/coloring-book-mortality/prints/2/", # educ3 poor_health first conversational
     # path = "./reports/coloring-book-mortality/prints/3/",
     width = 1600,
     height = 1200,
@@ -86,11 +90,13 @@ quick_save <- function(g,name){
 }
 
 # ---- define-graph-controls --------------------------------------------
+# declare the dependent variable and define descriptive labels
 dv_name            <- "S_DEAD"
 dv_label_prob      <- "Alive in X years"
 dv_label_odds      <- "Odds(Dead)"
-# covar_order_values <- c("female","marital","educ3","poor_health") # rows in display matrix
-covar_order_values <- c("educ3","poor_health", "FOL","OLN") # rows in display matrix
+# select the predictors to evaluate graphically
+covar_order_values <- c("female","marital","educ3","poor_health") # rows in display matrix
+# covar_order_values <- c("educ3","poor_health", "FOL","OLN") # rows in display matrix
 # covar_order_values <- c("educ5","poor_health", "FOL","OLN") # rows in display matrix
 
 
@@ -107,15 +113,17 @@ ds0 %>% group_by(age_group) %>% summarize(n = n())
 # transform the scale of some variable (to be used in the model)
 ds0 <- ds0 %>% 
   dplyr::mutate(
+    # because `female` is less ambiguous then `sex`
     female = car::recode(
       SEX, "
       'Female' = 'TRUE'
       ;'Male'  = 'FALSE'
       ")
     ,female = factor(female, levels = c("FALSE","TRUE"))
+    # because `still legaly married` is more legal than human
     ,marital = car::recode(
       MARST, "
-      'Divorced'                              = 'sep_divorced'
+      'Divorced'                              = 'sep_divorced' 
      ;'Legally married (and not separated)'   = 'mar_cohab' 
      ;'Separated, but still legally married'  = 'sep_divorced' 
      ;'Never legally married (single)'        = 'single' 
@@ -123,6 +131,7 @@ ds0 <- ds0 %>%
     "),
     marital = factor(marital, levels = c(
       "sep_divorced","widowed","single","mar_cohab"))
+    # because more than 5 categories is too fragmented
     ,educ5 = car::recode(
      HCDD, "
      'None'                                                                                                          = 'less then high school'
@@ -147,6 +156,7 @@ ds0 <- ds0 %>%
       ,"Dr."  
       ) 
     ) 
+    # because even only 5 may be too granular for our purposes
     ,educ3 = car::recode(
       HCDD, "
      'None'                                                                                                          = 'less than high school'
@@ -169,12 +179,15 @@ ds0 <- ds0 %>%
       , "more than high school"
       )
     )
-    ,poor_health = ifelse(ADIFCLTY %in% c("Yes, often","Yes, sometimes")
+    # ADIFCLTY               "Problems with ADL" (physical & cognitive)
+    # DISABFL                "Problems with ADL" (physical & social)
+   ,poor_health = ifelse(ADIFCLTY %in% c("Yes, often","Yes, sometimes")
                           &
                           DISABFL %in% c("Yes, often","Yes, sometimes"),
                           TRUE, FALSE
                           )
     ,poor_health = factor(poor_health, levels = c("TRUE","FALSE"))
+    # because interval floor is easer to display on the graph then `19 to 24`
     ,age_group_low = car::recode(
       age_group, 
       "
@@ -196,10 +209,11 @@ ds0 <- ds0 %>%
       "
     )
   ) %>%  
-  # replace for convenience
+  # because easier to reference, expressed as interval's floor
   dplyr::mutate(
     age_group = age_group_low
   ) %>% 
+  # because we it sorted from lowest to highest ability 
   dplyr::mutate(
     FOL = factor(FOL,levels = c(
        "Neither English nor French"
@@ -218,6 +232,7 @@ ds0 <- ds0 %>%
   )
 
 ds0 %>% glimpse(50)
+# because we want/need to inspect newly created variables
 ds0 %>% group_by(educ3) %>% summarize(n = n())
 ds0 %>% group_by(educ5) %>% summarize(n = n())
 ds0 %>% group_by(FOL) %>% summarize( n = n())
@@ -225,43 +240,44 @@ ds0 %>% group_by(FOL) %>% summarize( n = n())
 selected_provinces <- c("Alberta","British Columbia", "Ontario", "Quebec")
 sample_size = 10000
 
-# middle aged immigrants in british columbia
+# because we want to focus on a meaningful sample
+# middle aged immigrants in british columbia:
 ds1 <- ds0 %>% 
   dplyr::filter(PR %in% selected_provinces) %>% 
-  dplyr::filter(IMMDER == "Immigrants") %>% 
+  dplyr::filter(IMMDER   == "Immigrants") %>% 
   dplyr::filter(GENSTPOB == "1st generation - Respondent born outside Canada") #%>% 
   # get_a_subsample(sample_size) # representative sample across provinces
 
-
-dmls <- list() # dummy list
+# because we want only a small, representative sample from each province
+dmls <- list() # dummy list (dmls) to populate during the loop
 for(province_i in selected_provinces){
-  # province_i = "British Columbia"
+  # province_i = "British Columbia" # for example
   dmls[[province_i]] <-  ds1 %>%
   dplyr::filter(PR == province_i) %>% 
-    get_a_subsample(sample_size)
+    get_a_subsample(sample_size) # see `define-utility-functions` chunk
 }
 lapply(dmls, names) # view the contents of the list object
-# overwrite, making it a stratified sample across selected provinces (same size)
+# overwrite, making it a stratified sample across selected provinces (same size in each)
 ds1 <- plyr::ldply(dmls,data.frame,.id = "PR")
+ds1 %>% dplyr::glimpse(50)
 
 ds1 %>% group_by(educ3) %>% summarize(n = n())
 ds1 %>% group_by(educ5) %>% summarize(n = n())
 
 # ---- assemble ------------------------
 
-
-# basic counts
-table(ds1$PR, ds1$S_DEAD,  useNA = "ifany" )
-table(ds1$PR, ds1$FOL                      ) 
-table(ds1$PR, ds1$female,  useNA = "always")
-table(ds1$PR, ds1$marital, useNA = "always")
-table(ds1$PR, ds1$educ3,   useNA = "always")
-table(ds1$PR, ds1$educ5,   useNA = "always")
-table(ds1$PR, ds1$FOL,   useNA = "always")
-table(ds1$PR, ds1$OLN,   useNA = "always")
+# basic counts by province, to inspect subsample
+table(ds1$PR, ds1$S_DEAD,  useNA = "ifany" ) #%>% knitr::kable()
+table(ds1$PR, ds1$FOL                      ) #%>% knitr::kable()
+table(ds1$PR, ds1$female,  useNA = "always") #%>% knitr::kable()
+table(ds1$PR, ds1$marital, useNA = "always") #%>% knitr::kable()
+table(ds1$PR, ds1$educ3,   useNA = "always") #%>% knitr::kable()
+table(ds1$PR, ds1$educ5,   useNA = "always") #%>% knitr::kable()
+table(ds1$PR, ds1$FOL,   useNA = "always")   #%>% knitr::kable()
+table(ds1$PR, ds1$OLN,   useNA = "always")   #%>% knitr::kable()
 
 # ---- model-specification ----------------------------------------
-
+# because there are too many variables to keep track of, need to focus
 ds2 <- ds1 %>% 
   dplyr::select_("person_id", "PR", "S_DEAD"
                  ,"age_group"
@@ -330,6 +346,7 @@ ds_predicted_global$dv_hat_p  <- plogis(ds_predicted_global$dv_hat)
 # ----- estimate-local-solutions ------------------------
 # these models are estimated without PR in their predictors
 # instead, they use PR to subset data which is then fed to the estimation routine
+# this is a useful option to have to address some sampliing assumptions
 
 ds_predicted_province_list <- list()
 model_province_list <- list()
@@ -424,6 +441,9 @@ y_low = .2
 y_high = 1
 
 source("./scripts/graphing/graph-logistic.R")
+# color definitions are picked from  
+# http://colorbrewer2.org/#type=qualitative&scheme=Set1&n=7
+
 # 0 step : All colors are in
 increased_risk_2  <- "#e41a1c"  # red      - further increased risk factor
 increased_risk_1  <- "#ff7f00"  # organge  - increased risk factor
@@ -545,8 +565,6 @@ graph_logistic_point_complex_4(
   y_title = dv_label_prob,
   y_range = c(y_low, y_high)) %>% 
   quick_save("a4")
-
-
 
 
 # 5 step of color logic:
