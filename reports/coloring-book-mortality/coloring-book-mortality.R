@@ -236,6 +236,7 @@ ds0 %>% glimpse(50)
 ds0 %>% group_by(educ3) %>% summarize(n = n())
 ds0 %>% group_by(educ5) %>% summarize(n = n())
 ds0 %>% group_by(FOL) %>% summarize( n = n())
+
 # ---- a-1 ---------------------------------------------------------------
 selected_provinces <- c("Alberta","British Columbia", "Ontario", "Quebec")
 sample_size = 10000
@@ -248,24 +249,22 @@ ds1 <- ds0 %>%
   dplyr::filter(GENSTPOB == "1st generation - Respondent born outside Canada") #%>% 
   # get_a_subsample(sample_size) # representative sample across provinces
 
-# because we want only a small, representative sample from each province
+#create samples of the same size from each  province
 dmls <- list() # dummy list (dmls) to populate during the loop
 for(province_i in selected_provinces){
   # province_i = "British Columbia" # for example
   dmls[[province_i]] <-  ds1 %>%
-  dplyr::filter(PR == province_i) %>% 
+    dplyr::filter(PR == province_i) %>% 
     get_a_subsample(sample_size) # see `define-utility-functions` chunk
 }
 lapply(dmls, names) # view the contents of the list object
 # overwrite, making it a stratified sample across selected provinces (same size in each)
 ds1 <- plyr::ldply(dmls,data.frame,.id = "PR")
 ds1 %>% dplyr::glimpse(50)
-
-ds1 %>% group_by(educ3) %>% summarize(n = n())
-ds1 %>% group_by(educ5) %>% summarize(n = n())
+ds1 %>% dplyr::group_by(PR) %>% 
+  dplyr::summarise(n_people = length(unique(person_id)))
 
 # ---- assemble ------------------------
-
 # basic counts by province, to inspect subsample
 table(ds1$PR, ds1$S_DEAD,  useNA = "ifany" ) #%>% knitr::kable()
 table(ds1$PR, ds1$FOL                      ) #%>% knitr::kable()
