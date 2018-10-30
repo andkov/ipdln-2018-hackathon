@@ -1,5 +1,5 @@
 ---
-title: "SubSample for Demonstrations"
+title: "Demo of Graphing Technqiue"
 date: "Date: `r Sys.Date()`"
 output: 
   html_document: 
@@ -10,7 +10,12 @@ output:
     highlight: tango
     theme: spacelab
 ---
-This report narrates the creation of a subsample from data set provided during the IPDLN-2018 Hackathon. This subsample is meant FOR DEMONSTRATION PURPOSES ONLY and does not claim accuracy of patterns in the underlying phenomena. 
+This report provides annotation layer to the computational script
+`./reports/technique-demonstration/technique-demonstration.R`
+For the full technical report of this script, see its stitched output
+`./reports/technique-demonstration/stitched_output/technique-demonstration.html`
+
+
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of two directories.-->
 ```{r, echo=F, message=F} 
 # cat("Working directory: ", getwd())
@@ -28,8 +33,8 @@ opts_chunk$set(
   tidy         = FALSE,
   # dpi        = 400,
   out.width  = "900px", #This affects only the markdown, not the underlying png file.  The height will be scaled appropriately.
-  fig.width    = 9, 
-  fig.height   = 5, 
+  fig.width    = 12, 
+  fig.height   = 6, 
   fig.path     = 'figure-png/'
 )
 
@@ -73,9 +78,63 @@ read_chunk("./reports/technique-demonstration/technique-demonstration.R") #This 
 # custom functions
 ```{r define-utility-functions, echo=echo_chunks, results='show', message=message_chunks}
 ```
-# create subsample
-```{r create-subsample, echo=echo_chunks, results='show', message=message_chunks}
+
+# Graph controls
+```{r define-graph-controls, echo=echo_chunks, results='show', message=message_chunks}
 ```
+
+# Re-Scale variables
+```{r rescale-variables, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Data for model
+```{r isolate-for-modeling, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Model Specification
+```{r model-specification, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Model Estimation 
+```{r model-estimation, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Model Prediction 
+```{r model-prediction, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Coloring Book setting
+```{r define-coloring-book-settings, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Display 0
+```{r print-display-0, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Display 1
+```{r print-display-1, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Display 2
+```{r print-display-2, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Display 3
+```{r print-display-3, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Display 4
+```{r print-display-4, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Display 5
+```{r print-display-5, echo=echo_chunks, results='show', message=message_chunks}
+```
+
+# Display 6
+```{r print-display-6, echo=echo_chunks, results='show', message=message_chunks}
+```
+
 # save to disk
 ```{r save-to-disk, echo=echo_chunks, results='show', message=message_chunks}
 ```

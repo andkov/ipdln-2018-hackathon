@@ -41,16 +41,63 @@ source("./manipulation/object-glossary.R")   # object definitions
 ds0      <- readRDS(path_input_micro) #  product of `./analysis/subsample-for-demo/`
 ls_guide <- readRDS(path_input_meta) #  product of `./manipulation/0-metador.R`
 
-
-
 # ---- inspect-data ----------------------------
 ds0 %>% dplyr::glimpse(50)
-ds0 %>% 
-  dplyr::group_by(PR, IMMDER, GENSTPOB) %>% 
-  dplyr::summarize(n = length(unique(person_id)))
-
 
 # ---- tweak-data --------------------------------------------------------------
+# create an explicity person identifier
+ds0 <-  ds0 %>% 
+  tibble::rownames_to_column("person_id") %>% 
+  dplyr::mutate( person_id = as.integer(person_id)) %>% 
+  dplyr::select(person_id, dplyr::everything())
+
+# ---- define-utility-functions ---------------
+# create a function to subset a dataset in this context
+# because data is heavy and makes development cumbersome
+get_a_subsample <- function(d, sample_size, seed = 42){
+  # sample_size <- 20000
+  v_sample_ids <- sample(unique(d$person_id), sample_size)
+  d1 <- d %>% 
+    dplyr::filter(person_id %in% v_sample_ids)
+  return(d1)
+}
+# how to use 
+# ds1 <- ds0 %>% get_a_subsample(10000)  
+
+
+where_to_store_graphs <- "./reports/technique-demonstration/prints/1/" # female marital educ3 poor_health
+# where_to_store_graphs = "./reports/technique-demonstration/prints/2/" # educ3 poor_health first
+# where_to_store_graphs = "./reports/technique-demonstration/prints/3/", # other collection of predictors
+
+# define a function to print a graph onto disk as an image
+# because some aspects of appearances are easier to control during printing, not graphing
+quick_save <- function(g,name){
+  ggplot2::ggsave(
+    filename = paste0(name,".png"), 
+    plot   = g,
+    device = png,
+    path   = where_to_store_graphs, # female marital educ poor_healt
+    width  = 1600,
+    height = 1200,
+    # units = "cm",
+    dpi    = 200,
+    limitsize = FALSE
+  )
+}
+
+# ---- define-graph-controls --------------------------------------------
+# declare the dependent variable and define descriptive labels
+dv_name            <- "S_DEAD"
+dv_label_prob      <- "Alive in X years"
+dv_label_odds      <- "Odds(Dead)"
+
+# select the predictors to evaluate graphically
+# becasue we typically will have more predictors then we want to display
+# these will define rows in the printed matrix of graphs
+covar_order_values <- c("female","marital","educ3","poor_health") #for /prints/1/
+# covar_order_values <- c("marital", "educ3","poor_health", "FOL") # for /prints/2/
+
+# ---- rescale-variables --------------------------------------
 library(dplyr)
 # because we need to examine observed values of each predictor
 ds0 %>% group_by(PR)        %>% summarize(n = n())
@@ -60,9 +107,7 @@ ds0 %>% group_by(HCDD)      %>% summarize(n = n())
 ds0 %>% group_by(ADIFCLTY)  %>% summarize(n = n())
 ds0 %>% group_by(DISABFL)   %>% summarize(n = n())
 ds0 %>% group_by(age_group) %>% summarize(n = n())
-ds0 %>% group_by(FOL,PR) %>% summarize(n = n())
-ds0 %>% group_by(OLN,PR) %>% summarize(n = n())
-
+ds0 %>% group_by(FOL,PR)    %>% summarize(n = n())
 
 # as evident from above
 # some variables are too granular for general analysis
@@ -200,44 +245,39 @@ ds1 %>% group_by(FOL)   %>% summarize(n = n())
 ls_guide$item$IMMDER
 ls_guide$item$GENSTPOB
 
+# ---- isolate-for-modeling --------------------------------------------
 
-# ---- define-utility-functions ---------------
-where_to_store_graphs <- "./reports/technique-demonstration/prints/1/"
-# where_to_store_graphs = "./reports/coloring-book-mortality/prints/2/", # educ3 poor_health first conversational
-# where_to_store_graphs = "./reports/coloring-book-mortality/prints/3/", # other collection of predictors
+# define the scope of the exploration
+selected_provinces <- c("Alberta","British Columbia", "Ontario", "Quebec")
+sample_size = 10000
 
-# define a function to print a graph onto disk as an image
-# because some aspects of appearances are easier to control during printing, not graphing
-quick_save <- function(g,name){
-  ggplot2::ggsave(
-    filename = paste0(name,".png"), 
-    plot   = g,
-    device = png,
-    path   = where_to_store_graphs, # female marital educ poor_healt
-    width  = 1600,
-    height = 1200,
-    # units = "cm",
-    dpi    = 200,
-    limitsize = FALSE
-  )
+# because we want to focus on a meaningful sample: first-generation immigrants 
+ds2 <- ds1 %>% 
+  dplyr::filter(PR %in% selected_provinces) %>% 
+  dplyr::filter(IMMDER   == "Immigrants") %>% 
+  dplyr::filter(GENSTPOB == "1st generation - Respondent born outside Canada") #%>% 
+# get_a_subsample(sample_size) # use when need get representative sample across provinces
+
+#create samples of the same size from each  province
+dmls <- list() # dummy list (dmls) to populate during the loop
+for(province_i in selected_provinces){
+  # province_i = "British Columbia" # for example
+  dmls[[province_i]] <-  ds2 %>%
+    dplyr::filter(PR == province_i) %>% 
+    get_a_subsample(sample_size) # see `define-utility-functions` chunk
 }
+lapply(dmls, names) # view the contents of the list object
+# OVERWRITE, making it a stratified sample across selected provinces (same size in each)
+ds2 <- plyr::ldply(dmls,data.frame,.id = "PR")
 
-# ---- define-graph-controls --------------------------------------------
-# declare the dependent variable and define descriptive labels
-dv_name            <- "S_DEAD"
-dv_label_prob      <- "Alive in X years"
-dv_label_odds      <- "Odds(Dead)"
+# inspect the created data set 
+ds2 %>% dplyr::glimpse(50)
+ds2 %>% dplyr::group_by(PR) %>% 
+  dplyr::summarise(n_people = length(unique(person_id)))
 
-# select the predictors to evaluate graphically
-# becasue we typically will have more predictors then we want to display
-# these will define rows in the printed matrix of graphs
-covar_order_values <- c("female","marital","educ3","poor_health") 
-# covar_order_values <- c("educ3","poor_health", "FOL","OLN") 
-# covar_order_values <- c("educ5","poor_health", "FOL","OLN") 
 
-# ---- isloate-for-modeling --------------------------------------------
 # for the sake of modularization, create a data set that will passed to modeling
-ds_for_modeling <- ds1 %>% 
+ds_for_modeling <- ds2 %>% 
   # reorganize the order of variables to match your modeling preference
   dplyr::select_(
     "person_id", "PR", "S_DEAD"
@@ -253,7 +293,6 @@ ds_for_modeling <- ds1 %>%
 # ---- model-specification ----------------------------------------
 # define the model equation 
 equation_string <- paste0(
-  # "dv ~ -1 + PR + age_group + female + marital + educ3 + poor_health + FOL + OLN"
   "dv ~ -1 + PR + age_group + female + marital + educ3 + poor_health + FOL"
   ) 
 equation_formula <- as.formula(equation_string)
@@ -299,14 +338,15 @@ ds_predicted$dv_hat_p  <- plogis(ds_predicted$dv_hat)
 
 # save a modeling object to plat later
 ls_model <- list(
-  "call"          = equation_string
-  ,"summary"      = model_solution %>% summary()
-  ,"coefficients" = model_solution %>% stats::coefficients()
+  "call"              = equation_string
+  ,"summary"          = model_solution %>% summary()
+  ,"coefficients"     = model_solution %>% stats::coefficients()
   ,"predicted_values" = ds_predicted
 )
-writeRDS(ls_model, "./reports/")
+saveRDS(ls_model, "./data-public/derived/technique-demonstration/ls_model.rds")
 # the script can be continutued in
-# `./reports/technique-demonstrations/`
+# `./reports/technique-demonstrations/graphing-phase-demo.R`
+# without relying on the raw data
 
 
 # ---- define-coloring-book-settings ---------------------------
@@ -572,21 +612,22 @@ list.files(where_to_store_graphs, full.names = TRUE)
 # writing to disk was localized during printing
 
 # ---- publish ---------------------------------------
-path_report_1 <- "./reports/technique-demonstration/technique-demonstration.Rmd"
-# path_report_2 <- "./reports/*/report_2.Rmd"
-allReports <- c(path_report_1)
-
-pathFilesToBuild <- c(allReports)
-testit::assert("The knitr Rmd files should exist.", base::file.exists(pathFilesToBuild))
-# Build the reports
-for( pathFile in pathFilesToBuild ) {
-  
-  rmarkdown::render(input = pathFile,
-                    output_format=c(
-                      "html_document" # set print_format <- "html" in seed-study.R
-                      # "pdf_document"
-                      # ,"md_document"
-                      # "word_document" # set print_format <- "pandoc" in seed-study.R
-                    ),
-                    clean=TRUE)
-}
+# this chunk will be disabled during production of stichted_output
+# path_report_1 <- "./reports/technique-demonstration/technique-demonstration.Rmd"
+# # path_report_2 <- "./reports/*/report_2.Rmd"
+# allReports <- c(path_report_1)
+# 
+# pathFilesToBuild <- c(allReports)
+# testit::assert("The knitr Rmd files should exist.", base::file.exists(pathFilesToBuild))
+# # Build the reports
+# for( pathFile in pathFilesToBuild ) {
+#   
+#   rmarkdown::render(input = pathFile,
+#                     output_format=c(
+#                       "html_document" # set print_format <- "html" in seed-study.R
+#                       # "pdf_document"
+#                       # ,"md_document"
+#                       # "word_document" # set print_format <- "pandoc" in seed-study.R
+#                     ),
+#                     clean=TRUE)
+# }
