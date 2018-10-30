@@ -19,9 +19,8 @@ Repository to accompany a hackathon at IPDLN conference at Banff, Sep 2018
 
 The product of these two scripts define the foundation of every subsequent analytic report. 
 ```r
-ds0      <- readRDS("./data-unshared/derived/0-greeted.rds")
 ls_guide <- readRDS("./data-unshared/derived/0-metador.rds")
-
+ds0      <- readRDS("./data-unshared/derived/1-greeted.rds")
 ```
 
 # Analytic Reports
