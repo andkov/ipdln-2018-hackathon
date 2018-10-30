@@ -1,11 +1,4 @@
-# This script ... (enter functional description)
-
-# Lines before the first chunk are invisible to Rmd/Rnw callers
-# Run to stitch a tech report of this script (used only in RStudio)
-# knitr::stitch_rmd(
-#   script = "./manipulation/0-greeter.R",
-#   output = "./manipulation/stitched-output/0-greeter.md" # make sure the folder exists
-# )
+# This script performs basic exploratory data analysis on raw data set
 
 rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. 
 # This is not called by knitr, because it's above the first chunk.
