@@ -55,7 +55,7 @@ This script yeilded a collection of printed graphs stored in `./reports/coloring
 # Communication
 
 - Presentation of the [slide deck of hackathon results][slidedeck] to the  closing plenary of IDPDL-2018 Conference in Banff, September 17 2018.
-- Matrix Institue colloquium [2018-10-31][matrix-col]
+- Matrix Institue colloquium [2018-10-31][matrix-talk]
 - Popultaion Data BC Webinar [2018-11-01][popdatabc-webinar]
 
 [matrix-talk]:libs/materials/talks/2018-10-31-when-notebooks-are-not-enough.pdf
