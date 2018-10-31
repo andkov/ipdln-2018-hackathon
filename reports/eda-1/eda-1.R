@@ -42,6 +42,13 @@ ds %>% dplyr::glimpse()
 
 # ---- define-utility-functions ---------------
 
+# ---- select-focus ------------------------
+# this chunk is called by ./reports/eda-1/eda-1a-first-gen-immigrant.Rmd
+ds <- ds %>% 
+  # dplyr::filter(PR %in% selected_provinces) %>% 
+  dplyr::filter(IMMDER   == "Immigrants") %>% 
+  dplyr::filter(GENSTPOB == "1st generation - Respondent born outside Canada") 
+
 # ---- marginals ---------------------------------------------------------------
 for(block_i in names(ls_guide$block) ){
 # for(block_i in "demographic" ){
@@ -62,8 +69,9 @@ for(block_i in names(ls_guide$block) ){
 # ---- save-to-disk ----------------------------
 
 # ---- publish ---------------------------------------
-path_report_1 <- "./reports/eda-1/eda-1.Rmd"
-# path_report_2 <- "./reports/*/report_2.Rmd"
+# path_report_1 <- "./reports/eda-1/eda-1.Rmd"
+path_report_1 <- "./reports/eda-1/eda-1a-first-gen-immigrant.Rmd"
+
 allReports <- c(path_report_1)
 
 pathFilesToBuild <- c(allReports)
