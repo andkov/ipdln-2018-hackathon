@@ -1,6 +1,5 @@
-Contents of `./data-public/` Directory
+Contents of `./data-public/` directory
 =========
-Since files in this directory are not staged/committed, it's tough to communicate with collaborators what the files should look like on their computers.  Try to keep this list updated.
 
 ### Files in `./data-public/raw/`
 
@@ -9,9 +8,7 @@ Since files in this directory are not staged/committed, it's tough to communicat
 ### Files in `./data-public/derived/`
 ![capture-public-derived][capture-public-derived]
 
-
-- `0-ls_guide.rds` -  a list object storing meta data for the project
-- `1-greeted.rds` - state of the provided data as it enters modeling phase
+- `./data-public/derived/technique-demonstration/ls_model.rds` stores the results of the model estimated during `./reports/technique-demonstations 
 
 [capture-public-raw]:../libs/images/screen-capture/data-public/raw/screen-capture.PNG
 [capture-public-derived]:../libs/images/screen-capture/data-public/derived/screen-capture.PNG
