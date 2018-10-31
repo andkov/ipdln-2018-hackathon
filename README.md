@@ -4,6 +4,14 @@ Demonstrating coloring-book techique of graph production in ggplot2 during data 
 
 ![part2][part2]
 
+# How to reproduce
+- 0. Clone this repository (either via git or from the browswer)
+- 1. Lauch RStudio project via .Rproj file
+- 2. Execute `./manipulation/0-metador.R` to generate object with meta data
+- 3. Examine [`./reports/technique-demonstration/`][tech-demo] to see how models were estimated.
+- 4. Run [`./reports/graphing-phase-only/graphing-phase-only.R`] to load the model solution and start producing graphs
+
+
 # Background 
 - [Information for Participants][info_participants] 
 - [Data Codebook][data_codebook]
