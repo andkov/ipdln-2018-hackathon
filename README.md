@@ -1,6 +1,6 @@
 # ipdln-2018-hackathon
 
-Demonstrating coloring-book techingin of graphing with ggplot2 during hackathong at IPDLN-2018 conference at Banff, Sep 2018.
+Demonstrating coloring-book techique of graph production in ggplot2 during data linkage hackathong at IPDLN-2018 conference at Banff, Sep 2018.
 
 ![part2][part2]
 
