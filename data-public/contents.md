@@ -11,4 +11,4 @@ Since files in this directory are not staged/committed, it's tough to communicat
 - `0-ls_guide.rds` -  a list object storing meta data for the project
 - `1-greeted.rds` - state of the provided data as it enters modeling phase
 
-[capture]:screen-capture.png
+[capture]:screen-capture.PNG
