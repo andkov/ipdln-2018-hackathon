@@ -4,6 +4,9 @@ Demonstrating coloring-book techique of graph production in ggplot2 during data 
 
 ![part2][part2]
 
+ # Relevent now
+  - Here are the slides for my talk [When Notebooks are not Enough][matrix-talk] at the Matrix Institute colloquium at the University of Victoria on October 31, 2018
+
 # How to reproduce
 - 0. Clone this repository (either via git or from the browswer)
 - 1. Lauch RStudio project via .Rproj file
@@ -58,7 +61,7 @@ This script yeilded a collection of printed graphs stored in `./reports/coloring
 - Matrix Institue colloquium [2018-10-31][matrix-talk]
 - Popultaion Data BC Webinar [2018-11-01][popdatabc-webinar]
 
-[matrix-talk]:libs/materials/talks/2018-10-31-when-notebooks-are-not-enough.pdf
+[matrix-talk]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/libs/materials/2018-10-31-when-notebooks-are-not-enough.pdf
 [popdatabc-webinar]:libs/materials/talks/2018-11-01-coloring-book-technique.pdf
 
 
