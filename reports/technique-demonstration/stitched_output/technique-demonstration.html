@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title></title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<p>This report was automatically generated with the R package <strong>knitr</strong>
+(version 1.20).</p>
+
+<pre><code class="r"># Run next lint to stitch a tech report of this script (used only in RStudio)
+# knitr::stitch_rmd( script = &quot;./reports/technique-demonstration/technique-demonstration.R&quot;, output = &quot;./reports/technique-demonstration/stitched_output/technique-demonstration.md&quot; )
+
+rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. 
+# This is not called by knitr, because it&#39;s above the first chunk.
+cat(&quot;\f&quot;) # clear console when working in RStudio
+</code></pre>
+
+
+<pre><code class="r"># Call `base::source()` on any repo file that defines functions needed below.  
+# Ideally, no real operations are performed.
+base::source(&quot;./scripts/graphing/graph-logistic.R&quot;)
+base::source(&quot;./scripts/graphing/graph-presets.R&quot;) # fonts, colors, themes 
+</code></pre>
+
+<pre><code class="r"># Attach these packages so their functions don&#39;t need to be qualified: http://r-pkgs.had.co.nz/namespace.html#search-path
+library(ggplot2) #For graphing
+library(magrittr) # Pipes
+library(dplyr)
+requireNamespace(&quot;dplyr&quot;, quietly=TRUE)
+requireNamespace(&quot;TabularManifest&quot;) # devtools::install_github(&quot;Melinae/TabularManifest&quot;)
+requireNamespace(&quot;knitr&quot;)
+requireNamespace(&quot;scales&quot;) #For formating values in graphs
+requireNamespace(&quot;RColorBrewer&quot;)
+</code></pre>
+
+<pre><code class="r"># link to the source of the location mapping
+path_input_micro &lt;- &quot;./data-unshared/derived/0-greeted.rds&quot;
+# path_input_micro &lt;- &quot;./data-unshared/derived/simulated_subsample.rds&quot;
+path_input_meta  &lt;- &quot;./data-unshared/derived/ls_guide.rds&quot;
+
+# test whether the file exists / the link is good
+testit::assert(&quot;File does not exist&quot;, base::file.exists(path_input_micro))
+testit::assert(&quot;File does not exist&quot;, base::file.exists(path_input_meta))
+
+# declare where you will store the product of this script
+# path_save &lt;- &quot;./data-unshared/derived/object.rds&quot;
+
+# See definitions of commonly  used objects in:
+source(&quot;./manipulation/object-glossary.R&quot;)   # object definitions
+</code></pre>
+
+<pre><code class="r"># ds0      &lt;- readRDS(path_input_micro) #  product of `./manipulation/0-greeter.R`
+ds0      &lt;- readRDS(path_input_micro) #  product of `./analysis/subsample-for-demo/`
+ls_guide &lt;- readRDS(path_input_meta) #  product of `./manipulation/0-metador.R`
+</code></pre>
+
+<pre><code class="r">ds0 %&gt;% dplyr::glimpse(50)
+</code></pre>
+
+<pre><code>## Observations: 4,346,649
+## Variables: 34
+## $ ABDERR             &lt;fct&gt; Non-Aboriginal Ide...
+## $ ABIDENT            &lt;fct&gt; Non-Aboriginal ide...
+## $ ADIFCLTY           &lt;fct&gt; No, No, No, No, No...
+## $ CITSM              &lt;fct&gt; Not a Canadian cit...
+## $ COWD               &lt;fct&gt; Paid Worker - Work...
+## $ DISABFL            &lt;fct&gt; No, No, Yes, somet...
+## $ DISABIL            &lt;fct&gt; No difficulty with...
+## $ DVISMIN            &lt;fct&gt; Not a visible mino...
+## $ FOL                &lt;fct&gt; English only, Engl...
+## $ FPTIM              &lt;fct&gt; NA, NA, NA, NA, NA...
+## $ GENSTPOB           &lt;fct&gt; 1st generation - R...
+## $ HCDD               &lt;fct&gt; Bachelors degree, ...
+## $ IMMDER             &lt;fct&gt; Immigrants, Immigr...
+## $ LOINCA             &lt;fct&gt; non-low income, no...
+## $ LOINCB             &lt;fct&gt; non-low income, no...
+## $ MARST              &lt;fct&gt; Legally married (a...
+## $ NOCSBRD            &lt;fct&gt; D Health occupatio...
+## $ OLN                &lt;fct&gt; Both English and F...
+## $ POBDER             &lt;fct&gt;  Born outside Cana...
+## $ SEX                &lt;fct&gt; Female, Female, Fe...
+## $ TRMODE             &lt;fct&gt; Car, truck, van as...
+## $ RPAIR              &lt;fct&gt; Yes, major repairs...
+## $ PR                 &lt;fct&gt; Ontario, Manitoba,...
+## $ RUINDFG            &lt;fct&gt; Rural, Rural, Urba...
+## $ d_licoratio_da_bef &lt;fct&gt; 5th  decile, 3rd  ...
+## $ S_DEAD             &lt;fct&gt; Not dead, Not dead...
+## $ EFCNT_PP_R         &lt;fct&gt; 4 family members, ...
+## $ AGE_IMM_R_group    &lt;fct&gt; 35 to &lt; 40, 25 to ...
+## $ COD1               &lt;fct&gt; Did not die, Did n...
+## $ COD2               &lt;fct&gt; Did not die, Did n...
+## $ DPOB11N            &lt;fct&gt; NA, NA, NA, NA, NA...
+## $ KID_group          &lt;fct&gt; one or two childre...
+## $ YRIM_group         &lt;fct&gt; 2002 or later, 200...
+## $ age_group          &lt;fct&gt; 40 to 44, 30 to 34...
+</code></pre>
+
+<pre><code class="r"># create an explicity person identifier
+ds0 &lt;-  ds0 %&gt;% 
+  tibble::rownames_to_column(&quot;person_id&quot;) %&gt;% 
+  dplyr::mutate( person_id = as.integer(person_id)) %&gt;% 
+  dplyr::select(person_id, dplyr::everything())
+</code></pre>
+
+<pre><code class="r"># create a function to subset a dataset in this context
+# because data is heavy and makes development cumbersome
+get_a_subsample &lt;- function(d, sample_size, seed = 42){
+  # sample_size &lt;- 20000
+  v_sample_ids &lt;- sample(unique(d$person_id), sample_size)
+  d1 &lt;- d %&gt;% 
+    dplyr::filter(person_id %in% v_sample_ids)
+  return(d1)
+}
+# how to use 
+# ds1 &lt;- ds0 %&gt;% get_a_subsample(10000)  
+
+
+where_to_store_graphs &lt;- &quot;./reports/technique-demonstration/prints/1/&quot; # female marital educ3 poor_health
+# where_to_store_graphs = &quot;./reports/technique-demonstration/prints/2/&quot; # educ3 poor_health first
+# where_to_store_graphs = &quot;./reports/technique-demonstration/prints/3/&quot;, # other collection of predictors
+
+# define a function to print a graph onto disk as an image
+# because some aspects of appearances are easier to control during printing, not graphing
+quick_save &lt;- function(g,name){
+  ggplot2::ggsave(
+    filename = paste0(name,&quot;.png&quot;), 
+    plot   = g,
+    device = png,
+    path   = where_to_store_graphs, # female marital educ poor_healt
+    width  = 1600,
+    height = 1200,
+    # units = &quot;cm&quot;,
+    dpi    = 200,
+    limitsize = FALSE
+  )
+}
+</code></pre>
+
+<pre><code class="r"># declare the dependent variable and define descriptive labels
+dv_name            &lt;- &quot;S_DEAD&quot;
+dv_label_prob      &lt;- &quot;Alive in X years&quot;
+dv_label_odds      &lt;- &quot;Odds(Dead)&quot;
+
+# select the predictors to evaluate graphically
+# becasue we typically will have more predictors then we want to display
+# these will define rows in the printed matrix of graphs
+covar_order_values &lt;- c(&quot;female&quot;,&quot;marital&quot;,&quot;educ3&quot;,&quot;poor_health&quot;) #for /prints/1/
+# covar_order_values &lt;- c(&quot;marital&quot;, &quot;educ3&quot;,&quot;poor_health&quot;, &quot;FOL&quot;) # for /prints/2/
+</code></pre>
+
+<pre><code class="r">library(dplyr)
+# because we need to examine observed values of each predictor
+ds0 %&gt;% group_by(PR)        %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 13 x 2
+##    PR                              n
+##    &lt;fct&gt;                       &lt;int&gt;
+##  1 Newfoundland and Labrador   74281
+##  2 Prince Edward Island        18372
+##  3 Nova Scotia                128755
+##  4 New Brunswick              105097
+##  5 Quebec                    1047824
+##  6 Ontario                   1604077
+##  7 Manitoba                   176994
+##  8 Saskatchewan               150432
+##  9 Alberta                    444249
+## 10 British Columbia           557466
+## 11 Yukon                        9239
+## 12 Northwest Territories       15454
+## 13 Nunavut                     14409
+</code></pre>
+
+<pre><code class="r">ds0 %&gt;% group_by(SEX)       %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 2 x 2
+##   SEX          n
+##   &lt;fct&gt;    &lt;int&gt;
+## 1 Female 2242681
+## 2 Male   2103968
+</code></pre>
+
+<pre><code class="r">ds0 %&gt;% group_by(MARST)     %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 5 x 2
+##   MARST                                      n
+##   &lt;fct&gt;                                  &lt;int&gt;
+## 1 Divorced                              376637
+## 2 Legally married (and not separated)  2304941
+## 3 Separated, but still legally married  140009
+## 4 Never legally married (single)       1264326
+## 5 Widowed                               260736
+</code></pre>
+
+<pre><code class="r">ds0 %&gt;% group_by(HCDD)      %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 13 x 2
+##    HCDD                                                                  n
+##    &lt;fct&gt;                                                             &lt;int&gt;
+##  1 None                                                             9.02e5
+##  2 High school graduation certificate or equivalency certificate    1.07e6
+##  3 Other trades certificate or diploma                              3.33e5
+##  4 Registered apprenticeship certificate                            1.84e5
+##  5 College, CEGEP or other non-university certificate or diploma f~ 1.10e5
+##  6 College, CEGEP or other non-university certificate or diploma f~ 3.90e5
+##  7 College, CEGEP or other non-university certificate or diploma f~ 3.16e5
+##  8 University certificate or diploma below bachelor level           2.02e5
+##  9 Bachelors degree                                                 5.37e5
+## 10 University certificate or diploma above bachelor level           8.94e4
+## 11 Degree in medicine, dentistry, veterinary medicine or optometry  2.39e4
+## 12 Masters degree                                                   1.57e5
+## 13 Earned doctorate degree                                          3.15e4
+</code></pre>
+
+<pre><code class="r">ds0 %&gt;% group_by(ADIFCLTY)  %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 4 x 2
+##   ADIFCLTY             n
+##   &lt;fct&gt;            &lt;int&gt;
+## 1 No             3610703
+## 2 Not stated       54059
+## 3 Yes, often      282002
+## 4 Yes, sometimes  399885
+</code></pre>
+
+<pre><code class="r">ds0 %&gt;% group_by(DISABFL)   %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 4 x 2
+##   DISABFL              n
+##   &lt;fct&gt;            &lt;int&gt;
+## 1 No             3359763
+## 2 Not stated       45969
+## 3 Yes, often      423068
+## 4 Yes, sometimes  517849
+</code></pre>
+
+<pre><code class="r">ds0 %&gt;% group_by(age_group) %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 15 x 2
+##    age_group         n
+##    &lt;fct&gt;         &lt;int&gt;
+##  1 19 to 24     370193
+##  2 25 to 29     357121
+##  3 30 to 34     370583
+##  4 35 to 39     406491
+##  5 40 to 44     479630
+##  6 45 to 49     485782
+##  7 50 to 54     437395
+##  8 55 to 59     388211
+##  9 60 to 64     295752
+## 10 65 to 69     227771
+## 11 70 to 74     192595
+## 12 75 to 79     156532
+## 13 80 to 84     106865
+## 14 85 to 89      51146
+## 15 90 and older  20582
+</code></pre>
+
+<pre><code class="r">ds0 %&gt;% group_by(FOL,PR)    %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 52 x 3
+## # Groups:   FOL [?]
+##    FOL          PR                              n
+##    &lt;fct&gt;        &lt;fct&gt;                       &lt;int&gt;
+##  1 English only Newfoundland and Labrador   73794
+##  2 English only Prince Edward Island        17539
+##  3 English only Nova Scotia                123550
+##  4 English only New Brunswick               69961
+##  5 English only Quebec                     124818
+##  6 English only Ontario                   1486333
+##  7 English only Manitoba                   168102
+##  8 English only Saskatchewan               147337
+##  9 English only Alberta                    429295
+## 10 English only British Columbia           531644
+## # ... with 42 more rows
+</code></pre>
+
+<pre><code class="r"># as evident from above
+# some variables are too granular for general analysis
+# they need to be re-scaled in order to be more useful
+
+ds1 &lt;- ds0 %&gt;% 
+  dplyr::mutate(
+    # because `female` is less ambiguous then `sex`
+    female = car::recode(
+      SEX, &quot;
+      &#39;Female&#39; = &#39;TRUE&#39;
+      ;&#39;Male&#39;  = &#39;FALSE&#39;
+      &quot;)
+    ,female = factor(female, levels = c(&quot;FALSE&quot;,&quot;TRUE&quot;))
+    # because `still legaly married` is more legal than human
+    ,marital = car::recode(
+      MARST, &quot;
+      &#39;Divorced&#39;                              = &#39;sep_divorced&#39; 
+      ;&#39;Legally married (and not separated)&#39;   = &#39;mar_cohab&#39; 
+      ;&#39;Separated, but still legally married&#39;  = &#39;sep_divorced&#39; 
+      ;&#39;Never legally married (single)&#39;        = &#39;single&#39; 
+      ;&#39;Widowed&#39;                               = &#39;widowed&#39;
+      &quot;)
+    ,marital = factor(marital, levels = c(
+      &quot;sep_divorced&quot;,&quot;widowed&quot;,&quot;single&quot;,&quot;mar_cohab&quot;))
+    # because more than 5 categories is too fragmented
+    ,educ5 = car::recode(
+      HCDD, &quot;
+      &#39;None&#39;                                                                                                          = &#39;less then high school&#39;
+      ;&#39;High school graduation certificate or equivalency certificate&#39;                                                 = &#39;high school&#39;
+      ;&#39;Other trades certificate or diploma&#39;                                                                           = &#39;high school&#39;
+      ;&#39;Registered apprenticeship certificate&#39;                                                                         = &#39;high school&#39;
+      ;&#39;College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year&#39;  = &#39;college&#39;
+      ;&#39;College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years&#39;             = &#39;college&#39;
+      ;&#39;College, CEGEP or other non-university certificate or diploma from a program of more than 2 years&#39;             = &#39;college&#39;
+      ;&#39;University certificate or diploma below bachelor level&#39;                                                        = &#39;college&#39;
+      ;&#39;Bachelors degree&#39;                                                                                              = &#39;college&#39;
+      ;&#39;University certificate or diploma above bachelor level&#39;                                                        = &#39;graduate&#39;
+      ;&#39;Degree in medicine, dentistry, veterinary medicine or optometry&#39;                                               = &#39;graduate&#39;
+      ;&#39;Masters degree&#39;                                                                                                = &#39;graduate&#39;
+      ;&#39;Earned doctorate degree&#39;                                                                                       = &#39;Dr.&#39;
+      &quot;)
+    ,educ5 = factor(educ5, levels = c( 
+      &quot;less then high school&quot;
+      ,&quot;high school&quot;          
+      ,&quot;college&quot;             
+      ,&quot;graduate&quot;            
+      ,&quot;Dr.&quot;  
+    ) 
+    ) 
+    # because even only 5 may be too granular for our purposes
+    ,educ3 = car::recode(
+      HCDD, &quot;
+      &#39;None&#39;                                                                                                          = &#39;less than high school&#39;
+      ;&#39;High school graduation certificate or equivalency certificate&#39;                                                 = &#39;high school&#39;  
+      ;&#39;Other trades certificate or diploma&#39;                                                                           = &#39;high school&#39;  
+      ;&#39;Registered apprenticeship certificate&#39;                                                                         = &#39;more than high school&#39; 
+      ;&#39;College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year&#39;  = &#39;more than high school&#39; 
+      ;&#39;College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years&#39;             = &#39;more than high school&#39; 
+      ;&#39;College, CEGEP or other non-university certificate or diploma from a program of more than 2 years&#39;             = &#39;more than high school&#39; 
+      ;&#39;University certificate or diploma below bachelor level&#39;                                                        = &#39;more than high school&#39; 
+      ;&#39;Bachelors degree&#39;                                                                                              = &#39;more than high school&#39; 
+      ;&#39;University certificate or diploma above bachelor level&#39;                                                        = &#39;more than high school&#39;
+      ;&#39;Degree in medicine, dentistry, veterinary medicine or optometry&#39;                                               = &#39;more than high school&#39;
+      ;&#39;Masters degree&#39;                                                                                                = &#39;more than high school&#39;
+      ;&#39;Earned doctorate degree&#39;                                                                                       = &#39;more than high school&#39;
+      &quot;)
+    ,educ3 = factor(educ3, levels = c(
+      &quot;less than high school&quot;
+      , &quot;high school&quot;
+      , &quot;more than high school&quot;
+    )
+    )
+    # ADIFCLTY               &quot;Problems with ADL&quot; (physical &amp; cognitive)
+    # DISABFL                &quot;Problems with ADL&quot; (physical &amp; social)
+    # because this is what counts practically
+    ,poor_health = ifelse(ADIFCLTY %in% c(&quot;Yes, often&quot;,&quot;Yes, sometimes&quot;)
+                          &amp;
+                            DISABFL %in% c(&quot;Yes, often&quot;,&quot;Yes, sometimes&quot;),
+                          TRUE, FALSE
+    )
+    ,poor_health = factor(poor_health, levels = c(&quot;TRUE&quot;,&quot;FALSE&quot;))
+    # because interval floor is easer to display on the graph then `19 to 24`
+    ,age_group_low = car::recode(
+      age_group, 
+      &quot;
+      &#39;19 to 24&#39;      = &#39;19&#39;
+      ;&#39;25 to 29&#39;     = &#39;25&#39;
+      ;&#39;30 to 34&#39;     = &#39;30&#39;
+      ;&#39;35 to 39&#39;     = &#39;35&#39;
+      ;&#39;40 to 44&#39;     = &#39;40&#39;
+      ;&#39;45 to 49&#39;     = &#39;45&#39;
+      ;&#39;50 to 54&#39;     = &#39;50&#39;
+      ;&#39;55 to 59&#39;     = &#39;55&#39;
+      ;&#39;60 to 64&#39;     = &#39;60&#39;
+      ;&#39;65 to 69&#39;     = &#39;65&#39;
+      ;&#39;70 to 74&#39;     = &#39;70&#39;
+      ;&#39;75 to 79&#39;     = &#39;75&#39;
+      ;&#39;80 to 84&#39;     = &#39;80&#39;
+      ;&#39;85 to 89&#39;     = &#39;85&#39;
+      ;&#39;90 and older&#39; = &#39;90&#39;  
+      &quot;
+    )
+    ) %&gt;%  
+  # because easier to reference, expressed as interval&#39;s floor
+  dplyr::mutate(
+    age_group = age_group_low
+  ) %&gt;% 
+  # because it needs to be sorted from lowest to highest ability 
+  dplyr::mutate(
+    FOL = factor(FOL,levels = c(
+      &quot;Neither English nor French&quot;
+      ,&quot;French only&quot;
+      ,&quot;English only&quot;
+      ,&quot;Both English and French&quot;
+    )
+    )
+    ,OLN = factor(FOL,levels = c(
+      &quot;Neither English nor French&quot;
+      ,&quot;French only&quot;
+      ,&quot;English only&quot;
+      ,&quot;Both English and French&quot;
+    )
+    )
+  )
+
+ds1 %&gt;% glimpse(50)
+</code></pre>
+
+<pre><code>## Observations: 4,346,649
+## Variables: 41
+## $ person_id          &lt;int&gt; 1, 2, 3, 4, 5, 6, ...
+## $ ABDERR             &lt;fct&gt; Non-Aboriginal Ide...
+## $ ABIDENT            &lt;fct&gt; Non-Aboriginal ide...
+## $ ADIFCLTY           &lt;fct&gt; No, No, No, No, No...
+## $ CITSM              &lt;fct&gt; Not a Canadian cit...
+## $ COWD               &lt;fct&gt; Paid Worker - Work...
+## $ DISABFL            &lt;fct&gt; No, No, Yes, somet...
+## $ DISABIL            &lt;fct&gt; No difficulty with...
+## $ DVISMIN            &lt;fct&gt; Not a visible mino...
+## $ FOL                &lt;fct&gt; English only, Engl...
+## $ FPTIM              &lt;fct&gt; NA, NA, NA, NA, NA...
+## $ GENSTPOB           &lt;fct&gt; 1st generation - R...
+## $ HCDD               &lt;fct&gt; Bachelors degree, ...
+## $ IMMDER             &lt;fct&gt; Immigrants, Immigr...
+## $ LOINCA             &lt;fct&gt; non-low income, no...
+## $ LOINCB             &lt;fct&gt; non-low income, no...
+## $ MARST              &lt;fct&gt; Legally married (a...
+## $ NOCSBRD            &lt;fct&gt; D Health occupatio...
+## $ OLN                &lt;fct&gt; English only, Engl...
+## $ POBDER             &lt;fct&gt;  Born outside Cana...
+## $ SEX                &lt;fct&gt; Female, Female, Fe...
+## $ TRMODE             &lt;fct&gt; Car, truck, van as...
+## $ RPAIR              &lt;fct&gt; Yes, major repairs...
+## $ PR                 &lt;fct&gt; Ontario, Manitoba,...
+## $ RUINDFG            &lt;fct&gt; Rural, Rural, Urba...
+## $ d_licoratio_da_bef &lt;fct&gt; 5th  decile, 3rd  ...
+## $ S_DEAD             &lt;fct&gt; Not dead, Not dead...
+## $ EFCNT_PP_R         &lt;fct&gt; 4 family members, ...
+## $ AGE_IMM_R_group    &lt;fct&gt; 35 to &lt; 40, 25 to ...
+## $ COD1               &lt;fct&gt; Did not die, Did n...
+## $ COD2               &lt;fct&gt; Did not die, Did n...
+## $ DPOB11N            &lt;fct&gt; NA, NA, NA, NA, NA...
+## $ KID_group          &lt;fct&gt; one or two childre...
+## $ YRIM_group         &lt;fct&gt; 2002 or later, 200...
+## $ age_group          &lt;fct&gt; 40, 30, 65, 19, 55...
+## $ female             &lt;fct&gt; TRUE, TRUE, TRUE, ...
+## $ marital            &lt;fct&gt; mar_cohab, mar_coh...
+## $ educ5              &lt;fct&gt; college, college, ...
+## $ educ3              &lt;fct&gt; more than high sch...
+## $ poor_health        &lt;fct&gt; FALSE, FALSE, FALS...
+## $ age_group_low      &lt;fct&gt; 40, 30, 65, 19, 55...
+</code></pre>
+
+<pre><code class="r"># # because we want/need to inspect newly created variables
+ds1 %&gt;% group_by(educ3) %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 3 x 2
+##   educ3                       n
+##   &lt;fct&gt;                   &lt;int&gt;
+## 1 less than high school  902326
+## 2 high school           1403807
+## 3 more than high school 2040516
+</code></pre>
+
+<pre><code class="r">ds1 %&gt;% group_by(educ5) %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 5 x 2
+##   educ5                       n
+##   &lt;fct&gt;                   &lt;int&gt;
+## 1 less then high school  902326
+## 2 high school           1587347
+## 3 college               1555485
+## 4 graduate               269945
+## 5 Dr.                     31546
+</code></pre>
+
+<pre><code class="r">ds1 %&gt;% group_by(FOL)   %&gt;% summarize(n = n())
+</code></pre>
+
+<pre><code>## # A tibble: 4 x 2
+##   FOL                              n
+##   &lt;fct&gt;                        &lt;int&gt;
+## 1 Neither English nor French   64633
+## 2 French only                1032652
+## 3 English only               3209323
+## 4 Both English and French      40041
+</code></pre>
+
+<pre><code class="r"># reminder: we use `ls_guide` to lookup data codebook
+ls_guide$item$IMMDER
+</code></pre>
+
+<pre><code>## $levels
+##                         1                         2 
+##              &quot;Immigrants&quot; &quot;Non-permanent residents&quot; 
+##                         3 
+##          &quot;Non-immigrants&quot; 
+## 
+## $label
+## [1] &quot;Immigration status&quot;
+## 
+## $description
+## [1] &quot;Immigration status: Indicates whether the respondent is a non-immigrant, an immigrant or a non-permanent resident.&quot;
+</code></pre>
+
+<pre><code class="r">ls_guide$item$GENSTPOB
+</code></pre>
+
+<pre><code>## $levels
+##                                                                                1 
+##                                &quot;1st generation - Respondent born outside Canada&quot; 
+##                                                                                2 
+## &quot;2nd generation - Respondent born in Canada of at least one foreign-born parent&quot; 
+##                                                                                3 
+##     &quot;3rd generation - Respondent born in Canada and both parents born in Canada&quot; 
+## 
+## $label
+## [1] &quot;Generation in Canada&quot;
+## 
+## $description
+## [1] &quot;Generation status: Refers to the generational status of the respondent, that is, 1st generation, 2nd generation or 3rd generation or more.Generation status is derived from place of birth of respondent, place of birth of father and place of birth of mother.&quot;
+</code></pre>
+
+<pre><code class="r"># define the scope of the exploration
+selected_provinces &lt;- c(&quot;Alberta&quot;,&quot;British Columbia&quot;, &quot;Ontario&quot;, &quot;Quebec&quot;)
+sample_size = 10000
+
+# because we want to focus on a meaningful sample: first-generation immigrants 
+ds2 &lt;- ds1 %&gt;% 
+  dplyr::filter(PR %in% selected_provinces) %&gt;% 
+  dplyr::filter(IMMDER   == &quot;Immigrants&quot;) %&gt;% 
+  dplyr::filter(GENSTPOB == &quot;1st generation - Respondent born outside Canada&quot;) #%&gt;% 
+# get_a_subsample(sample_size) # use when need get representative sample across provinces
+
+#create samples of the same size from each  province
+dmls &lt;- list() # dummy list (dmls) to populate during the loop
+for(province_i in selected_provinces){
+  # province_i = &quot;British Columbia&quot; # for example
+  dmls[[province_i]] &lt;-  ds2 %&gt;%
+    dplyr::filter(PR == province_i) %&gt;% 
+    get_a_subsample(sample_size) # see `define-utility-functions` chunk
+}
+lapply(dmls, names) # view the contents of the list object
+</code></pre>
+
+<pre><code>## $Alberta
+##  [1] &quot;person_id&quot;          &quot;ABDERR&quot;             &quot;ABIDENT&quot;           
+##  [4] &quot;ADIFCLTY&quot;           &quot;CITSM&quot;              &quot;COWD&quot;              
+##  [7] &quot;DISABFL&quot;            &quot;DISABIL&quot;            &quot;DVISMIN&quot;           
+## [10] &quot;FOL&quot;                &quot;FPTIM&quot;              &quot;GENSTPOB&quot;          
+## [13] &quot;HCDD&quot;               &quot;IMMDER&quot;             &quot;LOINCA&quot;            
+## [16] &quot;LOINCB&quot;             &quot;MARST&quot;              &quot;NOCSBRD&quot;           
+## [19] &quot;OLN&quot;                &quot;POBDER&quot;             &quot;SEX&quot;               
+## [22] &quot;TRMODE&quot;             &quot;RPAIR&quot;              &quot;PR&quot;                
+## [25] &quot;RUINDFG&quot;            &quot;d_licoratio_da_bef&quot; &quot;S_DEAD&quot;            
+## [28] &quot;EFCNT_PP_R&quot;         &quot;AGE_IMM_R_group&quot;    &quot;COD1&quot;              
+## [31] &quot;COD2&quot;               &quot;DPOB11N&quot;            &quot;KID_group&quot;         
+## [34] &quot;YRIM_group&quot;         &quot;age_group&quot;          &quot;female&quot;            
+## [37] &quot;marital&quot;            &quot;educ5&quot;              &quot;educ3&quot;             
+## [40] &quot;poor_health&quot;        &quot;age_group_low&quot;     
+## 
+## $`British Columbia`
+##  [1] &quot;person_id&quot;          &quot;ABDERR&quot;             &quot;ABIDENT&quot;           
+##  [4] &quot;ADIFCLTY&quot;           &quot;CITSM&quot;              &quot;COWD&quot;              
+##  [7] &quot;DISABFL&quot;            &quot;DISABIL&quot;            &quot;DVISMIN&quot;           
+## [10] &quot;FOL&quot;                &quot;FPTIM&quot;              &quot;GENSTPOB&quot;          
+## [13] &quot;HCDD&quot;               &quot;IMMDER&quot;             &quot;LOINCA&quot;            
+## [16] &quot;LOINCB&quot;             &quot;MARST&quot;              &quot;NOCSBRD&quot;           
+## [19] &quot;OLN&quot;                &quot;POBDER&quot;             &quot;SEX&quot;               
+## [22] &quot;TRMODE&quot;             &quot;RPAIR&quot;              &quot;PR&quot;                
+## [25] &quot;RUINDFG&quot;            &quot;d_licoratio_da_bef&quot; &quot;S_DEAD&quot;            
+## [28] &quot;EFCNT_PP_R&quot;         &quot;AGE_IMM_R_group&quot;    &quot;COD1&quot;              
+## [31] &quot;COD2&quot;               &quot;DPOB11N&quot;            &quot;KID_group&quot;         
+## [34] &quot;YRIM_group&quot;         &quot;age_group&quot;          &quot;female&quot;            
+## [37] &quot;marital&quot;            &quot;educ5&quot;              &quot;educ3&quot;             
+## [40] &quot;poor_health&quot;        &quot;age_group_low&quot;     
+## 
+## $Ontario
+##  [1] &quot;person_id&quot;          &quot;ABDERR&quot;             &quot;ABIDENT&quot;           
+##  [4] &quot;ADIFCLTY&quot;           &quot;CITSM&quot;              &quot;COWD&quot;              
+##  [7] &quot;DISABFL&quot;            &quot;DISABIL&quot;            &quot;DVISMIN&quot;           
+## [10] &quot;FOL&quot;                &quot;FPTIM&quot;              &quot;GENSTPOB&quot;          
+## [13] &quot;HCDD&quot;               &quot;IMMDER&quot;             &quot;LOINCA&quot;            
+## [16] &quot;LOINCB&quot;             &quot;MARST&quot;              &quot;NOCSBRD&quot;           
+## [19] &quot;OLN&quot;                &quot;POBDER&quot;             &quot;SEX&quot;               
+## [22] &quot;TRMODE&quot;             &quot;RPAIR&quot;              &quot;PR&quot;                
+## [25] &quot;RUINDFG&quot;            &quot;d_licoratio_da_bef&quot; &quot;S_DEAD&quot;            
+## [28] &quot;EFCNT_PP_R&quot;         &quot;AGE_IMM_R_group&quot;    &quot;COD1&quot;              
+## [31] &quot;COD2&quot;               &quot;DPOB11N&quot;            &quot;KID_group&quot;         
+## [34] &quot;YRIM_group&quot;         &quot;age_group&quot;          &quot;female&quot;            
+## [37] &quot;marital&quot;            &quot;educ5&quot;              &quot;educ3&quot;             
+## [40] &quot;poor_health&quot;        &quot;age_group_low&quot;     
+## 
+## $Quebec
+##  [1] &quot;person_id&quot;          &quot;ABDERR&quot;             &quot;ABIDENT&quot;           
+##  [4] &quot;ADIFCLTY&quot;           &quot;CITSM&quot;              &quot;COWD&quot;              
+##  [7] &quot;DISABFL&quot;            &quot;DISABIL&quot;            &quot;DVISMIN&quot;           
+## [10] &quot;FOL&quot;                &quot;FPTIM&quot;              &quot;GENSTPOB&quot;          
+## [13] &quot;HCDD&quot;               &quot;IMMDER&quot;             &quot;LOINCA&quot;            
+## [16] &quot;LOINCB&quot;             &quot;MARST&quot;              &quot;NOCSBRD&quot;           
+## [19] &quot;OLN&quot;                &quot;POBDER&quot;             &quot;SEX&quot;               
+## [22] &quot;TRMODE&quot;             &quot;RPAIR&quot;              &quot;PR&quot;                
+## [25] &quot;RUINDFG&quot;            &quot;d_licoratio_da_bef&quot; &quot;S_DEAD&quot;            
+## [28] &quot;EFCNT_PP_R&quot;         &quot;AGE_IMM_R_group&quot;    &quot;COD1&quot;              
+## [31] &quot;COD2&quot;               &quot;DPOB11N&quot;            &quot;KID_group&quot;         
+## [34] &quot;YRIM_group&quot;         &quot;age_group&quot;          &quot;female&quot;            
+## [37] &quot;marital&quot;            &quot;educ5&quot;              &quot;educ3&quot;             
+## [40] &quot;poor_health&quot;        &quot;age_group_low&quot;
+</code></pre>
+
+<pre><code class="r"># OVERWRITE, making it a stratified sample across selected provinces (same size in each)
+ds2 &lt;- plyr::ldply(dmls,data.frame,.id = &quot;PR&quot;)
+
+# inspect the created data set 
+ds2 %&gt;% dplyr::glimpse(50)
+</code></pre>
+
+<pre><code>## Observations: 40,000
+## Variables: 41
+## $ person_id          &lt;int&gt; 107, 1213, 1299, 1...
+## $ ABDERR             &lt;fct&gt; Non-Aboriginal Ide...
+## $ ABIDENT            &lt;fct&gt; Non-Aboriginal ide...
+## $ ADIFCLTY           &lt;fct&gt; No, No, No, No, No...
+## $ CITSM              &lt;fct&gt; Canadian citizen b...
+## $ COWD               &lt;fct&gt; Paid Worker - Work...
+## $ DISABFL            &lt;fct&gt; No, No, No, No, Ye...
+## $ DISABIL            &lt;fct&gt; No difficulty with...
+## $ DVISMIN            &lt;fct&gt; Not a visible mino...
+## $ FOL                &lt;fct&gt; English only, Engl...
+## $ FPTIM              &lt;fct&gt; NA, NA, NA, NA, NA...
+## $ GENSTPOB           &lt;fct&gt; 1st generation - R...
+## $ HCDD               &lt;fct&gt; College, CEGEP or ...
+## $ IMMDER             &lt;fct&gt; Immigrants, Immigr...
+## $ LOINCA             &lt;fct&gt; non-low income, no...
+## $ LOINCB             &lt;fct&gt; non-low income, no...
+## $ MARST              &lt;fct&gt; Never legally marr...
+## $ NOCSBRD            &lt;fct&gt; G Sales and servic...
+## $ OLN                &lt;fct&gt; English only, Engl...
+## $ POBDER             &lt;fct&gt;  Born outside Cana...
+## $ SEX                &lt;fct&gt; Female, Female, Fe...
+## $ TRMODE             &lt;fct&gt; Car, truck, van as...
+## $ RPAIR              &lt;fct&gt; No, only regular m...
+## $ PR                 &lt;fct&gt; Alberta, Alberta, ...
+## $ RUINDFG            &lt;fct&gt; Urban, Urban, Urba...
+## $ d_licoratio_da_bef &lt;fct&gt; 8th  decile, 8th  ...
+## $ S_DEAD             &lt;fct&gt; Not dead, Not dead...
+## $ EFCNT_PP_R         &lt;fct&gt; 2 family members, ...
+## $ AGE_IMM_R_group    &lt;fct&gt;  5 to &lt; 10,  5 to ...
+## $ COD1               &lt;fct&gt; Did not die, Did n...
+## $ COD2               &lt;fct&gt; Did not die, Did n...
+## $ DPOB11N            &lt;fct&gt; NA, NA, Australia,...
+## $ KID_group          &lt;fct&gt; no children, one o...
+## $ YRIM_group         &lt;fct&gt; 1986 or earlier, 1...
+## $ age_group          &lt;fct&gt; 35, 45, 75, 55, 55...
+## $ female             &lt;fct&gt; TRUE, TRUE, TRUE, ...
+## $ marital            &lt;fct&gt; single, sep_divorc...
+## $ educ5              &lt;fct&gt; college, less then...
+## $ educ3              &lt;fct&gt; more than high sch...
+## $ poor_health        &lt;fct&gt; FALSE, FALSE, FALS...
+## $ age_group_low      &lt;fct&gt; 35, 45, 75, 55, 55...
+</code></pre>
+
+<pre><code class="r">ds2 %&gt;% dplyr::group_by(PR) %&gt;% 
+  dplyr::summarise(n_people = length(unique(person_id)))
+</code></pre>
+
+<pre><code>## # A tibble: 4 x 2
+##   PR               n_people
+##   &lt;fct&gt;               &lt;int&gt;
+## 1 Quebec              10000
+## 2 Ontario             10000
+## 3 Alberta             10000
+## 4 British Columbia    10000
+</code></pre>
+
+<pre><code class="r"># for the sake of modularization, create a data set that will passed to modeling
+ds_for_modeling &lt;- ds2 %&gt;% 
+  # reorganize the order of variables to match your modeling preference
+  dplyr::select_(
+    &quot;person_id&quot;, &quot;PR&quot;, &quot;S_DEAD&quot;
+    ,&quot;age_group&quot;
+    ,&quot;female&quot;, &quot;marital&quot;, &quot;educ3&quot;,&quot;poor_health&quot;, &quot;FOL&quot;,&quot;OLN&quot;
+  ) %&gt;%
+  # add transformation as needed
+  # na.omit() %&gt;% 
+  dplyr::rename_(
+    &quot;dv&quot; = dv_name # to ease serialization and string handling
+  ) 
+</code></pre>
+
+<pre><code class="r"># define the model equation 
+equation_string &lt;- paste0(
+  &quot;dv ~ -1 + PR + age_group + female + marital + educ3 + poor_health + FOL&quot;
+  ) 
+equation_formula &lt;- as.formula(equation_string)
+print(equation_formula, showEnv = FALSE)
+</code></pre>
+
+<pre><code>## dv ~ -1 + PR + age_group + female + marital + educ3 + poor_health + 
+##     FOL
+</code></pre>
+
+<pre><code class="r"># pass model specification to the estimation routine
+model_solution &lt;- glm(
+  equation_formula,
+  data   = ds_for_modeling, 
+  family = binomial(link=&quot;logit&quot;)
+) 
+# inspect model results
+equation_formula # because we must see equation!
+</code></pre>
+
+<pre><code>## dv ~ -1 + PR + age_group + female + marital + educ3 + poor_health + 
+##     FOL
+</code></pre>
+
+<pre><code class="r">model_solution %&gt;% summary()
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = equation_formula, family = binomial(link = &quot;logit&quot;), 
+##     data = ds_for_modeling)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -3.6773   0.0872   0.1688   0.3635   1.8669  
+## 
+## Coefficients:
+##                            Estimate Std. Error z value Pr(&gt;|z|)    
+## PRQuebec                    4.33434    0.46789   9.264  &lt; 2e-16 ***
+## PROntario                   4.55186    0.46640   9.760  &lt; 2e-16 ***
+## PRAlberta                   4.56119    0.46713   9.764  &lt; 2e-16 ***
+## PRBritish Columbia          4.51707    0.46663   9.680  &lt; 2e-16 ***
+## age_group25                -0.39125    0.58658  -0.667 0.504771    
+## age_group30                -0.72434    0.54078  -1.339 0.180431    
+## age_group35                -1.41586    0.48782  -2.902 0.003703 ** 
+## age_group40                -1.68424    0.47577  -3.540 0.000400 ***
+## age_group45                -2.53001    0.46166  -5.480 4.25e-08 ***
+## age_group50                -2.46218    0.46289  -5.319 1.04e-07 ***
+## age_group55                -3.43099    0.45591  -7.526 5.25e-14 ***
+## age_group60                -3.94645    0.45496  -8.674  &lt; 2e-16 ***
+## age_group65                -4.02185    0.45571  -8.825  &lt; 2e-16 ***
+## age_group70                -4.17885    0.45581  -9.168  &lt; 2e-16 ***
+## age_group75                -4.42325    0.45615  -9.697  &lt; 2e-16 ***
+## age_group80                -4.85780    0.45685 -10.633  &lt; 2e-16 ***
+## age_group85                -5.25667    0.46192 -11.380  &lt; 2e-16 ***
+## age_group90                -5.41861    0.47663 -11.369  &lt; 2e-16 ***
+## femaleTRUE                  0.71318    0.04691  15.203  &lt; 2e-16 ***
+## maritalwidowed             -0.62827    0.08306  -7.564 3.90e-14 ***
+## maritalsingle              -0.02683    0.10860  -0.247 0.804852    
+## maritalmar_cohab            0.26822    0.07122   3.766 0.000166 ***
+## educ3high school            0.13361    0.05605   2.384 0.017141 *  
+## educ3more than high school  0.52122    0.05378   9.692  &lt; 2e-16 ***
+## poor_healthFALSE            1.09996    0.04500  24.441  &lt; 2e-16 ***
+## FOLFrench only              0.17020    0.10869   1.566 0.117358    
+## FOLEnglish only            -0.06443    0.08020  -0.803 0.421786    
+## FOLBoth English and French  0.09699    0.14881   0.652 0.514568    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 55452  on 40000  degrees of freedom
+## Residual deviance: 15224  on 39972  degrees of freedom
+## AIC: 15280
+## 
+## Number of Fisher Scoring iterations: 8
+</code></pre>
+
+<pre><code class="r">model_solution %&gt;% coefficients() %&gt;% round(2)
+</code></pre>
+
+<pre><code>##                   PRQuebec                  PROntario 
+##                       4.33                       4.55 
+##                  PRAlberta         PRBritish Columbia 
+##                       4.56                       4.52 
+##                age_group25                age_group30 
+##                      -0.39                      -0.72 
+##                age_group35                age_group40 
+##                      -1.42                      -1.68 
+##                age_group45                age_group50 
+##                      -2.53                      -2.46 
+##                age_group55                age_group60 
+##                      -3.43                      -3.95 
+##                age_group65                age_group70 
+##                      -4.02                      -4.18 
+##                age_group75                age_group80 
+##                      -4.42                      -4.86 
+##                age_group85                age_group90 
+##                      -5.26                      -5.42 
+##                 femaleTRUE             maritalwidowed 
+##                       0.71                      -0.63 
+##              maritalsingle           maritalmar_cohab 
+##                      -0.03                       0.27 
+##           educ3high school educ3more than high school 
+##                       0.13                       0.52 
+##           poor_healthFALSE             FOLFrench only 
+##                       1.10                       0.17 
+##            FOLEnglish only FOLBoth English and French 
+##                      -0.06                       0.10
+</code></pre>
+
+<pre><code class="r"># ds_for_modeling$dv_p &lt;- predict(model_solution) # fast check
+</code></pre>
+
+<pre><code class="r"># distill all possible combinations of predictors
+# because we will create predictions for them
+# using the coefficients from the model solution
+ds_predicted &lt;- ds_for_modeling %&gt;% 
+  dplyr::select_(
+    &quot;PR&quot;
+    ,&quot;age_group&quot; 
+    ,&quot;female&quot;        
+    ,&quot;educ3&quot;
+    # ,&quot;educ5&quot;       
+    ,&quot;marital&quot; 
+    ,&quot;poor_health&quot; 
+    ,&quot;FOL&quot;
+    # ,&quot;ONL&quot;
+  ) %&gt;% 
+  dplyr::distinct()
+
+# compute predicted values of the criterion 
+# by applying model solution to all possible levels of predictors
+#logged-odds of probability (ie, linear)
+ds_predicted$dv_hat    &lt;- as.numeric(predict(model_solution, newdata=ds_predicted)) 
+#probability (ie, s-curve), because we want to visualize probability
+ds_predicted$dv_hat_p  &lt;- plogis(ds_predicted$dv_hat) 
+
+# save a modeling object to plat later
+ls_model &lt;- list(
+  &quot;call&quot;              = equation_string
+  ,&quot;summary&quot;          = model_solution %&gt;% summary()
+  ,&quot;coefficients&quot;     = model_solution %&gt;% stats::coefficients()
+  ,&quot;predicted_values&quot; = ds_predicted
+)
+saveRDS(ls_model, &quot;./data-public/derived/technique-demonstration/ls_model.rds&quot;)
+# the script can be continutued in
+# `./reports/technique-demonstrations/graphing-phase-demo.R`
+# without relying on the raw data
+</code></pre>
+
+<pre><code class="r"># create a function that would assign color
+# to the values of predictors based on informed expectation
+assign_color &lt;- function(color_group){
+
+  if( color_group == &quot;female&quot;) {
+    palette_color &lt;- c(
+      &quot;TRUE&quot;   = reference_color
+      ,&quot;FALSE&quot; = increased_risk_1
+    ) 
+  } else if( color_group %in% c(&quot;educ5&quot;) ) { 
+    palette_color &lt;- c(
+      &quot;less than high school&quot; = increased_risk_2
+      ,&quot;high school&quot;           = increased_risk_1
+      , &quot;college&quot;              = reference_color
+      , &quot;graduate&quot;             = descreased_risk_1
+      , &quot;Dr.&quot;                  = descreased_risk_2
+    ) 
+  } else if( color_group %in% c(&quot;educ3&quot;) ) { 
+    palette_color &lt;- c(
+      &quot;less than high school&quot;  = increased_risk_1
+      ,&quot;high school&quot;           = reference_color
+      ,&quot;more than high school&quot; = descreased_risk_1
+    ) 
+  } else if( color_group %in% c(&quot;marital&quot;) ) {
+    palette_color &lt;- c(
+      &quot;mar_cohab&quot;     = descreased_risk_1
+      ,&quot;sep_divorced&quot; = increased_risk_2
+      ,&quot;single&quot;       = reference_color
+      ,&quot;widowed&quot;      = increased_risk_1
+    )
+  } else if( color_group %in% c(&quot;poor_health&quot;) ) {
+    palette_color &lt;- c(
+      &quot;FALSE&quot; = reference_color
+      ,&quot;TRUE&quot; = increased_risk_2
+    )
+  } else if( color_group %in% c(&quot;FOL&quot;) ) {
+    palette_color &lt;- c(
+      &quot;Both English and French&quot;      = descreased_risk_1
+      ,&quot;English only&quot;                = reference_color 
+      ,&quot;French only&quot;                 = increased_risk_1
+      ,&quot;Neither English nor French&quot;  = increased_risk_2
+    )                       
+  } else if( color_group %in% c(&quot;OLN&quot;) ) {
+    palette_color &lt;- c(
+      &quot;Both English and French&quot;      = descreased_risk_2
+      ,&quot;English only&quot;                = reference_color 
+      ,&quot;French only&quot;                 = increased_risk_1
+      ,&quot;Neither English nor French&quot;  = increased_risk_2
+    )
+  } else {
+    stop(&quot;The palette for this variable is not defined.&quot;)
+  }
+
+}
+
+# shared grahpical setting
+common_alpha &lt;- .7          # shared transparency
+common_natural &lt;- &quot;grey90&quot;  # the &quot;no-color&quot; color
+y_low = .2 # to remove white space
+y_high = 1 # to remove white space
+
+# load the custom graphing function, isolated in this script
+base::source(&quot;./scripts/graphing/graph-logistic.R&quot;)
+# color definitions are picked from  
+# http://colorbrewer2.org/#type=qualitative&amp;scheme=Set1&amp;n=7
+list.files(where_to_store_graphs, full.names = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;./reports/technique-demonstration/prints/1/g0.png&quot;
+## [2] &quot;./reports/technique-demonstration/prints/1/g1.png&quot;
+## [3] &quot;./reports/technique-demonstration/prints/1/g2.png&quot;
+## [4] &quot;./reports/technique-demonstration/prints/1/g3.png&quot;
+## [5] &quot;./reports/technique-demonstration/prints/1/g4.png&quot;
+## [6] &quot;./reports/technique-demonstration/prints/1/g5.png&quot;
+## [7] &quot;./reports/technique-demonstration/prints/1/g6.png&quot;
+</code></pre>
+
+<pre><code class="r"># temp hack: so that older code doesnot break:
+eq_global_string &lt;- equation_string
+</code></pre>
+
+<pre><code class="r"># 0 step : All colors are in
+increased_risk_2  &lt;- &quot;#e41a1c&quot;  # red      - further increased risk factor
+increased_risk_1  &lt;- &quot;#ff7f00&quot;  # organge  - increased risk factor
+reference_color   &lt;- &quot;#4daf4a&quot;  # green    - REFERENCE  category
+descreased_risk_1 &lt;-&quot;#377eb8&quot;   # blue     - descreased risk factor
+descreased_risk_2 &lt;- &quot;#984ea3&quot;  # purple   - further descrease in risk factor
+
+g0 &lt;- ds_predicted %&gt;% 
+  graph_logistic_point_complex_4(
+    x_name       = &quot;age_group&quot;
+    ,y_name      = &quot;dv_hat_p&quot;
+    ,covar_order = covar_order_values
+    ,alpha_level = common_alpha
+    ,y_title     = dv_label_prob
+    ,y_range     = c(y_low, y_high)
+  ) 
+g0 %&gt;% print() # inspect
+</code></pre>
+
+<p><img src="figure/technique-demonstration-Rmdprint-display-0-1.png" title="plot of chunk print-display-0" alt="plot of chunk print-display-0" style="display: block; margin: auto;" /></p>
+
+<pre><code class="r">g0 %&gt;%  quick_save(name = &quot;g0&quot;) # save to disk
+list.files(where_to_store_graphs, full.names = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;./reports/technique-demonstration/prints/1/g0.png&quot;
+## [2] &quot;./reports/technique-demonstration/prints/1/g1.png&quot;
+## [3] &quot;./reports/technique-demonstration/prints/1/g2.png&quot;
+## [4] &quot;./reports/technique-demonstration/prints/1/g3.png&quot;
+## [5] &quot;./reports/technique-demonstration/prints/1/g4.png&quot;
+## [6] &quot;./reports/technique-demonstration/prints/1/g5.png&quot;
+## [7] &quot;./reports/technique-demonstration/prints/1/g6.png&quot;
+</code></pre>
+
+<pre><code class="r"># 1 step of color logic: no color is added
+increased_risk_2 &lt;- common_natural  # red     - further increased risk factor
+increased_risk_1 &lt;- common_natural  # organge - increased risk factor
+reference_color &lt;- common_natural   # green   - REFERENCE  category
+descreased_risk_1 &lt;-common_natural  # blue    - descreased risk factor
+descreased_risk_2 &lt;- common_natural # purple  - further descrease in risk factor
+
+# increased_risk_2 &lt;- &quot;#e41a1c&quot;  # red     - further increased risk factor
+# increased_risk_1 &lt;- &quot;#ff7f00&quot;  # organge - increased risk factor
+# reference_color &lt;- &quot;#4daf4a&quot;   # green   - REFERENCE  category
+# descreased_risk_1 &lt;-&quot;#377eb8&quot;  # blue    - descreased risk factor
+# descreased_risk_2 &lt;- &quot;#984ea3&quot; # purple  - further descrease in risk factor
+
+g1 &lt;- ds_predicted %&gt;% 
+  graph_logistic_point_complex_4(
+    x_name       = &quot;age_group&quot;
+    ,y_name      = &quot;dv_hat_p&quot;
+    ,covar_order = covar_order_values
+    ,alpha_level = common_alpha
+    ,y_title     = dv_label_prob
+    ,y_range     = c(y_low, y_high)
+) 
+g1 %&gt;% print() # inspect
+</code></pre>
+
+<p><img src="figure/technique-demonstration-Rmdprint-display-1-1.png" title="plot of chunk print-display-1" alt="plot of chunk print-display-1" style="display: block; margin: auto;" /></p>
+
+<pre><code class="r">g1 %&gt;%  quick_save(name = &quot;g1&quot;) # save to disk
+list.files(where_to_store_graphs, full.names = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;./reports/technique-demonstration/prints/1/g0.png&quot;
+## [2] &quot;./reports/technique-demonstration/prints/1/g1.png&quot;
+## [3] &quot;./reports/technique-demonstration/prints/1/g2.png&quot;
+## [4] &quot;./reports/technique-demonstration/prints/1/g3.png&quot;
+## [5] &quot;./reports/technique-demonstration/prints/1/g4.png&quot;
+## [6] &quot;./reports/technique-demonstration/prints/1/g5.png&quot;
+## [7] &quot;./reports/technique-demonstration/prints/1/g6.png&quot;
+</code></pre>
+
+<pre><code class="r"># 2 step of color logic: add only the reference group
+increased_risk_2 &lt;- common_natural  # red     - further increased risk factor
+increased_risk_1 &lt;- common_natural  # organge - increased risk factor
+reference_color &lt;- common_natural   # green   - REFERENCE  category
+descreased_risk_1 &lt;-common_natural  # blue    - descreased risk factor
+descreased_risk_2 &lt;- common_natural # purple  - further descrease in risk factor
+
+# increased_risk_2 &lt;- &quot;#e41a1c&quot;  # red     - further increased risk factor
+# increased_risk_1 &lt;- &quot;#ff7f00&quot;  # organge - increased risk factor
+reference_color &lt;- &quot;#4daf4a&quot;  # green   - REFERENCE  category
+# descreased_risk_1 &lt;-&quot;#377eb8&quot;  # blue    - descreased risk factor
+# descreased_risk_2 &lt;- &quot;#984ea3&quot; # purple  - further descrease in risk factor
+
+
+g2 &lt;- ds_predicted %&gt;% 
+  graph_logistic_point_complex_4(
+    x_name       = &quot;age_group&quot;
+    ,y_name      = &quot;dv_hat_p&quot;
+    ,covar_order = covar_order_values
+    ,alpha_level = common_alpha
+    ,y_title     = dv_label_prob
+    ,y_range     = c(y_low, y_high)
+  ) 
+g2 %&gt;% print() # inspect
+</code></pre>
+
+<p><img src="figure/technique-demonstration-Rmdprint-display-2-1.png" title="plot of chunk print-display-2" alt="plot of chunk print-display-2" style="display: block; margin: auto;" /></p>
+
+<pre><code class="r">g2 %&gt;%  quick_save(name = &quot;g2&quot;) # save to disk
+list.files(where_to_store_graphs, full.names = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;./reports/technique-demonstration/prints/1/g0.png&quot;
+## [2] &quot;./reports/technique-demonstration/prints/1/g1.png&quot;
+## [3] &quot;./reports/technique-demonstration/prints/1/g2.png&quot;
+## [4] &quot;./reports/technique-demonstration/prints/1/g3.png&quot;
+## [5] &quot;./reports/technique-demonstration/prints/1/g4.png&quot;
+## [6] &quot;./reports/technique-demonstration/prints/1/g5.png&quot;
+## [7] &quot;./reports/technique-demonstration/prints/1/g6.png&quot;
+</code></pre>
+
+<pre><code class="r"># 3 step of color logic: add moderately increased risk
+increased_risk_2 &lt;- common_natural  # red - further increased risk factor
+increased_risk_1 &lt;- common_natural  # organge - increased risk factor
+reference_color &lt;- common_natural   # green  - REFERENCE  category
+descreased_risk_1 &lt;-common_natural  # blue - descreased risk factor
+descreased_risk_2 &lt;- common_natural # purple - further descrease in risk factor
+
+# increased_risk_2 &lt;- &quot;#e41a1c&quot;  # red - further increased risk factor
+increased_risk_1 &lt;- &quot;#ff7f00&quot;  # organge - increased risk factor
+# reference_color &lt;- &quot;#4daf4a&quot;   # green  - REFERENCE  category
+# descreased_risk_1 &lt;-&quot;#377eb8&quot;  # blue - descreased risk factor
+# descreased_risk_2 &lt;- &quot;#984ea3&quot; # purple - further descrease in risk factor
+
+g3 &lt;- ds_predicted %&gt;% 
+  graph_logistic_point_complex_4(
+    x_name       = &quot;age_group&quot;
+    ,y_name      = &quot;dv_hat_p&quot;
+    ,covar_order = covar_order_values
+    ,alpha_level = common_alpha
+    ,y_title     = dv_label_prob
+    ,y_range     = c(y_low, y_high)
+  ) 
+g3 %&gt;% print() # inspect
+</code></pre>
+
+<p><img src="figure/technique-demonstration-Rmdprint-display-3-1.png" title="plot of chunk print-display-3" alt="plot of chunk print-display-3" style="display: block; margin: auto;" /></p>
+
+<pre><code class="r">g3 %&gt;%  quick_save(name = &quot;g3&quot;) # save to disk
+list.files(where_to_store_graphs, full.names = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;./reports/technique-demonstration/prints/1/g0.png&quot;
+## [2] &quot;./reports/technique-demonstration/prints/1/g1.png&quot;
+## [3] &quot;./reports/technique-demonstration/prints/1/g2.png&quot;
+## [4] &quot;./reports/technique-demonstration/prints/1/g3.png&quot;
+## [5] &quot;./reports/technique-demonstration/prints/1/g4.png&quot;
+## [6] &quot;./reports/technique-demonstration/prints/1/g5.png&quot;
+## [7] &quot;./reports/technique-demonstration/prints/1/g6.png&quot;
+</code></pre>
+
+<pre><code class="r"># 4 step of color logic: add moderately decreased risk
+increased_risk_2 &lt;- common_natural  # red - further increased risk factor
+increased_risk_1 &lt;- common_natural  # organge - increased risk factor
+reference_color &lt;- common_natural   # green  - REFERENCE  category
+descreased_risk_1 &lt;-common_natural  # blue - descreased risk factor
+descreased_risk_2 &lt;- common_natural # purple - further descrease in risk factor
+
+# increased_risk_2 &lt;- &quot;#e41a1c&quot;  # red - further increased risk factor
+# increased_risk_1 &lt;- &quot;#ff7f00&quot;  # organge - increased risk factor
+# reference_color &lt;- &quot;#4daf4a&quot;   # green  - REFERENCE  category
+descreased_risk_1 &lt;-&quot;#377eb8&quot;  # blue - descreased risk factor
+# descreased_risk_2 &lt;- &quot;#984ea3&quot; # purple - further descrease in risk factor
+
+
+g4 &lt;- ds_predicted %&gt;% 
+  graph_logistic_point_complex_4(
+    x_name       = &quot;age_group&quot;
+    ,y_name      = &quot;dv_hat_p&quot;
+    ,covar_order = covar_order_values
+    ,alpha_level = common_alpha
+    ,y_title     = dv_label_prob
+    ,y_range     = c(y_low, y_high)
+  ) 
+g4 %&gt;% print() # inspect
+</code></pre>
+
+<p><img src="figure/technique-demonstration-Rmdprint-display-4-1.png" title="plot of chunk print-display-4" alt="plot of chunk print-display-4" style="display: block; margin: auto;" /></p>
+
+<pre><code class="r">g4 %&gt;%  quick_save(name = &quot;g4&quot;) # save to disk
+list.files(where_to_store_graphs, full.names = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;./reports/technique-demonstration/prints/1/g0.png&quot;
+## [2] &quot;./reports/technique-demonstration/prints/1/g1.png&quot;
+## [3] &quot;./reports/technique-demonstration/prints/1/g2.png&quot;
+## [4] &quot;./reports/technique-demonstration/prints/1/g3.png&quot;
+## [5] &quot;./reports/technique-demonstration/prints/1/g4.png&quot;
+## [6] &quot;./reports/technique-demonstration/prints/1/g5.png&quot;
+## [7] &quot;./reports/technique-demonstration/prints/1/g6.png&quot;
+</code></pre>
+
+<pre><code class="r"># 5 step of color logic: add substantially increased risk
+increased_risk_2 &lt;- common_natural  # red - further increased risk factor
+increased_risk_1 &lt;- common_natural  # organge - increased risk factor
+reference_color &lt;- common_natural   # green  - REFERENCE  category
+descreased_risk_1 &lt;-common_natural  # blue - descreased risk factor
+descreased_risk_2 &lt;- common_natural # purple - further descrease in risk factor
+
+increased_risk_2 &lt;- &quot;#e41a1c&quot;  # red - further increased risk factor
+# increased_risk_1 &lt;- &quot;#ff7f00&quot;  # organge - increased risk factor
+# reference_color &lt;- &quot;#4daf4a&quot;   # green  - REFERENCE  category
+# descreased_risk_1 &lt;-&quot;#377eb8&quot;  # blue - descreased risk factor
+# descreased_risk_2 &lt;- &quot;#984ea3&quot; # purple - further descrease in risk factor
+
+g5 &lt;- ds_predicted %&gt;% 
+  graph_logistic_point_complex_4(
+    x_name       = &quot;age_group&quot;
+    ,y_name      = &quot;dv_hat_p&quot;
+    ,covar_order = covar_order_values
+    ,alpha_level = common_alpha
+    ,y_title     = dv_label_prob
+    ,y_range     = c(y_low, y_high)
+  ) 
+g5 %&gt;% print() # inspect
+</code></pre>
+
+<p><img src="figure/technique-demonstration-Rmdprint-display-5-1.png" title="plot of chunk print-display-5" alt="plot of chunk print-display-5" style="display: block; margin: auto;" /></p>
+
+<pre><code class="r">g5 %&gt;%  quick_save(name = &quot;g5&quot;) # save to disk
+list.files(where_to_store_graphs, full.names = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;./reports/technique-demonstration/prints/1/g0.png&quot;
+## [2] &quot;./reports/technique-demonstration/prints/1/g1.png&quot;
+## [3] &quot;./reports/technique-demonstration/prints/1/g2.png&quot;
+## [4] &quot;./reports/technique-demonstration/prints/1/g3.png&quot;
+## [5] &quot;./reports/technique-demonstration/prints/1/g4.png&quot;
+## [6] &quot;./reports/technique-demonstration/prints/1/g5.png&quot;
+## [7] &quot;./reports/technique-demonstration/prints/1/g6.png&quot;
+</code></pre>
+
+<pre><code class="r"># 6 step of color logic: add substantially decreased risk
+increased_risk_2 &lt;- common_natural  # red - further increased risk factor
+increased_risk_1 &lt;- common_natural  # organge - increased risk factor
+reference_color &lt;- common_natural   # green  - REFERENCE  category
+descreased_risk_1 &lt;-common_natural  # blue - descreased risk factor
+descreased_risk_2 &lt;- common_natural # purple - further descrease in risk factor
+
+# increased_risk_2 &lt;- &quot;#e41a1c&quot;  # red - further increased risk factor
+# increased_risk_1 &lt;- &quot;#ff7f00&quot;  # organge - increased risk factor
+# reference_color &lt;- &quot;#4daf4a&quot;   # green  - REFERENCE  category
+# descreased_risk_1 &lt;-&quot;#377eb8&quot;  # blue - descreased risk factor
+descreased_risk_2 &lt;- &quot;#984ea3&quot; # purple - further descrease in risk factor
+
+g6 &lt;- ds_predicted %&gt;% 
+  graph_logistic_point_complex_4(
+    x_name       = &quot;age_group&quot;
+    ,y_name      = &quot;dv_hat_p&quot;
+    ,covar_order = covar_order_values
+    ,alpha_level = common_alpha
+    ,y_title     = dv_label_prob
+    ,y_range     = c(y_low, y_high)
+  ) 
+g6 %&gt;% print() # inspect
+</code></pre>
+
+<p><img src="figure/technique-demonstration-Rmdprint-display-6-1.png" title="plot of chunk print-display-6" alt="plot of chunk print-display-6" style="display: block; margin: auto;" /></p>
+
+<pre><code class="r">g6 %&gt;%  quick_save(name = &quot;g6&quot;) # save to disk
+list.files(where_to_store_graphs, full.names = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;./reports/technique-demonstration/prints/1/g0.png&quot;
+## [2] &quot;./reports/technique-demonstration/prints/1/g1.png&quot;
+## [3] &quot;./reports/technique-demonstration/prints/1/g2.png&quot;
+## [4] &quot;./reports/technique-demonstration/prints/1/g3.png&quot;
+## [5] &quot;./reports/technique-demonstration/prints/1/g4.png&quot;
+## [6] &quot;./reports/technique-demonstration/prints/1/g5.png&quot;
+## [7] &quot;./reports/technique-demonstration/prints/1/g6.png&quot;
+</code></pre>
+
+<pre><code class="r"># cat(&#39;&lt;img src=&quot;&#39;, path, &#39;&quot; alt=&quot;&#39;, basename(path),&#39;&quot;&gt;\n&#39;, sep=&quot;&quot;)
+</code></pre>
+
+<pre><code class="r"># writing to disk was localized during printing
+</code></pre>
+
+<pre><code class="r"># this chunk will be disabled during production of stichted_output
+# path_report_1 &lt;- &quot;./reports/technique-demonstration/technique-demonstration.Rmd&quot;
+# # path_report_2 &lt;- &quot;./reports/*/report_2.Rmd&quot;
+# allReports &lt;- c(path_report_1)
+# 
+# pathFilesToBuild &lt;- c(allReports)
+# testit::assert(&quot;The knitr Rmd files should exist.&quot;, base::file.exists(pathFilesToBuild))
+# # Build the reports
+# for( pathFile in pathFilesToBuild ) {
+#   
+#   rmarkdown::render(input = pathFile,
+#                     output_format=c(
+#                       &quot;html_document&quot; # set print_format &lt;- &quot;html&quot; in seed-study.R
+#                       # &quot;pdf_document&quot;
+#                       # ,&quot;md_document&quot;
+#                       # &quot;word_document&quot; # set print_format &lt;- &quot;pandoc&quot; in seed-study.R
+#                     ),
+#                     clean=TRUE)
+# }
+</code></pre>
+
+<p>The R session information (including the OS info, R version and all
+packages used):</p>
+
+<pre><code class="r">sessionInfo()
+</code></pre>
+
+<pre><code>## R version 3.4.4 (2018-03-15)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows &gt;= 8 x64 (build 9200)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] grid      stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
+## 
+## other attached packages:
+## [1] knitr_1.20         bindrcpp_0.2.2     dplyr_0.7.6       
+## [4] magrittr_1.5       RColorBrewer_1.1-2 dichromat_2.0-0   
+## [7] ggplot2_3.0.0      extrafont_0.17    
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.3            purrr_0.2.5                
+##  [3] reshape2_1.4.3              haven_1.1.1                
+##  [5] carData_3.0-1               colorspace_1.3-2           
+##  [7] htmltools_0.3.6             yaml_2.1.19                
+##  [9] utf8_1.1.3                  rlang_0.2.2                
+## [11] pillar_1.2.1                foreign_0.8-69             
+## [13] glue_1.3.0                  withr_2.1.1                
+## [15] readxl_1.0.0                bindr_0.1.1                
+## [17] plyr_1.8.4                  stringr_1.3.1              
+## [19] munsell_0.5.0               gtable_0.2.0               
+## [21] cellranger_1.1.0            zip_1.0.0                  
+## [23] evaluate_0.10.1             labeling_0.3               
+## [25] rio_0.5.10                  forcats_0.3.0              
+## [27] curl_3.1                    highr_0.6                  
+## [29] Rttf2pt1_1.3.6              Rcpp_0.12.18               
+## [31] backports_1.1.2             scales_1.0.0               
+## [33] TabularManifest_0.1-16.9003 abind_1.4-5                
+## [35] testit_0.8                  digest_0.6.18              
+## [37] stringi_1.1.7               openxlsx_4.1.0             
+## [39] rprojroot_1.3-2             cowplot_0.9.3              
+## [41] cli_1.0.0                   tools_3.4.4                
+## [43] lazyeval_0.2.1              tibble_1.4.2               
+## [45] crayon_1.3.4                car_3.0-0                  
+## [47] extrafontdb_1.0             pkgconfig_2.0.1            
+## [49] data.table_1.10.4-3         assertthat_0.2.0           
+## [51] rmarkdown_1.8               rstudioapi_0.7             
+## [53] R6_2.2.2                    compiler_3.4.4
+</code></pre>
+
+<pre><code class="r">Sys.time()
+</code></pre>
+
+<pre><code>## [1] &quot;2018-10-30 13:43:58 PDT&quot;
+</code></pre>
+
+</body>
+
+</html>
