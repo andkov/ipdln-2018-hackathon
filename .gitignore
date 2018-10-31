@@ -52,6 +52,7 @@ reports/*/*/*/*/prints/*/*.png
 reports/*/*/*/*/prints/*/*/*.png
 reports/*/*/*/*/prints/*/*/*/*.png
 reports/*/*/*/*/prints/*/*/*/*/*.png
+!reports/technique-demonstration/prints/*/*.png
 
 sandbox/*/prints/*.*
 sandbox/*/prints/*/*.*
