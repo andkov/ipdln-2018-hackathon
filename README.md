@@ -26,6 +26,8 @@ ds0      <- readRDS("./data-unshared/derived/1-greeted.rds")
 # Analytic Reports
 
 - [`./reports/eda-1/][eda1] - prints frequency distributions of all variables. 
+- [`./reports/eda-1/][eda1a] - repeats [eda1][eda1] but for subsample of first-generation immigrants
+
 - [`./reports/coloring-book-mortality/][hackathon2018] - implements analysis in the historic context of the IPDLN-2018-hackathon. Not a report, but a bare R script. Need to know the options before running. More for archeological purposes.  
 - [`./reports/technique-demonstration/][tech-demo] - a cleaned, simplified and heavily annotated version of [coloring-book-mortality][hackathon2018] report. Optimized for learning the workflow with the original data. ` For full details consult [stitched_output][tech-demo-stitched]. 
 - [`./reports/graphing-phase-only/][graph-only] - focuses on the graphing phase of production. Fully reproducible: works with the results of the models estimated during [technical-demonstration][graph-only], stored in [`./data-public/dereived/technique-demonstration/`][tech-demo-derived]. For full details consult [stitched_output][graph-only-stitched]
@@ -54,9 +56,11 @@ Model estimation and graph production is carried out in [`./reports/coloring-boo
       
 
 [governor]:https://github.com/andkov/ipdln-2018-hackathon/blob/master/manipulation/governor.R
-[0-meta-report]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/manipulation/stitched-output/0-metador.html
-[1-greeter-report]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/manipulation/stitched-output/1-greeter.html
-[eda1]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/reports/eda-1/eda-1.html
+[0-meta-report]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/manipulation/stitched-output/0-metador.html
+[1-greeter-report]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/manipulation/stitched-output/1-greeter.html
+[eda1]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/reports/eda-1/eda-1.html
+[eda1a]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/reports/eda-1/eda-1a-first-gen-immigrant.html
+
 [part1]:https://raw.githubusercontent.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/results-part-1.gif
 [part2]:https://raw.githubusercontent.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/results-part-2.gif
 
