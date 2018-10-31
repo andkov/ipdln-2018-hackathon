@@ -8,6 +8,10 @@ Demonstrating coloring-book techique of graph production in ggplot2 during data 
 - [Information for Participants][info_participants] 
 - [Data Codebook][data_codebook]
 
+[info_participants]:data-public/raw/IPDLN_Hackathon_Information_August2018.pdf
+[data_codebook]:data-public/raw/IPDLN_Hackathon_Synth_Data_Codebook_Final.pdf
+    
+    
 # Dynamic Documentation on Data Cleaning
  
 - [`./manipulation/0-metador.R`][0-meta-report] records the definition of available variables, their factor levels, labels, description, as well as additional meta data (e.g. colors, fonts, themes). 
