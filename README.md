@@ -58,7 +58,7 @@ This script yeilded a collection of printed graphs stored in `./reports/coloring
 - Matrix Institue colloquium [2018-10-31][matrix-talk]
 - Popultaion Data BC Webinar [2018-11-01][popdatabc-webinar]
 
-[matrix-talk]:libs/materials/talks/2018-10-31-when-notebooks-are-not-enough.pdf
+[matrix-talk]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/libs/materials/2018-10-31-when-notebooks-are-not-enough.pdf
 [popdatabc-webinar]:libs/materials/talks/2018-11-01-coloring-book-technique.pdf
 
 
