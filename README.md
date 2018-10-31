@@ -25,8 +25,8 @@ ds0      <- readRDS("./data-unshared/derived/1-greeted.rds")
 
 # Analytic Reports
 
-- [`./reports/eda-1/][eda1] - prints frequency distributions of all variables. 
-- [`./reports/eda-1/][eda1a] - repeats [eda1][eda1] but for subsample of first-generation immigrants
+- [`./reports/eda-1/eda-1][eda1] - prints frequency distributions of all variables. 
+- [`./reports/eda-1/eda-1a-first-gen-immigrant][eda1a] - repeats [eda1][eda1] but for subsample of first-generation immigrants
 
 - [`./reports/coloring-book-mortality/][hackathon2018] - implements analysis in the historic context of the IPDLN-2018-hackathon. Not a report, but a bare R script. Need to know the options before running. More for archeological purposes.  
 - [`./reports/technique-demonstration/][tech-demo] - a cleaned, simplified and heavily annotated version of [coloring-book-mortality][hackathon2018] report. Optimized for learning the workflow with the original data. ` For full details consult [stitched_output][tech-demo-stitched]. 
