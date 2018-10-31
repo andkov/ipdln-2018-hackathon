@@ -32,7 +32,8 @@ devtools.zip
 /data/unshared/*
 
 libs/materials/*
-!libs/materials/2018-10-31-when-notebooks-are-not-enough.pdf
+!libs/materials/talks/README.md
+!libs/materials/talks/2018-10-31-when-notebooks-are-not-enough.pdf
 
 reports/*/prints/*.png
 reports/*/prints/*/*.png
