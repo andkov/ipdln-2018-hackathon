@@ -84,8 +84,10 @@ This script yeilded a collection of printed graphs stored in `./reports/coloring
 
 # History
 
-- technique orignally developed for `ialsa-2016-groningen` exercise by Andriy Koval and Will Beasley
+- technique orignally developed for [`ialsa-2016-groningen`][groningen-brief] exercise by Andriy Koval and Will Beasley
 - currently maintained by Andriy Koval
+
+[groningen-brief]https://raw.githack.com/IALSA/ialsa-2016-groningen-public/master/2016-04-21-groningen-exercise-brief.pdf
 
 ## Hackathon-2018 Team
 - Stacey Fisher, Ph.D. Candidate, Ottawa Hospital Research Institute; ICES; University of Ottawa
