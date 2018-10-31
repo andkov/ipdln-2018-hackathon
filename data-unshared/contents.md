@@ -10,8 +10,6 @@ Since files in this directory are not staged/committed, it's tough to communicat
 ![capture-unshared-derived][capture-unshared-derived]
 
 
-
-
 [capture-unshared-raw]:../libs/images/screen-capture/data-unshared/raw/screen-capture.PNG
 [capture-unshared-derived]:../libs/images/screen-capture/data-unshared/derived/screen-capture.PNG
  
