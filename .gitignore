@@ -53,6 +53,7 @@ reports/*/*/*/*/prints/*/*/*.png
 reports/*/*/*/*/prints/*/*/*/*.png
 reports/*/*/*/*/prints/*/*/*/*/*.png
 !reports/technique-demonstration/prints/*/*.png
+!reports/coloring-book-mortality/prints/*/*.png
 
 sandbox/*/prints/*.*
 sandbox/*/prints/*/*.*
