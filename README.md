@@ -43,8 +43,6 @@ Resulst  of these two EDAs informed development of the script to estimate and to
 
 This script yeilded a collection of printed graphs stored in `./reports/coloring-book-mortality/prints/`, visualizing three different collection of predictors from the same model. There were put together into this [slide deck][slidedeck] and presented during the closing plenary of IDPDL-2018 Conference in Banff. 
 
-- [slide deck of presented results][slidedeck]
-
 [slidedeck]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/ipdln-2018-banff-hackathon-results-2018-09-14.pdf
 
 # Technique demonstration
@@ -52,6 +50,18 @@ This script yeilded a collection of printed graphs stored in `./reports/coloring
 
 - [`./reports/technique-demonstration/`][tech-demo] - a cleaned, simplified and heavily annotated version of [coloring-book-mortality][hackathon2018] report. Optimized for learning the workflow with the original data. For full details consult its [stitched_output][tech-demo-stitched]. 
 - [`./reports/graphing-phase-only/`][graph-only] - focuses on the graphing phase of production. Fully reproducible: works with the results of the models estimated during [technical-demonstration][graph-only], stored in [`./data-public/dereived/technique-demonstration/`][tech-demo-derived]. For full details consult its [stitched_output][graph-only-stitched]
+
+
+# Communication
+
+- Presentation of the [slide deck of hackathon results][slidedeck] to the  closing plenary of IDPDL-2018 Conference in Banff, September 17 2018.
+- Matrix Institue colloquium [2018-10-31][matrix-col]
+- Popultaion Data BC Webinar [2018-11-01][popdatabc-webinar]
+
+[matrix-talk]:libs/materials/talks/2018-10-31-when-notebooks-are-not-enough.pdf
+[popdatabc-webinar]:libs/materials/talks/2018-11-01-coloring-book-technique.pdf
+
+
 
 [hackathon2018]:https://github.com/andkov/ipdln-2018-hackathon/blob/master/reports/coloring-book-mortality/coloring-book-mortality.R
 
