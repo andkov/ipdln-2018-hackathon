@@ -48,7 +48,7 @@ This script yeilded a collection of printed graphs stored in `./reports/coloring
 # Technique demonstration
 
 
-- [`./reports/technique-demonstration/`][tech-demo] - a cleaned, simplified and heavily annotated version of [coloring-book-mortality][hackathon2018] report. Optimized for learning the workflow with the original data. For full details consult its [stitched_output][tech-demo-stitched]. 
+- [`./reports/technique-demonstration/`][tech-demo] - a cleaned, simplified and heavily annotated .R + .Rmd version of [coloring-book-mortality.R][hackathon2018] script. Optimized for learning the workflow with the original data. For full details consult its [stitched_output][tech-demo-stitched]. 
 - [`./reports/graphing-phase-only/`][graph-only] - focuses on the graphing phase of production. Fully reproducible: works with the results of the models estimated during [technical-demonstration][graph-only], stored in [`./data-public/dereived/technique-demonstration/`][tech-demo-derived]. For full details consult its [stitched_output][graph-only-stitched]
 
 
