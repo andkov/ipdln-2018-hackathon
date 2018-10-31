@@ -7,4 +7,4 @@ Since files in this directory are not staged/committed, it's tough to communicat
 
 
 ### Files in `./data-unshared/derived/`
-[capture]:screen-capture.PNG
+[capture]:../libs/images/screen-capture/data-unshared/raw/screen-capture.PNG
