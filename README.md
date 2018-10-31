@@ -4,6 +4,9 @@ Demonstrating coloring-book techique of graph production in ggplot2 during data 
 
 ![part2][part2]
 
+ # Relevent now
+  - Here are the slides for my talk [When Notebooks are not Enough][matrix-talk] at the Matrix Institute colloquium at the University of Victoria on October 31, 2018
+
 # How to reproduce
 - 0. Clone this repository (either via git or from the browswer)
 - 1. Lauch RStudio project via .Rproj file
