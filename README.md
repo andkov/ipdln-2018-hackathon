@@ -5,7 +5,7 @@ Demonstrating coloring-book techique of graph production in ggplot2 during data 
 ![part2][part2]
 
  # Relevent now
-  - Here are the slides for my talk [When Notebooks are not Enough][matrix-talk] at the Matrix Institute colloquium at the University of Victoria on October 31, 2018
+  - Here are the slides for my webinar [Visulizing Logistic Regression][popdatabc-webinar] at the Power of Population Data Science webinar series at PopDatBC on November 1, 2018.
 
 # How to reproduce
 0. Clone this repository (either via git or from the browswer)
@@ -61,8 +61,8 @@ This script yeilded a collection of printed graphs stored in `./reports/coloring
 # Communication
 
 - Presentation of the [slide deck of hackathon results][slidedeck] to the  closing plenary of IDPDL-2018 Conference in Banff, September 17 2018.
-- Matrix Institue colloquium [2018-10-31][matrix-talk]
-- Popultaion Data BC Webinar [2018-11-01][popdatabc-webinar]
+- Matrix Institue colloquium [2018-10-31][matrix-talk] - slides for my talk [When Notebooks are not Enough][matrix-talk] at the Matrix Institute colloquium at the University of Victoria on October 31, 2018
+- Popultaion Data BC Webinar [2018-11-01][popdatabc-webinar] -slides for my webinar [Visulizing Logistic Regression][popdatabc-webinar] at the Power of Population Data Science webinar series at PopDatBC on November 1, 2018.
 
 [matrix-talk]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/libs/materials/2018-10-31-when-notebooks-are-not-enough.pdf
 [popdatabc-webinar]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/libs/materials/2018-11-01-visualizing-logistic-regression.pdf
