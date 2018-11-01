@@ -10,8 +10,8 @@ Demonstrating coloring-book techique of graph production in ggplot2 during data 
 # How to reproduce
 0. Clone this repository (either via git or from the browswer)
 1. Lauch RStudio project via .Rproj file
-2. Execute `./manipulation/0-metador.R` to generate object with meta data
-3. Examine `./manipulation/stitched_output/1-greeter.html` Greet the data provided to the participants of the hackathon (currently unavailable to the public, but send a friendly tweet [@StatCan_eng](https://twitter.com/andkovpro/status/1056974611961667584) to let them know there is interest to make this data set public)
+2. Execute [`./manipulation/0-metador.R`](./manipulation/0-metador.R) to generate object with meta data
+3. Examine [`./manipulation/stitched_output/1-greeter.html`][1-greeter-report] Greet the data provided to the participants of the hackathon (currently unavailable to the public, but send a friendly tweet [@StatCan_eng](https://twitter.com/andkovpro/status/1056974611961667584) to let them know there is interest to make this data set public)
 4. Examine [`./reports/technique-demonstration/technique-demonstration-1.html`][tech-demo] to see how models were estimated on data provided to hackathon participants (really, please send a friendly tweet [@StatCan_eng](https://twitter.com/andkovpro/status/1056974611961667584) )
 5. Run [`./reports/graphing-phase-only/graphing-phase-only.R`](./reports/graphing-phase-only/graphing-phase-only.R) to load the model solution and start producing graphs
 
