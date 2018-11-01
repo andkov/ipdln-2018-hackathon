@@ -26,17 +26,12 @@ requireNamespace("RColorBrewer")
 
 # This script works with model results data estimated during /technique-demonstration/
 path_input_micro <- "./data-public/derived/technique-demonstration/ls_model.rds"
-path_input_meta  <- "./data-unshared/derived/ls_guide.rds"
+path_input_meta  <- "./data-unshared/derived/0-ls_guide.rds"
 
 # test whether the file exists / the link is good
 testit::assert("File does not exist", base::file.exists(path_input_micro))
 testit::assert("File does not exist", base::file.exists(path_input_meta))
 
-# declare where you will store the product of this script
-# path_save <- "./data-unshared/derived/object.rds"
-
-# See definitions of commonly  used objects in:
-source("./manipulation/object-glossary.R")   # object definitions
 # ---- load-data ---------------------------------------------------------------
 ls_model <- readRDS(path_input_micro) #  product of `./reports/technique-demonstration/technique-demonstration.R`
 ls_guide <- readRDS(path_input_meta) #  product of `./manipulation/0-metador.R`
@@ -55,7 +50,6 @@ ls_model$predicted_values %>% glimpse(50) # predicted values
 where_to_store_graphs <- "./reports/graphing-phase-only/prints/1/" # female marital educ3 poor_health
 # where_to_store_graphs = "./reports/graphing-phase-only/prints/2/" # educ3 poor_health first
 # where_to_store_graphs = "./reports/graphing-phase-only/prints/3/", # other collection of predictors
-
 
 # define a function to print a graph onto disk as an image
 # because some aspects of appearances are easier to control during printing, not graphing
@@ -142,7 +136,7 @@ assign_color <- function(color_group){
   
 }
 
-# shared grahpical setting
+# declare shared grahpical setting
 common_alpha <- .7          # shared transparency
 common_natural <- "grey90"  # the "no-color" color
 y_low = .2 # to remove white space
@@ -158,14 +152,41 @@ list.files(where_to_store_graphs, full.names = TRUE)
 eq_global_string <- ls_model$call
 # the function that supports older reports needs this
 
+# ---- graph-demo -----------------------------
+# let us examine the ggplot2 logic of the graph
+ds_predicted %>% glimpse()
+g <-  ds_predicted %>% 
+  # dplyr::filter(PR == "Alberta") %>% 
+  ggplot2::ggplot(
+    aes(x = age_group)
+  ) +
+  geom_jitter( 
+    aes( y = dv_hat_p , fill = female)
+    ,shape = 21
+    ,alpha = .7
+    ,size  = 5 
+  ) +
+  scale_fill_manual(values = c("TRUE" = "pink", 'FALSE' = "blue")) +
+  facet_grid(. ~ PR) + 
+  main_theme +
+  labs(title = "Mortality across age groups")
+g
+# we have created two funtions that using this form
+# graph_logistic_point_simple() - creates a generic graph 
+# graph_logistic_point_complex_4() - stacks graphs for 4 predictors
+# these functions are isolated in the script
+base::source("./scripts/graphing/graph-logistic.R")
 
 # ---- print-display-0 ----------------------
 # 0 step : All colors are in
-increased_risk_2  <- "#e41a1c"  # red      - further increased risk factor
-increased_risk_1  <- "#ff7f00"  # organge  - increased risk factor
-reference_color   <- "#4daf4a"  # green    - REFERENCE  category
-descreased_risk_1 <-"#377eb8"   # blue     - descreased risk factor
-descreased_risk_2 <- "#984ea3"  # purple   - further descrease in risk factor
+increased_risk_2  <- "#e41a1c"  # red     - further increased risk factor
+increased_risk_1  <- "#ff7f00"  # organge - increased risk factor
+reference_color   <- "#4daf4a"  # green   - REFERENCE  category
+descreased_risk_1 <- "#377eb8"  # blue    - descreased risk factor
+descreased_risk_2 <- "#984ea3"  # purple  - further descrease in risk factor
+# color definitions are picked from  
+# http://colorbrewer2.org/#type=qualitative&scheme=Set1&n=7
+
 
 g0 <- ds_predicted %>% 
   graph_logistic_point_complex_4(
