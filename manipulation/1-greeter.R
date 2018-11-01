@@ -1,14 +1,10 @@
 # this script imports the raw data described in this shared document 
-# https://drive.google.com/file/d/10idMxy8eX8nTHr6wr2Q40x4XOP3Y5ck7/view
+# ./data-public/raw/IPDLN_Hackathon_Synth_Data_Codebook_Final.docx
 # and prepares a state of data used as a standard point of departure for any subsequent reproducible analytics
 
 # Lines before the first chunk are invisible to Rmd/Rnw callers
 # Run to stitch a tech report of this script (used only in RStudio)
-# knitr::stitch_rmd(
-#   script = "./manipulation/0-greeter.R",
-#   output = "./manipulation/stitched-output/0-greeter.md"
-# )
-# this command is typically executed by the ./manipulation/governor.R
+# knitr::stitch_rmd(script = "./manipulation/0-greeter.R",output = "./manipulation/stitched-output/0-greeter.md" )
 
 rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. 
 # This is not called by knitr, because it's above the first chunk.
@@ -24,7 +20,7 @@ requireNamespace("dplyr", quietly=TRUE)
 # ---- declare-globals ---------------------------------------------------------
 # link to the source of the location mapping
 path_input_micro <- "./data-unshared/raw/ipdln_synth_final.csv"
-path_input_meta  <- "./data-unshared/derived/ls_guide.rds"
+path_input_meta  <- "./data-unshared/derived/0-ls_guide.rds"
 
 # test whether the file exists / the link is good
 testit::assert("File does not exist", base::file.exists(path_input_micro))

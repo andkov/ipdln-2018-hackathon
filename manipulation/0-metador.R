@@ -1,13 +1,10 @@
 # this script transcribes the meta data from 
-# https://drive.google.com/file/d/10idMxy8eX8nTHr6wr2Q40x4XOP3Y5ck7/view
+# ./data-public/raw/IPDLN_Hackathon_Synth_Data_Codebook_Final.docx
 # and organizes the data documentation in a form convenient for reproducible analytics
 
 # Lines before the first chunk are invisible to Rmd/Rnw callers
 # Run to stitch a tech report of this script (used only in RStudio)
-# knitr::stitch_rmd(
-#   script = "./manipulation/0-metador.R",
-#   output = "./manipulation/stitched-output/0-metador.md"
-# )
+# knitr::stitch_rmd(script = "./manipulation/0-metador.R",output = "./manipulation/stitched-output/0-metador.md" )
 
 rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. 
 # This is not called by knitr, because it's above the first chunk.
@@ -21,7 +18,7 @@ requireNamespace("dplyr", quietly=TRUE)
 
 # ---- declare-globals ---------------------------------------------------------
 # declare where you will store the product of this script
-path_save <- "./data-unshared/derived/ls_guide.rds"
+path_save <- "./data-unshared/derived/0-ls_guide.rds"
 
 # ----- alphabetical-listing --------------------
 
@@ -92,7 +89,7 @@ immigration <- c(
   "POBDER"                 # "Place of birth"                 # immigration               
   ,"DPOB11N"               # "Contry of birth"                #                  
   ,"IMMDER"                # "Immigration status"             #                     
-  ,"AGE_IMM_R_group" # "Age at immigration"             #                     
+  ,"AGE_IMM_R_group"       # "Age at immigration"             #                     
   ,"YRIM_group"            # "Year came to Canada"            #                      
   ,"CITSM"                 # "Citizen of Canada"              #                    
   ,"GENSTPOB"              # "Generation in Canada"           #                       
