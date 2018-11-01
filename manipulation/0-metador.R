@@ -592,6 +592,7 @@ ls_guide$item$KID_group %>% str()
 
 # ---- save-to-disk ------------------------
 cat("Save results to ",path_save)
+dir.create("./data-unshared/derived/",showWarnings = TRUE)
 saveRDS(ls_guide, path_save)
 
 
