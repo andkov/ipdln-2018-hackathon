@@ -65,7 +65,7 @@ This script yeilded a collection of printed graphs stored in `./reports/coloring
 - Popultaion Data BC Webinar [2018-11-01][popdatabc-webinar]
 
 [matrix-talk]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/libs/materials/2018-10-31-when-notebooks-are-not-enough.pdf
-[popdatabc-webinar]:libs/materials/talks/2018-11-01-coloring-book-technique.pdf
+[popdatabc-webinar]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/libs/materials/2018-11-01-visualizing-logistic-regression.pdf
 
 
 
