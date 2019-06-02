@@ -6,7 +6,7 @@ Demonstrating coloring-book techique of graph production in _ggplot2_ during dat
 
 # Relevant talks 
 
-- April, 2016 - Groningen -  Technique orignally developed for 2016 Maelstrom Harmonization Workshop ("_Assessing the impact of different harmonization procedures on the analysis results from several real datasets_"). View the [slides][`ialsa-2016-groningen`][groningen-brief]  presenting the results of the exercise by [Andriy Koval](http://github.com/andkov) and [Will Beasley](http://github.com/wibeasley). Groningen, Netherlands, April 22, 2016. 
+- April, 2016 - Groningen -  Technique orignally developed for 2016 Maelstrom Harmonization Workshop ("_Assessing the impact of different harmonization procedures on the analysis results from several real datasets_"). View the slides [`ialsa-2016-groningen`][groningen-brief]  presenting the results of the exercise by [Andriy Koval](http://github.com/andkov) and [Will Beasley](http://github.com/wibeasley). Groningen, Netherlands, April 22, 2016. 
 - September, 2017 - Banff -  Presentation of the [slide deck of hackathon results][slidedeck] to the  closing plenary of IDPDL-2018 Conference in Banff, September 17 2018.
 - October, 2017 - Victoria - Matrix Institue colloquium [2018-10-31][matrix-talk] - slides for my talk [When Notebooks are not Enough][matrix-talk] at the Matrix Institute colloquium at the University of Victoria on October 31, 2018
 - November, 2017  Victoria - Popultaion Data BC Webinar [2018-11-01][popdatabc-webinar] -slides for my webinar [Visulizing Logistic Regression][popdatabc-webinar] at the Power of Population Data Science webinar series at PopDatBC on November 1, 2018.
