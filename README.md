@@ -4,8 +4,15 @@ Demonstrating coloring-book techique of graph production in _ggplot2_ during dat
 
 ![part2][part2]
 
- # Relevent now
-  - Here are the slides for my webinar [Visulizing Logistic Regression][popdatabc-webinar] at the Power of Population Data Science webinar series at PopDatBC on November 1, 2018.
+# Relevant talks 
+
+- April, 2016 - Groningen -  Technique orignally developed for 2016 Maelstrom Harmonization Workshop ("_Assessing the impact of different harmonization procedures on the analysis results from several real datasets_"). View the [slides][`ialsa-2016-groningen`][groningen-brief]  presenting the results of the exercise by [Andriy Koval](http://github.com/andkov) and [Will Beasley](http://github.com/wibeasley). Groningen, Netherlands, April 22, 2016. 
+- September, 2017 - Banff -  Presentation of the [slide deck of hackathon results][slidedeck] to the  closing plenary of IDPDL-2018 Conference in Banff, September 17 2018.
+- October, 2017 - Victoria - Matrix Institue colloquium [2018-10-31][matrix-talk] - slides for my talk [When Notebooks are not Enough][matrix-talk] at the Matrix Institute colloquium at the University of Victoria on October 31, 2018
+- November, 2017  Victoria - Popultaion Data BC Webinar [2018-11-01][popdatabc-webinar] -slides for my webinar [Visulizing Logistic Regression][popdatabc-webinar] at the Power of Population Data Science webinar series at PopDatBC on November 1, 2018.
+
+[matrix-talk]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/libs/materials/2018-10-31-when-notebooks-are-not-enough.pdf
+[popdatabc-webinar]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/libs/materials/2018-11-01-visualizing-logistic-regression.pdf
 
 # How to reproduce
 0. Clone this repository (either via git or from the browswer)
@@ -16,15 +23,12 @@ Demonstrating coloring-book techique of graph production in _ggplot2_ during dat
 5. Run [`./reports/graphing-phase-only/graphing-phase-only.R`](./reports/graphing-phase-only/graphing-phase-only.R) to load the model solution and start producing graphs
 
 
-
-
 # Background 
 - [Information for Participants][info_participants] 
 - [Data Codebook][data_codebook]
 
 [info_participants]:data-public/raw/IPDLN_Hackathon_Information_August2018.pdf
-[data_codebook]:data-public/raw/IPDLN_Hackathon_Synth_Data_Codebook_Final.pdf
-    
+[data_codebook]:data-public/raw/IPDLN_Hackathon_Synth_Data_Codebook_Final.pdf    
     
 # Dynamic Documentation on Data Cleaning
  
@@ -52,20 +56,10 @@ This script yeilded a collection of printed graphs stored in `./reports/coloring
 [slidedeck]:https://rawgit.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/ipdln-2018-banff-hackathon-results-2018-09-14.pdf
 
 # Technique demonstration
-
-
 - [`./reports/technique-demonstration/`][tech-demo] - a cleaned, simplified and heavily annotated .R + .Rmd version of [coloring-book-mortality.R][hackathon2018] script. Optimized for learning the workflow with the original data. For full details consult its [stitched_output][tech-demo-stitched]. 
 - [`./reports/graphing-phase-only/`][graph-only] - focuses on the graphing phase of production. Fully reproducible: works with the results of the models estimated during [technical-demonstration][graph-only], stored in [`./data-public/dereived/technique-demonstration/`][tech-demo-derived]. For full details consult its [stitched_output][graph-only-stitched]
 
 
-# Communication
-
-- Presentation of the [slide deck of hackathon results][slidedeck] to the  closing plenary of IDPDL-2018 Conference in Banff, September 17 2018.
-- Matrix Institue colloquium [2018-10-31][matrix-talk] - slides for my talk [When Notebooks are not Enough][matrix-talk] at the Matrix Institute colloquium at the University of Victoria on October 31, 2018
-- Popultaion Data BC Webinar [2018-11-01][popdatabc-webinar] -slides for my webinar [Visulizing Logistic Regression][popdatabc-webinar] at the Power of Population Data Science webinar series at PopDatBC on November 1, 2018.
-
-[matrix-talk]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/libs/materials/2018-10-31-when-notebooks-are-not-enough.pdf
-[popdatabc-webinar]:https://raw.githack.com/andkov/ipdln-2018-hackathon/master/libs/materials/2018-11-01-visualizing-logistic-regression.pdf
 
 
 
@@ -88,10 +82,6 @@ This script yeilded a collection of printed graphs stored in `./reports/coloring
 [part1]:https://raw.githubusercontent.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/results-part-1.gif
 [part2]:https://raw.githubusercontent.com/andkov/ipdln-2018-hackathon/master/reports/coloring-book-mortality/results-part-2.gif
 
-# History
-
-- technique orignally developed for [`ialsa-2016-groningen`][groningen-brief] exercise by Andriy Koval and Will Beasley
-- currently maintained by Andriy Koval
 
 [groningen-brief]:https://raw.githack.com/IALSA/ialsa-2016-groningen-public/master/2016-04-21-groningen-exercise-brief.pdf
 
