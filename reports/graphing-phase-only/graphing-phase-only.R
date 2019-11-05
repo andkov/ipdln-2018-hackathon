@@ -4,7 +4,7 @@
 rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. 
 # This is not called by knitr, because it's above the first chunk.
 cat("\f") # clear console when working in RStudio
-
+ 
 # ---- load-sources ------------------------------------------------------------
 # Call `base::source()` on any repo file that defines functions needed below.  
 # Ideally, no real operations are performed.
@@ -35,7 +35,7 @@ testit::assert("File does not exist", base::file.exists(path_input_meta))
 # ---- load-data ---------------------------------------------------------------
 ls_model <- readRDS(path_input_micro) #  product of `./reports/technique-demonstration/technique-demonstration.R`
 ls_guide <- readRDS(path_input_meta) #  product of `./manipulation/0-metador.R`
-
+ 
 # ---- tweak-data --------------------------------------------------------------
 ds_predicted <- ls_model$predicted_values 
 
@@ -47,8 +47,8 @@ ls_model$coefficients %>% round(2)# estimated coefficients
 ls_model$predicted_values %>% glimpse(50) # predicted values
 
 # ---- define-utility-functions ---------------
-where_to_store_graphs <- "./reports/graphing-phase-only/prints/1/" # female marital educ3 poor_health
-# where_to_store_graphs = "./reports/graphing-phase-only/prints/2/" # educ3 poor_health first
+# where_to_store_graphs <- "./reports/graphing-phase-only/prints/1/" # female marital educ3 poor_health
+where_to_store_graphs = "./reports/graphing-phase-only/prints/2/" # marital educ3 poor_health first
 # where_to_store_graphs = "./reports/graphing-phase-only/prints/3/", # other collection of predictors
 
 # define a function to print a graph onto disk as an image
@@ -76,8 +76,8 @@ dv_label_odds      <- "Odds(Dead)"
 # select the predictors to evaluate graphically
 # becasue we typically will have more predictors then we want to display
 # these will define rows in the printed matrix of graphs
-covar_order_values <- c("female","marital","educ3","poor_health") #for /prints/1/
-# covar_order_values <- c("marital", "educ3","poor_health", "FOL") # for /prints/2/
+# covar_order_values <- c("female","marital","educ3","poor_health") #for /prints/1/
+covar_order_values <- c("marital", "educ3","poor_health", "FOL") # for /prints/2/
 
 
 # ---- define-coloring-book-settings ---------------------------
@@ -375,21 +375,21 @@ list.files(where_to_store_graphs, full.names = TRUE)
 
 # ---- publish ---------------------------------------
 # this chunk will be disabled during production of stichted_output
-# path_report_1 <- "./reports/graphing-phase-only/graphing-phase-only.Rmd"
-# # path_report_2 <- "./reports/*/report_2.Rmd"
-# allReports <- c(path_report_1)
-# 
-# pathFilesToBuild <- c(allReports)
-# testit::assert("The knitr Rmd files should exist.", base::file.exists(pathFilesToBuild))
-# # Build the reports
-# for( pathFile in pathFilesToBuild ) {
-#   
-#   rmarkdown::render(input = pathFile,
-#                     output_format=c(
-#                       "html_document" # set print_format <- "html" in seed-study.R
-#                       # "pdf_document"
-#                       # ,"md_document"
-#                       # "word_document" # set print_format <- "pandoc" in seed-study.R
-#                     ),
-#                     clean=TRUE)
-# }
+path_report_1 <- "./reports/graphing-phase-only/graphing-phase-only.Rmd"
+# path_report_2 <- "./reports/*/report_2.Rmd"
+allReports <- c(path_report_1)
+
+pathFilesToBuild <- c(allReports)
+testit::assert("The knitr Rmd files should exist.", base::file.exists(pathFilesToBuild))
+# Build the reports
+for( pathFile in pathFilesToBuild ) {
+
+  rmarkdown::render(input = pathFile,
+                    output_format=c(
+                      "html_document" # set print_format <- "html" in seed-study.R
+                      # "pdf_document"
+                      # ,"md_document"
+                      # "word_document" # set print_format <- "pandoc" in seed-study.R
+                    ),
+                    clean=TRUE)
+}
