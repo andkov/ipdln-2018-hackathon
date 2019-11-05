@@ -23,13 +23,13 @@ requireNamespace("RColorBrewer")
 
 # ---- declare-globals ---------------------------------------------------------
 # link to the source of the location mapping
-path_input_micro <- "./data-unshared/derived/0-greeted.rds"
+path_input_meta  <- "./data-unshared/derived/0-ls_guide.rds"
+path_input_micro <- "./data-unshared/derived/1-greeted.rds"
 # path_input_micro <- "./data-unshared/derived/simulated_subsample.rds"
-path_input_meta  <- "./data-unshared/derived/ls_guide.rds"
 
 # test whether the file exists / the link is good
-testit::assert("File does not exist", base::file.exists(path_input_micro))
 testit::assert("File does not exist", base::file.exists(path_input_meta))
+testit::assert("File does not exist", base::file.exists(path_input_micro))
 
 # declare where you will store the product of this script
 # path_save <- "./data-unshared/derived/object.rds"
@@ -66,7 +66,7 @@ get_a_subsample <- function(d, sample_size, seed = 42){
 
 
 where_to_store_graphs <- "./reports/technique-demonstration/prints/1/" # female marital educ3 poor_health
-# where_to_store_graphs = "./reports/technique-demonstration/prints/2/" # educ3 poor_health first
+# where_to_store_graphs = "./reports/technique-demonstration/prints/2/" # marital educ3 poor_health first
 # where_to_store_graphs = "./reports/technique-demonstration/prints/3/", # other collection of predictors
 
 # define a function to print a graph onto disk as an image
@@ -343,7 +343,7 @@ ls_model <- list(
   ,"coefficients"     = model_solution %>% stats::coefficients()
   ,"predicted_values" = ds_predicted
 )
-saveRDS(ls_model, "./data-public/derived/technique-demonstration/ls_model.rds")
+# saveRDS(ls_model, "./data-public/derived/technique-demonstration/ls_model.rds")
 # the script can be continutued in
 # `./reports/technique-demonstrations/graphing-phase-demo.R`
 # without relying on the raw data
@@ -405,7 +405,7 @@ assign_color <- function(color_group){
   
 }
 
-# shared grahpical setting
+# shared graphing setting
 common_alpha <- .7          # shared transparency
 common_natural <- "grey90"  # the "no-color" color
 y_low = .2 # to remove white space
@@ -613,21 +613,21 @@ list.files(where_to_store_graphs, full.names = TRUE)
 
 # ---- publish ---------------------------------------
 # this chunk will be disabled during production of stichted_output
-# path_report_1 <- "./reports/technique-demonstration/technique-demonstration.Rmd"
-# # path_report_2 <- "./reports/*/report_2.Rmd"
-# allReports <- c(path_report_1)
-# 
-# pathFilesToBuild <- c(allReports)
-# testit::assert("The knitr Rmd files should exist.", base::file.exists(pathFilesToBuild))
-# # Build the reports
-# for( pathFile in pathFilesToBuild ) {
-#   
-#   rmarkdown::render(input = pathFile,
-#                     output_format=c(
-#                       "html_document" # set print_format <- "html" in seed-study.R
-#                       # "pdf_document"
-#                       # ,"md_document"
-#                       # "word_document" # set print_format <- "pandoc" in seed-study.R
-#                     ),
-#                     clean=TRUE)
-# }
+path_report_1 <- "./reports/technique-demonstration/technique-demonstration.Rmd"
+# path_report_2 <- "./reports/*/report_2.Rmd"
+allReports <- c(path_report_1)
+
+pathFilesToBuild <- c(allReports)
+testit::assert("The knitr Rmd files should exist.", base::file.exists(pathFilesToBuild))
+# Build the reports
+for( pathFile in pathFilesToBuild ) {
+
+  rmarkdown::render(input = pathFile,
+                    output_format=c(
+                      "html_document" # set print_format <- "html" in seed-study.R
+                      # "pdf_document"
+                      # ,"md_document"
+                      # "word_document" # set print_format <- "pandoc" in seed-study.R
+                    ),
+                    clean=TRUE)
+}
