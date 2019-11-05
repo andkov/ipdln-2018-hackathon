@@ -32,8 +32,8 @@ opts_chunk$set(
   tidy         = FALSE,
   # dpi        = 400,
   out.width  = "900px", #This affects only the markdown, not the underlying png file.  The height will be scaled appropriately.
-  fig.width    = 12, 
-  fig.height   = 6, 
+  fig.width    = 22, 
+  fig.height   = 16, 
   fig.path     = 'figure-png/'
 )
 
@@ -83,7 +83,7 @@ read_chunk("./reports/graphing-phase-only/graphing-phase-only.R") #This allows k
 ```
 
 # Coloring Book setting
-```{r define-coloring-book-setting, echo=echo_chunks, results='show', message=message_chunks}
+```{r define-coloring-book-settings, echo=echo_chunks, results='show', message=message_chunks}
 ```
 
 # Display 0
